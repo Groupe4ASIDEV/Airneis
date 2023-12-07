@@ -1,5 +1,10 @@
 # Airneis
 
+Before launching any of the applications of the project, please make sure that you have installed the followings:
+- Node.js v20.8.0 or latest,
+- npm v10.1.0 or latest.
+We cannot guarantee that the applications will launch with older versions.
+
 This repository includes 3 main directories for each application of the Airneis project:
 - The front web application, developed with React.
 - The front mobile application, developed with React Native.
