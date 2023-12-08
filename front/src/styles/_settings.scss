@@ -1,0 +1,19 @@
+// Variables
+$color-1: black;
+$color-2: #AE692B;
+$color-3: #DFB65A;
+$color-4: #ECD8A5;
+$color-5: #83664A;
+
+// Mixins
+
+// Global
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    outline: none;
+    border: none;
+    text-decoration: none;
+}
