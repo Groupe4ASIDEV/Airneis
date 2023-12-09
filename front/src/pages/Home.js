@@ -2,23 +2,21 @@ import Carousel from '../components/Carousel';
 
 function Home() {
     return (
-        <div>
+        <div id="home">
             <Carousel />
-            <div>
+            <div className="catchphrase">
                 <p>
-                    <strong>
-                        Venant des Hautes Terres d'Ecosse
-                        <br />
-                        Nos meubles sont immortels
-                    </strong>
+                    Venant des Hautes Terres d'Ecosse
+                    <br />
+                    Nos meubles sont immortels
                 </p>
             </div>
             <div>
                 <p>3 highlighted categories</p>
             </div>
-            <div>
+            <div className="catchphrase">
                 <p>
-                    <strong>Les highlanders du moment</strong>
+                    Les highlanders du moment
                 </p>
                 <p>highlighted products</p>
             </div>
