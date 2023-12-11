@@ -1,4 +1,6 @@
 import Carousel from '../components/Carousel';
+import HighlightedCategories from '../components/HighlightedCategories';
+import HighlightedProducts from '../components/HighlightedProducts';
 
 function Home() {
     return (
@@ -11,15 +13,11 @@ function Home() {
                     Nos meubles sont immortels
                 </p>
             </div>
-            <div>
-                <p>3 highlighted categories</p>
-            </div>
+            <HighlightedCategories />
             <div className="catchphrase">
-                <p>
-                    Les highlanders du moment
-                </p>
-                <p>highlighted products</p>
+                <p>Les highlanders du moment</p>
             </div>
+            <HighlightedProducts />
         </div>
     );
 }
