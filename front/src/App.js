@@ -1,12 +1,13 @@
+import { Container } from '@mui/material';
 import Index from './routes';
 
 function App() {
     return (
         <>
             <main>
-                <div className="container">
+                <Container className="container">
                     <Index />
-                </div>
+                </Container>
             </main>
         </>
     );
