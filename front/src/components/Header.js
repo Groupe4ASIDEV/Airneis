@@ -9,8 +9,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 function Header() {
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+        <Box component="header" sx={{ flexGrow: 1 }}>
+            <AppBar component="div" position="static">
                 <Toolbar>
                     <Typography
                         variant="h1"
