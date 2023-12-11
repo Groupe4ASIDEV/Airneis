@@ -17,3 +17,9 @@ $color-5: #83664A;
     border: none;
     text-decoration: none;
 }
+
+.container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
