@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import Index from './routes';
+import Footer from './components/Footer';
 
 function App() {
     return (
@@ -10,6 +11,7 @@ function App() {
                     <Index />
                 </div>
             </main>
+            <Footer />
         </>
     );
 }
