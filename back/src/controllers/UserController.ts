@@ -49,6 +49,15 @@ export default {
         return Response.success(context, 'update is working');
     },
     delete: async (context: Koa.Context) => {
-        return Response.success(context, 'delete is working');
+        const id = context.params.id;
+        if (!id) {
+            return Response.badRequest(context, 'INVALID_ID');
+        }
+        const user = await User.getOneById(id);
+        if (!user) {
+            return Response.resourceNotFound(context, 'USER_NOT_FOUND');
+        }
+        await User.deleteOne({ _id: id });
+        return Response.success(context, 'USER_DELETED');
     },
 };
