@@ -7,7 +7,7 @@ router.get('/status', StatusController.status);
 
 const userRouter = new Router({ prefix: '/user' });
 userRouter.get('/', UserController.getAll);
-userRouter.get('/:id', UserController.getOneById);
+userRouter.post('/', UserController.getOneById);
 userRouter.put('/:id', UserController.update);
 userRouter.delete('/:id', UserController.delete);
 userRouter.post('/create', UserController.create);

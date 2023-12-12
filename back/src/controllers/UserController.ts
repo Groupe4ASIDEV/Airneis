@@ -11,7 +11,16 @@ export default {
         return Response.success(context, users);
     },
     getOneById: async (context: Koa.Context) => {
-        return Response.success(context, 'getOneById is working');
+        const body = context.request.body;
+        const id = body.id;
+        if (!id) {
+            return Response.badRequest(context, 'INVALID_ID');
+        }
+        const user = await User.getOneById(id);
+        if (!user) {
+            return Response.resourceNotFound(context, 'USER_NOT_FOUND');
+        }
+        return Response.success(context, user);
     },
     create: async (context: Koa.Context) => {
         const body = context.request.body;
