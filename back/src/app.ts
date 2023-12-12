@@ -7,7 +7,7 @@ const app = new Koa();
 app.use(koaBody());
 app.use(logger());
 app.use((ctx) => {
-    ctx.body = 'Airneis API is running ' + process.env.APP_HOSTNAME;
+    ctx.body = 'Airneis API is running ';
 });
 
 export default app;
