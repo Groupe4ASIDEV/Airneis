@@ -5,7 +5,6 @@ import Echo from '../helpers/Echo';
 export default {
     connect: async function () {
         const databaseURI = process.env.DATABASE_URI ?? null;
-        console.log('🚀 ~ file: database.ts:8 ~ databaseURI:', databaseURI);
         if (databaseURI !== null) {
             Echo.green('Connecting to mongodb...');
             await mongoose.set('strictQuery', true);
