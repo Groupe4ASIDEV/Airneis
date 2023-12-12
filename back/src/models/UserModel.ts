@@ -25,8 +25,8 @@ const userSchema = new mongoose.Schema<User>({
     admin: { type: Boolean, required: true, default: false },
     validated: { type: Boolean, required: true, default: false },
     createdAt: { type: Date, default: Date.now },
-    deletedAt: { type: Date },
     updatedAt: { type: Date },
+    deletedAt: { type: Date },
 });
 
 userSchema.statics = {

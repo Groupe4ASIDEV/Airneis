@@ -9,7 +9,7 @@ const userRouter = new Router({ prefix: '/user' });
 userRouter.get('/', UserController.getAll);
 userRouter.post('/', UserController.getOneById);
 userRouter.post('/create', UserController.create);
-userRouter.put('/update', UserController.update);
+userRouter.put('/update/:id', UserController.update);
 userRouter.post('/delete', UserController.deleteMany);
 userRouter.delete('/delete/:id', UserController.delete);
 
