@@ -12,11 +12,6 @@ export type User = {
     updatedAt: Date;
 };
 
-export type UserStatic = Model<User> & {
-    getAll(): Promise<User[]>;
-    getOneById(id: String): Promise<User>;
-};
-
 const userSchema = new mongoose.Schema<User>({
     fullName: { type: String },
     email: { type: String, required: true, unique: true },
@@ -29,15 +24,4 @@ const userSchema = new mongoose.Schema<User>({
     deletedAt: { type: Date },
 });
 
-userSchema.statics = {
-    async getAll() {
-        const users = await this.find();
-        return users;
-    },
-    async getOneById(id) {
-        const user = await this.findById(id);
-        return user;
-    },
-};
-
-export const User = model<User, UserStatic>('User', userSchema);
+export const User = model<User>('User', userSchema);

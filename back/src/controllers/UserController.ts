@@ -4,7 +4,7 @@ import { User } from '../models/UserModel';
 
 export default {
     getAll: async (context: Koa.Context) => {
-        const users = await User.getAll();
+        const users = await User.find();
 
         if (users.length == 0) {
             return Response.resourceNotFound(context, 'NO_USER_FOUND');
@@ -20,7 +20,7 @@ export default {
             return Response.badRequest(context, 'INVALID_ID');
         }
 
-        const user = await User.getOneById(id);
+        const user = await User.findById(id);
 
         if (!user) {
             return Response.resourceNotFound(context, 'USER_NOT_FOUND');
@@ -83,7 +83,7 @@ export default {
             return Response.badRequest(context, 'INVALID_ID');
         }
 
-        const user = await User.getOneById(id);
+        const user = await User.findById(id);
 
         if (!user) {
             return Response.resourceNotFound(context, 'USER_NOT_FOUND');
