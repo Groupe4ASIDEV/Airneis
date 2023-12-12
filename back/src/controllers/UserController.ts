@@ -60,4 +60,17 @@ export default {
         await User.deleteOne({ _id: id });
         return Response.success(context, 'USER_DELETED');
     },
+    deleteMany: async (context: Koa.Context) => {
+        const body = context.request.body;
+        const ids = body.ids;
+        if (!ids || !Array.isArray(ids) || ids.length === 0) {
+            return Response.badRequest(context, 'INVALID_IDS');
+        }
+        const users = await User.find({ _id: { $in: ids } });
+        if (users.length !== ids.length) {
+            return Response.resourceNotFound(context, 'SOME_USERS_NOT_FOUND');
+        }
+        await User.deleteMany({ _id: { $in: ids } });
+        return Response.success(context, `${ids.length}_USERS_DELETED`);
+    },
 };

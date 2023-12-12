@@ -10,6 +10,7 @@ userRouter.get('/', UserController.getAll);
 userRouter.post('/', UserController.getOneById);
 userRouter.post('/create', UserController.create);
 userRouter.put('/update', UserController.update);
+userRouter.post('/delete', UserController.deleteMany);
 userRouter.delete('/delete/:id', UserController.delete);
 
 router.use(userRouter.routes(), userRouter.allowedMethods());
