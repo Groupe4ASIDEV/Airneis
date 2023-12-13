@@ -1,14 +1,16 @@
 // Variables
 $color-1: black;
-$color-2: #AE692B;
-$color-3: #DFB65A;
-$color-4: #ECD8A5;
-$color-5: #83664A;
+$color-2: #ae692b;
+$color-3: #dfb65a;
+$color-4: #ecd8a5;
+$color-5: #83664a;
+$textcolor-1: white;
+$textcolor-2: black;
 
 // Mixins
 
 // Global
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -18,8 +20,14 @@ $color-5: #83664A;
     text-decoration: none;
 }
 
-.container{
+.container {
     display: flex;
     flex-direction: column;
     text-align: center;
+}
+
+.title {
+    &-main {
+        font-size: 2rem !important;
+    }
 }
