@@ -1,24 +1,27 @@
+import { Typography, Box } from '@mui/material';
 import Carousel from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
 
 function Home() {
     return (
-        <div id="home">
+        <>
             <Carousel />
-            <div className="catchphrase">
-                <p>
+            <Box className="catchphrase">
+                <Typography variant="h6" component="p">
                     Venant des Hautes Terres d'Ecosse
                     <br />
                     Nos meubles sont immortels
-                </p>
-            </div>
+                </Typography>
+            </Box>
             <HighlightedCategories />
-            <div className="catchphrase">
-                <p>Les highlanders du moment</p>
-            </div>
+            <Box className="catchphrase">
+                <Typography variant="h6" component="p">
+                    Les highlanders du moment
+                </Typography>
+            </Box>
             <HighlightedProducts />
-        </div>
+        </>
     );
 }
 
