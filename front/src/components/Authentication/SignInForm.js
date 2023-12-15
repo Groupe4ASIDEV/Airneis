@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -13,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 const defaultTheme = createTheme();
+const baseUrl = process.env.REACT_APP_API_URL;
 
 export default function SignIn() {
     const handleSubmit = async (event) => {
@@ -23,7 +25,7 @@ export default function SignIn() {
             password: data.get('password'),
         };
         try {
-            const response = await fetch('http://localhost:5000/user/signin', {
+            const response = await fetch(`${baseUrl}/user/signin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
