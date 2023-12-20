@@ -7,6 +7,7 @@
 -   rename .env-example file to .env
 
 -   fill environment variables in .env at your convenience if needed
+    **IMPORTANT**: for production, make sure NODE_ENV is set on "production" in order to use cookies on https only with SameSite attribute.
 
 -   make sure your terminal is at the root of the application
 
