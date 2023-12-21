@@ -1,10 +1,10 @@
+import { useContext } from 'react';
 import SignIn from '../components/Authentication/SignInForm';
-// import SignUp from '../components/Authentication/SignUpForm';
+import { UidContext } from '../components/Authentication/UserContext';
 
-const isLoggedIn = false;
-
-function Login() {
-    return <>{isLoggedIn ? <p>USER CONNECTED</p> : <SignIn />}</>;
+function LogIn() {
+    const { isAuth } = useContext(UidContext);
+    return <>{isAuth ? <p>USER CONNECTED</p> : <SignIn />}</>;
 }
 
-export default Login;
+export default LogIn;

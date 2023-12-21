@@ -1,4 +1,4 @@
-import mongoose, { Model, model } from 'mongoose';
+import mongoose, { model } from 'mongoose';
 
 export type User = {
     fullName: string;

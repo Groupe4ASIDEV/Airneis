@@ -10,16 +10,14 @@ const env = process.env.NODE_ENV;
 export default {
     signUp: async (context: Koa.Context) => {
         const body = context.request.body;
-        const firstName = body.firstName;
-        const lastName = body.lastName;
+        const fullName = body.fullName;
         const email = body.email;
         const password = body.password;
 
         try {
             const hashedPassword = await bcrypt.hash(password, 12);
             const user = new User({
-                firstName: firstName,
-                lastName: lastName,
+                fullName: fullName,
                 email: email,
                 password: hashedPassword,
             });
@@ -53,7 +51,7 @@ export default {
                 expiresIn: '24h',
             });
             context.cookies.set('jwt', token, {
-                httpOnly: true,
+                httpOnly: env === 'production',
                 secure: env === 'production',
                 maxAge: 24 * 60 * 60 * 1000,
                 sameSite: env === 'production' ? 'none' : 'lax',
@@ -66,8 +64,8 @@ export default {
     },
     signOut: async (context: Koa.Context) => {
         context.cookies.set('jwt', null, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production',
+            httpOnly: env === 'production',
+            secure: env === 'production',
             maxAge: 0,
         });
 
