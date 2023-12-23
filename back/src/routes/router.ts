@@ -18,6 +18,15 @@ userRouter.delete('/delete/:id', UserController.delete);
 userRouter.post('/signup', AuthController.signUp);
 userRouter.post('/signin', AuthController.signIn);
 userRouter.get('/signout', AuthController.signOut);
+//----------------------------------------------------//
+const productRouter = new Router({ prefix: '/product' });
+// product CRUD
+productRouter.get('/', UserController.getAll);
+productRouter.post('/', UserController.getOneById);
+productRouter.post('/create', UserController.create);
+productRouter.put('/update/:id', UserController.update);
+productRouter.post('/delete', UserController.deleteMany);
+productRouter.delete('/delete/:id', UserController.delete);
 
 router.use(userRouter.routes(), userRouter.allowedMethods());
 
