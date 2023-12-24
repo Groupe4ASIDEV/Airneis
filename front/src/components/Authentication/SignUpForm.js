@@ -129,7 +129,7 @@ export default function SignUp() {
                                     to="/auth"
                                     variant="body2"
                                 >
-                                    Already have an account? Sign in
+                                    Vous avez déjà un compte? Connectez-vous!
                                 </Link>
                             </Grid>
                         </Grid>
