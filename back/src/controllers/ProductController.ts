@@ -4,7 +4,7 @@ import { Product } from '../models/ProductModel';
 
 export default {
     getAll: async (context: Koa.Context) => {
-        try {
+
             const products = await Product.find();
 
             if (products.length === 0) {
@@ -12,13 +12,10 @@ export default {
             }
 
             return Response.success(context, products);
-        } catch (error: any) {
-            return Response.resourceNotFound(context, error.message);
-        }
     },
 
     getOneById: async (context: Koa.Context) => {
-        try {
+
             const id = context.params.id;
 
             if (!id) {
@@ -32,13 +29,10 @@ export default {
             }
 
             return Response.success(context, product);
-        } catch (error: any) {
-            return Response.resourceNotFound(context, error.message);
-        }
     },
 
     create: async (context: Koa.Context) => {
-        try {
+
             const body = context.request.body;
             const { label, description, price, stock } = body;
 
@@ -56,13 +50,10 @@ export default {
             await product.save();
 
             return Response.success(context, product);
-        } catch (error: any) {
-            return Response.resourceNotFound(context, error.message);
-        }
     },
 
     update: async (context: Koa.Context) => {
-        try {
+
             const id = context.params.id;
             const updateData = context.request.body;
             const allowedUpdates = {
@@ -85,13 +76,9 @@ export default {
             }
 
             return Response.success(context, product);
-        } catch (error: any) {
-            return Response.resourceNotFound(context, error.message);
-        }
     },
 
     delete: async (context: Koa.Context) => {
-        try {
             const id = context.params.id;
 
             if (!id) {
@@ -107,13 +94,11 @@ export default {
             await Product.deleteOne({ _id: id });
 
             return Response.success(context, 'PRODUCT_DELETED');
-        } catch (error: any) {
-            return Response.resourceNotFound(context, error.message);
-        }
+
     },
 
     deleteMany: async (context: Koa.Context) => {
-        try {
+
             const body = context.request.body;
             const ids = body.ids;
 
@@ -130,8 +115,6 @@ export default {
             await Product.deleteMany({ _id: { $in: ids } });
 
             return Response.success(context, `${ids.length}_PRODUCTS_DELETED`);
-        } catch (error: any) {
-            return Response.resourceNotFound(context, error.message);
-        }
+
     },
 };

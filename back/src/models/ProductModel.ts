@@ -1,10 +1,15 @@
-import mongoose, { Model, model } from 'mongoose';
+import mongoose, {Model, model, Schema} from 'mongoose';
+import {ObjectId} from "mongodb";
 
 export type Product = {
     label: string;
     description: string;
     price: number;
     stock: number;
+    category: ObjectId;
+    material: ObjectId;
+    pictures: ObjectId;
+
 };
 
 const userSchema = new mongoose.Schema<Product>({
