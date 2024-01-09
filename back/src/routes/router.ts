@@ -2,6 +2,7 @@ import Router from 'koa-router';
 import StatusController from '../controllers/StatusController';
 import UserController from '../controllers/UserController';
 import AuthController from '../controllers/AuthController';
+import ProductController from "../controllers/ProductController";
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -21,13 +22,13 @@ userRouter.get('/signout', AuthController.signOut);
 //----------------------------------------------------//
 const productRouter = new Router({ prefix: '/product' });
 // product CRUD
-productRouter.get('/', UserController.getAll);
-productRouter.post('/', UserController.getOneById);
-productRouter.post('/create', UserController.create);
-productRouter.put('/update/:id', UserController.update);
-productRouter.post('/delete', UserController.deleteMany);
-productRouter.delete('/delete/:id', UserController.delete);
+productRouter.get('/', ProductController.getAll);
+productRouter.post('/', ProductController.getOneById);
+productRouter.post('/create', ProductController.create);
+productRouter.put('/update/:id', ProductController.update);
+productRouter.post('/delete', ProductController.deleteMany);
+productRouter.delete('/delete/:id', ProductController.delete);
 
-router.use(userRouter.routes(), userRouter.allowedMethods());
+router.use(userRouter.routes(), userRouter.allowedMethods(), productRouter.routes(), productRouter.allowedMethods());
 
 export default router;
