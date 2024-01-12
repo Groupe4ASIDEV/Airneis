@@ -1,4 +1,7 @@
 // Variables
+$font-title: 'Paytone One', sans-serif;
+$font-text: 'Roboto', sans-serif;
+
 $color-1: black;
 $color-2: #ae692b;
 $color-3: #dfb65a;
@@ -8,6 +11,10 @@ $textcolor-1: white;
 $textcolor-2: black;
 
 // Mixins
+@mixin fontTitle {
+    font-family: $font-title !important;
+    letter-spacing: 1px;
+}
 
 // Global
 * {
@@ -18,6 +25,7 @@ $textcolor-2: black;
     outline: none;
     border: none;
     text-decoration: none;
+    font-family: $font-text !important;
 }
 
 .container {
@@ -26,8 +34,6 @@ $textcolor-2: black;
     text-align: center;
 }
 
-.title {
-    &-main {
-        font-size: 2rem !important;
-    }
+h1 {
+    @include fontTitle;
 }
