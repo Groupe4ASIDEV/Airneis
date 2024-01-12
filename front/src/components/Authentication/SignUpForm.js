@@ -1,8 +1,9 @@
+import { NavLink, useNavigate } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-// import Link from '@mui/material/Link';
+import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,12 +15,13 @@ const defaultTheme = createTheme();
 const baseUrl = process.env.REACT_APP_API_URL;
 
 export default function SignUp() {
+    const navigate = useNavigate();
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const user = {
-            firstName: data.get('firstName'),
-            lastName: data.get('lastName'),
+            fullName: data.get('firstName') + ' ' + data.get('lastName'),
             email: data.get('email'),
             password: data.get('password'),
         };
@@ -35,6 +37,7 @@ export default function SignUp() {
             if (response.ok) {
                 const result = await response.json();
                 console.log(result);
+                navigate('/auth');
             } else {
                 // prévoir des erreurs types
             }
@@ -119,13 +122,17 @@ export default function SignUp() {
                         >
                             Sign Up
                         </Button>
-                        {/* <Grid container justifyContent="flex-end">
+                        <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
-                                    Already have an account? Sign in
+                                <Link
+                                    component={NavLink}
+                                    to="/auth"
+                                    variant="body2"
+                                >
+                                    Vous avez déjà un compte? Connectez-vous!
                                 </Link>
                             </Grid>
-                        </Grid> */}
+                        </Grid>
                     </Box>
                 </Box>
             </Container>
