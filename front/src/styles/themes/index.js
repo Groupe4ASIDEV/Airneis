@@ -22,30 +22,4 @@ export const defaultTheme = createTheme({
             fontSize: '2rem',
         },
     },
-    // components: {
-    //     MuiAvatar: {
-    //         styleOverrides: {
-    //             root: {
-    //                 backgroundColor: ({ palette }) => palette.primary.dark,
-    //             },
-    //         },
-    //     },
-    //     MuiButtonBase: {
-    //         styleOverrides: {
-    //             root: {
-    //                 '&:hover': {
-    //                     color: ({ palette }) => palette.primary.dark,
-    //                 },
-    //             },
-    //         },
-    //     },
-    //     MuiAppBar: {
-    //         styleOverrides: {
-    //             root: {
-    //                 color: ({ palette }) => palette.primary.contrastText,
-    //                 backgroundColor: ({ palette }) => palette.primary.dark,
-    //             },
-    //         },
-    //     },
-    // },
 });

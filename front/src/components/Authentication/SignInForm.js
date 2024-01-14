@@ -105,7 +105,15 @@ export default function SignIn() {
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{
+                            mt: 3,
+                            mb: 2,
+                            bgcolor: 'primary.main',
+                            '&:hover': {
+                                color: 'primary.dark',
+                                bgcolor: 'secondary.main',
+                            },
+                        }}
                     >
                         Sign In
                     </Button>
@@ -120,6 +128,14 @@ export default function SignIn() {
                                 component={NavLink}
                                 to="/registration"
                                 variant="body2"
+                                sx={{
+                                    mt: 3,
+                                    mr: 2,
+                                    color: 'primary.main',
+                                    '&:hover': {
+                                        color: 'primary.light',
+                                    },
+                                }}
                             >
                                 {'Pas de compte? Inscrivez-vous!'}
                             </Link>
