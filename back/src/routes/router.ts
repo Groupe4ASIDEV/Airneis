@@ -3,6 +3,7 @@ import StatusController from '../controllers/StatusController';
 import UserController from '../controllers/UserController';
 import AuthController from '../controllers/AuthController';
 import ProductController from "../controllers/ProductController";
+import CategoryController from "../controllers/CategoryController";
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -28,7 +29,18 @@ productRouter.post('/create', ProductController.create);
 productRouter.put('/update/:id', ProductController.update);
 productRouter.post('/delete', ProductController.deleteMany);
 productRouter.delete('/delete/:id', ProductController.delete);
+//----------------------------------------------------//
+const categoryRouter = new Router({ prefix: '/category' });
+// product CRUD
+categoryRouter.get('/', CategoryController.getAll);
+categoryRouter.post('/', CategoryController.getOneById);
+categoryRouter.post('/create', CategoryController.create);
+categoryRouter.put('/update/:id', CategoryController.update);
+categoryRouter.post('/delete', CategoryController.deleteMany);
+categoryRouter.delete('/delete/:id', CategoryController.delete);
 
-router.use(userRouter.routes(), userRouter.allowedMethods(), productRouter.routes(), productRouter.allowedMethods());
+router.use(userRouter.routes(), userRouter.allowedMethods(),
+    productRouter.routes(), productRouter.allowedMethods(),
+    categoryRouter.routes(), categoryRouter.allowedMethods());
 
 export default router;

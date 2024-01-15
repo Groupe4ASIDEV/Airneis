@@ -12,11 +12,11 @@ export type Product = {
 
 };
 
-const userSchema = new mongoose.Schema<Product>({
+const productSchema = new mongoose.Schema<Product>({
     label: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
     stock: { type: Number, required: true }
 });
 
-export const Product = model<Product>('Product', userSchema);
+export const Product = model<Product>('Product', productSchema);
