@@ -33,7 +33,9 @@ function Header() {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{
+                            mr: 2,
+                        }}
                     >
                         <ShoppingCartIcon />
                     </IconButton>
@@ -42,7 +44,9 @@ function Header() {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{
+                            mr: 2,
+                        }}
                     >
                         <SearchIcon />
                     </IconButton>
@@ -51,7 +55,9 @@ function Header() {
                         edge="start"
                         color="inherit"
                         aria-label="menu"
-                        sx={{ mr: 2 }}
+                        sx={{
+                            mr: 2,
+                        }}
                     >
                         <MenuIcon />
                     </IconButton>
