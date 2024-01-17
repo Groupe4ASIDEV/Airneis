@@ -55,7 +55,7 @@ export default function SignUp() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'primary.light' }}>
+                <Avatar sx={{ m: 1 }}>
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
@@ -118,11 +118,6 @@ export default function SignUp() {
                         sx={{
                             mt: 3,
                             mb: 2,
-                            bgcolor: 'primary.main',
-                            '&:hover': {
-                                color: 'primary.dark',
-                                bgcolor: 'secondary.main',
-                            },
                         }}
                     >
                         Sign Up
@@ -136,10 +131,6 @@ export default function SignUp() {
                                 sx={{
                                     mt: 3,
                                     mr: 2,
-                                    color: 'primary.main',
-                                    '&:hover': {
-                                        color: 'primary.light',
-                                    },
                                 }}
                             >
                                 Vous avez déjà un compte? Connectez-vous!

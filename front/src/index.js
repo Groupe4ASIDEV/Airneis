@@ -5,14 +5,14 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
-import { defaultTheme } from './styles/themes';
+import theme from './styles/themes';
 import { AuthProvider } from './components/Authentication/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <ThemeProvider theme={defaultTheme}>
+            <ThemeProvider theme={theme}>
                 <AuthProvider>
                     <App />
                 </AuthProvider>

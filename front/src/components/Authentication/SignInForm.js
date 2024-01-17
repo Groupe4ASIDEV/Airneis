@@ -11,7 +11,6 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import { defaultTheme } from '../../styles/themes';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -61,7 +60,6 @@ export default function SignIn() {
                 <Avatar
                     sx={{
                         m: 1,
-                        bgcolor: defaultTheme.palette.primary.light,
                     }}
                 >
                     <LockOutlinedIcon />
@@ -108,11 +106,6 @@ export default function SignIn() {
                         sx={{
                             mt: 3,
                             mb: 2,
-                            bgcolor: 'primary.main',
-                            '&:hover': {
-                                color: 'primary.dark',
-                                bgcolor: 'secondary.main',
-                            },
                         }}
                     >
                         Sign In
@@ -131,10 +124,6 @@ export default function SignIn() {
                                 sx={{
                                     mt: 3,
                                     mr: 2,
-                                    color: 'primary.main',
-                                    '&:hover': {
-                                        color: 'primary.light',
-                                    },
                                 }}
                             >
                                 {'Pas de compte? Inscrivez-vous!'}

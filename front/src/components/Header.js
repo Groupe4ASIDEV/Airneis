@@ -15,11 +15,7 @@ function Header() {
 
     return (
         <Box component="header" sx={{ flexGrow: 1 }}>
-            <AppBar
-                component="div"
-                position="static"
-                sx={{ bgcolor: 'primary.dark' }}
-            >
+            <AppBar component="div" position="static">
                 <Toolbar>
                     <Typography
                         variant="h1"
@@ -39,7 +35,6 @@ function Header() {
                         aria-label="menu"
                         sx={{
                             mr: 2,
-                            '&:hover': { color: 'secondary.light' },
                         }}
                     >
                         <ShoppingCartIcon />
@@ -51,7 +46,6 @@ function Header() {
                         aria-label="menu"
                         sx={{
                             mr: 2,
-                            '&:hover': { color: 'secondary.light' },
                         }}
                     >
                         <SearchIcon />
@@ -63,7 +57,6 @@ function Header() {
                         aria-label="menu"
                         sx={{
                             mr: 2,
-                            '&:hover': { color: 'secondary.light' },
                         }}
                     >
                         <MenuIcon />
