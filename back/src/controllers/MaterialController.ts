@@ -1,16 +1,16 @@
 import Koa from 'koa';
 import Response from '../helpers/Response';
-import { Category } from '../models/CategoryModel';
+import { Material } from '../models/MaterialModel';
 
 export default {
     getAll: async (context: Koa.Context) => {
-        const categories = await Category.find();
+        const materials = await Material.find();
 
-        if (categories.length === 0) {
-            return Response.resourceNotFound(context, 'NO_CATEGORY_FOUND');
+        if (materials.length === 0) {
+            return Response.resourceNotFound(context, 'NO_MATERIAL_FOUND');
         }
 
-        return Response.success(context, categories);
+        return Response.success(context, materials);
     },
 
     getOneById: async (context: Koa.Context) => {
@@ -20,13 +20,13 @@ export default {
             return Response.badRequest(context, 'INVALID_ID');
         }
 
-        const category = await Category.findById(id);
+        const material = await Material.findById(id);
 
-        if (!category) {
-            return Response.resourceNotFound(context, 'CATEGORY_NOT_FOUND');
+        if (!material) {
+            return Response.resourceNotFound(context, 'MATERIAL_NOT_FOUND');
         }
 
-        return Response.success(context, category);
+        return Response.success(context, material);
     },
 
     create: async (context: Koa.Context) => {
@@ -37,14 +37,14 @@ export default {
             return Response.badRequest(context);
         }
 
-        const category = new Category({
+        const material = new Material({
             name,
             description,
         });
 
-        await category.save();
+        await material.save();
 
-        return Response.success(context, category);
+        return Response.success(context, material);
     },
 
     update: async (context: Koa.Context) => {
@@ -59,15 +59,15 @@ export default {
             return Response.badRequest(context, 'INVALID_ID');
         }
 
-        const category = await Category.findByIdAndUpdate(id, allowedUpdates, {
+        const material = await Material.findByIdAndUpdate(id, allowedUpdates, {
             new: true,
         });
 
-        if (!category) {
-            return Response.resourceNotFound(context, 'CATEGORY_NOT_FOUND');
+        if (!material) {
+            return Response.resourceNotFound(context, 'MATERIAL_NOT_FOUND');
         }
 
-        return Response.success(context, category);
+        return Response.success(context, material);
     },
 
     delete: async (context: Koa.Context) => {
@@ -77,15 +77,15 @@ export default {
             return Response.badRequest(context, 'INVALID_ID');
         }
 
-        const category = await Category.findById(id);
+        const material = await Material.findById(id);
 
-        if (!category) {
-            return Response.resourceNotFound(context, 'CATEGORY_NOT_FOUND');
+        if (!material) {
+            return Response.resourceNotFound(context, 'MATERIAL_NOT_FOUND');
         }
 
-        await Category.deleteOne({ _id: id });
+        await Material.deleteOne({ _id: id });
 
-        return Response.success(context, 'CATEGORY_DELETED');
+        return Response.success(context, 'MATERIAL_DELETED');
     },
 
 
@@ -97,14 +97,14 @@ export default {
             return Response.badRequest(context, 'INVALID_IDS');
         }
 
-        const categories = await Category.find({ _id: { $in: ids } });
+        const materials = await Material.find({ _id: { $in: ids } });
 
-        if (categories.length !== ids.length) {
-            return Response.resourceNotFound(context, 'SOME_CATEGORIES_NOT_FOUND');
+        if (materials.length !== ids.length) {
+            return Response.resourceNotFound(context, 'SOME_MATERIALS_NOT_FOUND');
         }
 
-        await Category.deleteMany({ _id: { $in: ids } });
+        await Material.deleteMany({ _id: { $in: ids } });
 
-        return Response.success(context, `${ids.length}_CATEGORIES_DELETED`);
+        return Response.success(context, `${ids.length}_MATERIAL_DELETED`);
     },
 };

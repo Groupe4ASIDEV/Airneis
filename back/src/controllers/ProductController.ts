@@ -55,12 +55,12 @@ export default {
     update: async (context: Koa.Context) => {
 
             const id = context.params.id;
-            const updateData = context.request.body;
+            const body = context.request.body;
             const allowedUpdates = {
-                label: updateData.label,
-                description: updateData.description,
-                price: updateData.price,
-                stock: updateData.stock,
+                label: body.label,
+                description: body.description,
+                price: body.price,
+                stock: body.stock,
             };
 
             if (!id) {

@@ -4,6 +4,7 @@ import UserController from '../controllers/UserController';
 import AuthController from '../controllers/AuthController';
 import ProductController from "../controllers/ProductController";
 import CategoryController from "../controllers/CategoryController";
+import MaterialController from "../controllers/MaterialController";
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -38,9 +39,20 @@ categoryRouter.post('/create', CategoryController.create);
 categoryRouter.put('/update/:id', CategoryController.update);
 categoryRouter.post('/delete', CategoryController.deleteMany);
 categoryRouter.delete('/delete/:id', CategoryController.delete);
+//----------------------------------------------------//
+const materialRouter = new Router({ prefix: '/material' });
+// product CRUD
+materialRouter.get('/', MaterialController.getAll);
+materialRouter.post('/', MaterialController.getOneById);
+materialRouter.post('/create', MaterialController.create);
+materialRouter.put('/update/:id', MaterialController.update);
+materialRouter.post('/delete', MaterialController.deleteMany);
+materialRouter.delete('/delete/:id', MaterialController.delete);
 
 router.use(userRouter.routes(), userRouter.allowedMethods(),
     productRouter.routes(), productRouter.allowedMethods(),
-    categoryRouter.routes(), categoryRouter.allowedMethods());
+    categoryRouter.routes(), categoryRouter.allowedMethods(),
+    materialRouter.routes(), materialRouter.allowedMethods(),
+    );
 
 export default router;

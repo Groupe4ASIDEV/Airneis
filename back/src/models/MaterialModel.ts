@@ -1,13 +1,13 @@
 import mongoose, {model} from 'mongoose';
 
-export type Category = {
+export type Material = {
     label: string;
     description: string;
 };
 
-const categorySchema = new mongoose.Schema<Category>({
+const materialSchema = new mongoose.Schema<Material>({
     label: { type: String, required: true },
     description: { type: String, required: true },
 });
 
-export const Category = model<Category>('Category', categorySchema);
+export const Material = model<Material>('Material', materialSchema);
