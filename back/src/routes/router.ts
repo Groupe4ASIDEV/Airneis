@@ -2,6 +2,8 @@ import Router from 'koa-router';
 import StatusController from '../controllers/StatusController';
 import UserController from '../controllers/UserController';
 import AuthController from '../controllers/AuthController';
+import koaBody from 'koa-body';
+import PictureController from '../controllers/PictureController';
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -19,6 +21,29 @@ userRouter.post('/signup', AuthController.signUp);
 userRouter.post('/signin', AuthController.signIn);
 userRouter.get('/signout', AuthController.signOut);
 
-router.use(userRouter.routes(), userRouter.allowedMethods());
+// picture management
+const pictureRouter = new Router({ prefix: '/picture' });
+pictureRouter.get('/', PictureController.getAll);
+pictureRouter.get('/:id', PictureController.getOneById);
+pictureRouter.post(
+    '/upload',
+    koaBody({
+        multipart: true,
+        formidable: {
+            uploadDir: './uploads',
+            keepExtensions: true,
+        },
+    }),
+    PictureController.upload
+);
+pictureRouter.post('/delete', PictureController.deleteMany);
+pictureRouter.delete('/delete/:id', PictureController.delete);
+
+router.use(
+    userRouter.routes(),
+    userRouter.allowedMethods(),
+    pictureRouter.routes(),
+    pictureRouter.allowedMethods()
+);
 
 export default router;
