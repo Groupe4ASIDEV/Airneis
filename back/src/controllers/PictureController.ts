@@ -62,7 +62,6 @@ export default {
                 url: name,
                 alt: body.alt,
             });
-            console.log(picture);
 
             await picture.save();
 
