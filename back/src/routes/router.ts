@@ -30,7 +30,7 @@ pictureRouter.post(
     koaBody({
         multipart: true,
         formidable: {
-            uploadDir: './uploads',
+            uploadDir: './src/uploads',
             keepExtensions: true,
         },
     }),

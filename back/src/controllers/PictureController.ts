@@ -89,7 +89,7 @@ export default {
 
         await Picture.deleteOne({ _id: id });
 
-        const filePath = path.join(__dirname, 'src/uploads', picture.url);
+        const filePath = path.join(__dirname, '..', 'uploads', picture.url);
         fs.unlink(filePath, (error) => {
             if (error) {
                 console.error(error);
@@ -118,7 +118,7 @@ export default {
         await Picture.deleteMany({ _id: { $in: ids } });
 
         pictures.forEach((picture) => {
-            const filePath = path.join(__dirname, 'src/uploads', picture.url);
+            const filePath = path.join(__dirname, '..', 'uploads', picture.url);
             fs.unlink(filePath, (error) => {
                 if (error) {
                     console.error(error);
