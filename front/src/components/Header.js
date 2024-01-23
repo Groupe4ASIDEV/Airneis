@@ -11,7 +11,6 @@ import { UidContext } from './Authentication/UserContext';
 
 function Header() {
     const { userData, isAuth } = useContext(UidContext);
-    console.log('🚀 ~ file: Header.js:14 ~ Header ~ userData:', userData);
 
     return (
         <Box component="header" sx={{ flexGrow: 1 }}>

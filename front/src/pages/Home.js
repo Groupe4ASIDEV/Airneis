@@ -2,10 +2,12 @@ import { Typography, Box } from '@mui/material';
 import Carousel from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
+import ImageDisplay from '../components/Pictures/Pictures';
 
 function Home() {
     return (
         <>
+            <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
             <Carousel />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">

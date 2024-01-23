@@ -21,10 +21,6 @@ export const AuthProvider = ({ children }) => {
         const token = Cookies.get('jwt');
         console.log('🚀 ~ file: UserContext.js:18 ~ useEffect ~ token:', token);
         if (token) {
-            console.log(
-                '🚀 ~ file: UserContext.js:19 ~ useEffect ~ token:',
-                token
-            );
             setIsAuth(true);
             setJwt(token);
             try {
