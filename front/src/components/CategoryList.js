@@ -8,7 +8,7 @@ const CategoryList = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/category');
+                const response = await axios.get('http://localhost:5000/category');
                 setCategories(response.data);
             } catch (error) {
                 console.error('Erreur lors du chargement des catégories :', error);
@@ -16,6 +16,7 @@ const CategoryList = () => {
         };
 
         fetchCategories();
+
     }, []);
 
     return (

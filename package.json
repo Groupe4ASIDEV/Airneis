@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@mui/material": "^5.15.3",
-    "axios": "^1.6.5"
-  }
-}

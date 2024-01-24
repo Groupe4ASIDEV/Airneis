@@ -32,7 +32,7 @@ productRouter.post('/delete', ProductController.deleteMany);
 productRouter.delete('/delete/:id', ProductController.delete);
 //----------------------------------------------------//
 const categoryRouter = new Router({ prefix: '/category' });
-// product CRUD
+// category CRUD
 categoryRouter.get('/', CategoryController.getAll);
 categoryRouter.post('/', CategoryController.getOneById);
 categoryRouter.post('/create', CategoryController.create);
@@ -41,7 +41,7 @@ categoryRouter.post('/delete', CategoryController.deleteMany);
 categoryRouter.delete('/delete/:id', CategoryController.delete);
 //----------------------------------------------------//
 const materialRouter = new Router({ prefix: '/material' });
-// product CRUD
+// material CRUD
 materialRouter.get('/', MaterialController.getAll);
 materialRouter.post('/', MaterialController.getOneById);
 materialRouter.post('/create', MaterialController.create);
