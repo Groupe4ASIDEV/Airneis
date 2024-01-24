@@ -1,0 +1,56 @@
+// // Variables
+// $font-title: 'Paytone One', sans-serif;
+// $font-text: 'Roboto', sans-serif;
+
+// $color-1: black;
+// $color-2: #ae692b;
+// $color-3: #dfb65a;
+// $color-4: #ecd8a5;
+// $color-5: #83664a;
+// $textcolor-1: white;
+// $textcolor-2: black;
+
+// // Mixins
+// @mixin fontTitle {
+//     font-family: $font-title !important;
+//     letter-spacing: 1px;
+// }
+
+// Global
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style-type: none;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    // font-family: $font-text !important;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+// h1 {
+//     @include fontTitle;
+// }
+
+// .MuiAvatar {
+//     &-root {
+//         background-color: $color-5 !important;
+//     }
+// }
+
+// .MuiButton {
+//     &-root {
+//         background-color: $color-3 !important;
+//         color: $textcolor-2 !important;
+//         &:hover {
+//             background-color: $color-2 !important;
+//             color: $textcolor-1 !important;
+//         }
+//     }
+// }

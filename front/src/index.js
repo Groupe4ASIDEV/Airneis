@@ -1,15 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './styles/index.scss';
+import './styles/scss/index.scss';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './styles/themes';
+import { AuthProvider } from './components/Authentication/UserContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
         <BrowserRouter>
-            <App />
+            <ThemeProvider theme={theme}>
+                <AuthProvider>
+                    <App />
+                </AuthProvider>
+            </ThemeProvider>
         </BrowserRouter>
     </React.StrictMode>
 );
