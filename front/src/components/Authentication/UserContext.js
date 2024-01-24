@@ -19,16 +19,11 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const token = Cookies.get('jwt');
-        console.log('🚀 ~ file: UserContext.js:18 ~ useEffect ~ token:', token);
         if (token) {
             setIsAuth(true);
             setJwt(token);
             try {
                 const userId = jwtDecode(token).id;
-                console.log(
-                    '🚀 ~ file: UserContext.js:22 ~ useEffect ~ user:',
-                    userId
-                );
                 fetch(`${baseUrl}/user/`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -37,10 +32,6 @@ export const AuthProvider = ({ children }) => {
                     .then((response) => response.json())
                     .then((data) => {
                         setUserData(data.data);
-                        console.log(
-                            '🚀 ~ file: UserContext.js:42 ~ .then ~ data:',
-                            data
-                        );
                     });
             } catch (error) {
                 console.error('Erreur de décodage du JWT', error);

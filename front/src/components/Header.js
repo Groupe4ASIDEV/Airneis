@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,11 +6,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { UidContext } from './Authentication/UserContext';
+import { Link } from '@mui/material';
 
 function Header() {
-    const { userData, isAuth } = useContext(UidContext);
-
     return (
         <div id="header">
         <Box component="header" sx={{ flexGrow: 1 }}>
@@ -20,25 +17,12 @@ function Header() {
                     <Typography
                         variant="h1"
                         component="h1"
-                        className="title-main"
                         sx={{ flexGrow: 1 }}
                     >
-                        Àirneis
+                        <Link color="inherit" href="/">
+                            Àirneis
+                        </Link>{' '}
                     </Typography>
-                    {isAuth && userData ? (
-                        <p>Hello {userData.fullName} !</p>
-                    ) : null}
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{
-                            mr: 2,
-                        }}
-                    >
-                        <ShoppingCartIcon />
-                    </IconButton>
                     <IconButton
                         size="large"
                         edge="start"
@@ -49,6 +33,17 @@ function Header() {
                         }}
                     >
                         <SearchIcon />
+                    </IconButton>
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{
+                            mr: 2,
+                        }}
+                    >
+                        <ShoppingCartIcon />
                     </IconButton>
                     <IconButton
                         size="large"

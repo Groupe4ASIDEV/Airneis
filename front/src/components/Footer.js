@@ -11,7 +11,7 @@ function Footer() {
                         align="center"
                     >
                         {'Copyright © '}
-                        <Link color="inherit" href="#">
+                        <Link color="inherit" href="/">
                             Àirneis
                         </Link>{' '}
                         {new Date().getFullYear()}
