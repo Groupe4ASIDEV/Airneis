@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,12 +6,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { UidContext } from './Authentication/UserContext';
 import { Link } from '@mui/material';
 
 function Header() {
-    const { userData, isAuth } = useContext(UidContext);
-
     return (
         <div id="header">
         <Box component="header" sx={{ flexGrow: 1 }}>
