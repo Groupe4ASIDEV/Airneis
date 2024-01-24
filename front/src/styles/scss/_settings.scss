@@ -25,7 +25,6 @@
     outline: none;
     border: none;
     text-decoration: none;
-    // font-family: $font-text !important;
 }
 
 .container {
@@ -34,23 +33,6 @@
     text-align: center;
 }
 
-// h1 {
-//     @include fontTitle;
-// }
-
-// .MuiAvatar {
-//     &-root {
-//         background-color: $color-5 !important;
-//     }
-// }
-
-// .MuiButton {
-//     &-root {
-//         background-color: $color-3 !important;
-//         color: $textcolor-2 !important;
-//         &:hover {
-//             background-color: $color-2 !important;
-//             color: $textcolor-1 !important;
-//         }
-//     }
-// }
+main {
+    text-align: center;
+}
