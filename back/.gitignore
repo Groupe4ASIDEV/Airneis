@@ -1,2 +1,5 @@
 .env
 node_modules
+
+uploads/*
+!uploads/6be167476748f93fdc267da00.jpg
