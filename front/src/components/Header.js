@@ -13,6 +13,7 @@ function Header() {
     const { userData, isAuth } = useContext(UidContext);
 
     return (
+        <div id="header">
         <Box component="header" sx={{ flexGrow: 1 }}>
             <AppBar component="div" position="static">
                 <Toolbar>
@@ -63,6 +64,7 @@ function Header() {
                 </Toolbar>
             </AppBar>
         </Box>
+        </div>
     );
 }
 

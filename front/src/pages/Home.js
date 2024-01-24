@@ -23,7 +23,7 @@ function Home() {
     }, []);
 
     return (
-        <>
+        <div id="home">
             <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
             <Carousel />
             <Box className="catchphrase">
@@ -41,7 +41,7 @@ function Home() {
                 </Typography>
             </Box>
             <HighlightedProducts products={products} />
-        </>
+        </div>
     );
 }
 

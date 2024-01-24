@@ -10,9 +10,9 @@ function Registration() {
         navigate('/');
     }
     return (
-        <>
+        <div id="registration">
             <SignUp />
-        </>
+        </div>
     );
 }
 
