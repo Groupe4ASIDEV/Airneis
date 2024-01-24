@@ -5,7 +5,7 @@ import HighlightedProducts from '../components/HighlightedProducts';
 
 function Home() {
     return (
-        <>
+        <div id="home">
             <Carousel />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
@@ -21,7 +21,7 @@ function Home() {
                 </Typography>
             </Box>
             <HighlightedProducts />
-        </>
+        </div>
     );
 }
 

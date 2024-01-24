@@ -4,7 +4,7 @@ import { UidContext } from '../components/Authentication/UserContext';
 
 function LogIn() {
     const { isAuth } = useContext(UidContext);
-    return <>{isAuth ? <p>USER CONNECTED</p> : <SignIn />}</>;
+    return <div id="authentication">{isAuth ? <p>USER CONNECTED</p> : <SignIn />}</div>;
 }
 
 export default LogIn;
