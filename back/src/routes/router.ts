@@ -3,9 +3,9 @@ import koaBody from 'koa-body';
 import StatusController from '../controllers/StatusController';
 import UserController from '../controllers/UserController';
 import AuthController from '../controllers/AuthController';
-import ProductController from "../controllers/ProductController";
-import CategoryController from "../controllers/CategoryController";
-import MaterialController from "../controllers/MaterialController";
+import ProductController from '../controllers/ProductController';
+import CategoryController from '../controllers/CategoryController';
+import MaterialController from '../controllers/MaterialController';
 import PictureController from '../controllers/PictureController';
 
 const router: Router = new Router();
@@ -50,9 +50,10 @@ materialRouter.post('/create', MaterialController.create);
 materialRouter.put('/update/:id', MaterialController.update);
 materialRouter.post('/delete', MaterialController.deleteMany);
 materialRouter.delete('/delete/:id', MaterialController.delete);
+//----------------------------------------------------//
 
-// picture management
 const pictureRouter = new Router({ prefix: '/picture' });
+// picture management
 pictureRouter.get('/', PictureController.getAll);
 pictureRouter.get('/:id', PictureController.getOneById);
 pictureRouter.post(
@@ -75,10 +76,15 @@ router.use(
     pictureRouter.routes(),
     pictureRouter.allowedMethods()
 );
-router.use(userRouter.routes(), userRouter.allowedMethods(),
-    productRouter.routes(), productRouter.allowedMethods(),
-    categoryRouter.routes(), categoryRouter.allowedMethods(),
-    materialRouter.routes(), materialRouter.allowedMethods(),
-    );
+router.use(
+    userRouter.routes(),
+    userRouter.allowedMethods(),
+    productRouter.routes(),
+    productRouter.allowedMethods(),
+    categoryRouter.routes(),
+    categoryRouter.allowedMethods(),
+    materialRouter.routes(),
+    materialRouter.allowedMethods()
+);
 
 export default router;
