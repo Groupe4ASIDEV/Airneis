@@ -10,9 +10,7 @@ const env = process.env.NODE_ENV;
 export default {
     signUp: async (context: Koa.Context) => {
         const body = context.request.body;
-        const fullName = body.fullName;
-        const email = body.email;
-        const password = body.password;
+        const { fullName, email, password } = body;
 
         try {
             const hashedPassword = await bcrypt.hash(password, 12);
@@ -31,8 +29,7 @@ export default {
     },
     signIn: async (context: Koa.Context) => {
         const body = context.request.body;
-        const email = body.email;
-        const password = body.password;
+        const { email, password } = body;
 
         try {
             const user = await User.findOne({ email: email });
