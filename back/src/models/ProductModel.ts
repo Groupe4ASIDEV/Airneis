@@ -15,15 +15,9 @@ const productSchema = new mongoose.Schema<Product>({
     description: { type: String, required: true },
     price: { type: Number, required: true },
     stock: { type: Number, required: true },
-    categories: [{ type: Schema.Types.ObjectId, ref: 'Category' }],
-    materials: [{ type: Schema.Types.ObjectId, ref: 'Material' }],
-    pictures: [
-        {
-            type: Schema.Types.ObjectId,
-            ref: 'Picture',
-            default: [new Types.ObjectId('65ae6ebe1628cad26ad03d15')],
-        },
-    ],
+    categories: { type: [Types.ObjectId] },
+    materials: { type: [Types.ObjectId] },
+    pictures: { type: [Types.ObjectId] },
 });
 
 export const Product = model<Product>('Product', productSchema);

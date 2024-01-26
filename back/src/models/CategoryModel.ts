@@ -1,21 +1,15 @@
-import mongoose, { model, Types } from 'mongoose';
+import mongoose, { model, Types, Schema } from 'mongoose';
 
 export type Category = {
     label: string;
     description: string;
-    pictures: Types.ObjectId[];
+    picture: Types.ObjectId;
 };
 
 const categorySchema = new mongoose.Schema<Category>({
     label: { type: String, required: true },
     description: { type: String, required: true },
-    pictures: [
-        {
-            type: Types.ObjectId,
-            ref: 'Picture',
-            default: [new Types.ObjectId('65ae6ebe1628cad26ad03d15')],
-        },
-    ],
+    picture: { type: Schema.Types.ObjectId },
 });
 
 export const Category = model<Category>('Category', categorySchema);

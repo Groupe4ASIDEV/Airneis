@@ -15,7 +15,8 @@ export default {
     },
 
     getOneById: async (context: Koa.Context) => {
-        const id = context.params.id;
+        const body = context.request.body;
+        const id = body.id;
 
         if (!id) {
             return Response.badRequest(context, 'INVALID_ID');
@@ -32,7 +33,7 @@ export default {
 
     create: async (context: Koa.Context) => {
         const body = context.request.body;
-        const { label, description, pictures } = body;
+        const { label, description, picture } = body;
 
         if (!label || !description) {
             return Response.badRequest(context);
@@ -41,12 +42,8 @@ export default {
         const category = new Category({
             label,
             description,
+            picture,
         });
-
-        if (pictures) {
-            console.log('pictures added');
-            category.pictures = pictures;
-        }
 
         await category.save();
 
@@ -59,7 +56,7 @@ export default {
         const allowedUpdates = {
             name: body.name,
             description: body.description,
-            picture: body.pictures,
+            picture: body.picture,
         };
 
         if (!id) {
