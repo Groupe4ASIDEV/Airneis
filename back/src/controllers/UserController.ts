@@ -30,11 +30,7 @@ export default {
     },
     create: async (context: Koa.Context) => {
         const body = context.request.body;
-        const fullName = body.fullName;
-        const email = body.email;
-        const password = body.password;
-        const admin = body.admin;
-        const validate = body.validated;
+        const { fullName, email, password, admin, validate } = body;
 
         if (!email || !password) {
             return Response.badRequest(context);

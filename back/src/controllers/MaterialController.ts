@@ -14,7 +14,8 @@ export default {
     },
 
     getOneById: async (context: Koa.Context) => {
-        const id = context.params.id;
+        const body = context.request.body;
+        const id = body.id;
 
         if (!id) {
             return Response.badRequest(context, 'INVALID_ID');
@@ -88,7 +89,6 @@ export default {
         return Response.success(context, 'MATERIAL_DELETED');
     },
 
-
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;
         const ids = body.ids;
@@ -100,7 +100,10 @@ export default {
         const materials = await Material.find({ _id: { $in: ids } });
 
         if (materials.length !== ids.length) {
-            return Response.resourceNotFound(context, 'SOME_MATERIALS_NOT_FOUND');
+            return Response.resourceNotFound(
+                context,
+                'SOME_MATERIALS_NOT_FOUND'
+            );
         }
 
         await Material.deleteMany({ _id: { $in: ids } });

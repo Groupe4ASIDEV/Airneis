@@ -15,7 +15,8 @@ export default {
         return Response.success(context, pictures);
     },
     getOneById: async (context: Koa.Context) => {
-        const id = context.params.id;
+        const body = context.request.body;
+        const id = body.id;
 
         if (!id) {
             return Response.badRequest(context, 'INVALID_ID');
