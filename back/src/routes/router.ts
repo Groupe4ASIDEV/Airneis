@@ -51,7 +51,6 @@ materialRouter.put('/update/:id', MaterialController.update);
 materialRouter.post('/delete', MaterialController.deleteMany);
 materialRouter.delete('/delete/:id', MaterialController.delete);
 //----------------------------------------------------//
-
 const pictureRouter = new Router({ prefix: '/picture' });
 // picture management
 pictureRouter.get('/', PictureController.getAll);
@@ -74,11 +73,7 @@ router.use(
     userRouter.routes(),
     userRouter.allowedMethods(),
     pictureRouter.routes(),
-    pictureRouter.allowedMethods()
-);
-router.use(
-    userRouter.routes(),
-    userRouter.allowedMethods(),
+    pictureRouter.allowedMethods(),
     productRouter.routes(),
     productRouter.allowedMethods(),
     categoryRouter.routes(),
