@@ -11,7 +11,7 @@ function Home() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/products');
+                const response = await axios.get('http://localhost:5000/product');
                 setProducts(response.data);
             } catch (error) {
                 console.error('Erreur lors du chargement des produits :', error);
@@ -28,7 +28,7 @@ function Home() {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/categories');
+                const response = await axios.get('http://localhost:5000/category');
                 setCategories(response.data);
             } catch (error) {
                 console.error('Erreur lors du chargement des catégories :', error);
