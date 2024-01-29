@@ -11,7 +11,7 @@ function Home() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/products'); // Remplacez l'URL par votre endpoint API
+                const response = await axios.get('http://localhost:5000/products');
                 setProducts(response.data);
             } catch (error) {
                 console.error('Erreur lors du chargement des produits :', error);
@@ -19,6 +19,23 @@ function Home() {
         };
 
         fetchProducts();
+
+
+    }, []);
+
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/categories');
+                setCategories(response.data);
+            } catch (error) {
+                console.error('Erreur lors du chargement des catégories :', error);
+            }
+        };
+
+        fetchCategories();
     }, []);
 
     return (
@@ -39,6 +56,7 @@ function Home() {
                 </Typography>
             </Box>
             <HighlightedProducts products={products} />
+            <CategoryList categories={categories} />
         </>
     );
 }
