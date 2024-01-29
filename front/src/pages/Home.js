@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
-import Carousel from '../components/Carousel';
+import CarouselBuilder from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
 import ImageDisplay from '../components/Pictures/Pictures';
@@ -12,10 +12,15 @@ function Home() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/products'); // Remplacez l'URL par votre endpoint API
+                const response = await axios.get(
+                    'http://localhost:3000/products'
+                ); // Remplacez l'URL par votre endpoint API
                 setProducts(response.data);
             } catch (error) {
-                console.error('Erreur lors du chargement des produits :', error);
+                console.error(
+                    'Erreur lors du chargement des produits :',
+                    error
+                );
             }
         };
 
@@ -25,7 +30,7 @@ function Home() {
     return (
         <div id="home">
             <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
-            <Carousel />
+            <CarouselBuilder />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
                     Venant des Hautes Terres d'Ecosse
@@ -36,8 +41,7 @@ function Home() {
             <HighlightedCategories />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
-                    Les highlanders du moment
-
+                    Les Highlanders du moment
                 </Typography>
             </Box>
             <HighlightedProducts products={products} />
