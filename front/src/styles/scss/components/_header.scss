@@ -1,0 +1,8 @@
+#header {
+    & .MuiLink-root{
+        text-decoration: none;
+        &:hover {
+            color: unset;
+        }
+    }
+}

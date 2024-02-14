@@ -1,10 +1,12 @@
 import Router from 'koa-router';
+import koaBody from 'koa-body';
 import StatusController from '../controllers/StatusController';
 import UserController from '../controllers/UserController';
 import AuthController from '../controllers/AuthController';
-import ProductController from "../controllers/ProductController";
-import CategoryController from "../controllers/CategoryController";
-import MaterialController from "../controllers/MaterialController";
+import ProductController from '../controllers/ProductController';
+import CategoryController from '../controllers/CategoryController';
+import MaterialController from '../controllers/MaterialController';
+import PictureController from '../controllers/PictureController';
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -48,11 +50,36 @@ materialRouter.post('/create', MaterialController.create);
 materialRouter.put('/update/:id', MaterialController.update);
 materialRouter.post('/delete', MaterialController.deleteMany);
 materialRouter.delete('/delete/:id', MaterialController.delete);
+//----------------------------------------------------//
+const pictureRouter = new Router({ prefix: '/picture' });
+// picture management
+pictureRouter.get('/', PictureController.getAll);
+pictureRouter.get('/:id', PictureController.getOneById);
+pictureRouter.post(
+    '/upload',
+    koaBody({
+        multipart: true,
+        formidable: {
+            uploadDir: './src/uploads',
+            keepExtensions: true,
+        },
+    }),
+    PictureController.upload
+);
+pictureRouter.post('/delete', PictureController.deleteMany);
+pictureRouter.delete('/delete/:id', PictureController.delete);
 
-router.use(userRouter.routes(), userRouter.allowedMethods(),
-    productRouter.routes(), productRouter.allowedMethods(),
-    categoryRouter.routes(), categoryRouter.allowedMethods(),
-    materialRouter.routes(), materialRouter.allowedMethods(),
-    );
+router.use(
+    userRouter.routes(),
+    userRouter.allowedMethods(),
+    pictureRouter.routes(),
+    pictureRouter.allowedMethods(),
+    productRouter.routes(),
+    productRouter.allowedMethods(),
+    categoryRouter.routes(),
+    categoryRouter.allowedMethods(),
+    materialRouter.routes(),
+    materialRouter.allowedMethods()
+);
 
 export default router;

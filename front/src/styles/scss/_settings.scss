@@ -1,13 +1,6 @@
-// Variables
-$color-1: black;
-$color-2: #ae692b;
-$color-3: #dfb65a;
-$color-4: #ecd8a5;
-$color-5: #83664a;
-$textcolor-1: white;
-$textcolor-2: black;
+// // Variables
 
-// Mixins
+// // Mixins
 
 // Global
 * {
@@ -26,8 +19,6 @@ $textcolor-2: black;
     text-align: center;
 }
 
-.title {
-    &-main {
-        font-size: 2rem !important;
-    }
+main {
+    text-align: center;
 }

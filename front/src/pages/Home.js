@@ -4,6 +4,7 @@ import Carousel from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
 import CategoryList from "../components/CategoryList";
+import ImageDisplay from '../components/Pictures/Pictures';
 import axios from 'axios';
 import CustomComponent from "../components/CatList";
 
@@ -53,7 +54,8 @@ function Home() {
             */
 
     return (
-        <>
+        <div id="home">
+            <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
             <Carousel />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
@@ -66,7 +68,7 @@ function Home() {
                 <CustomComponent></CustomComponent>
             </Box>
 
-        </>
+        </div>
     );
 }
 

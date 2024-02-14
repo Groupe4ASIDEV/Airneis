@@ -8,7 +8,7 @@ function App() {
         <>
             <Header />
             <main>
-                <Container className="container">
+                <Container>
                     <Index />
                 </Container>
             </main>

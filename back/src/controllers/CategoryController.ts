@@ -1,6 +1,7 @@
 import Koa from 'koa';
 import Response from '../helpers/Response';
 import { Category } from '../models/CategoryModel';
+import { Types } from 'mongoose';
 
 export default {
     getAll: async (context: Koa.Context) => {
@@ -14,7 +15,8 @@ export default {
     },
 
     getOneById: async (context: Koa.Context) => {
-        const id = context.params.id;
+        const body = context.request.body;
+        const id = body.id;
 
         if (!id) {
             return Response.badRequest(context, 'INVALID_ID');
@@ -31,15 +33,16 @@ export default {
 
     create: async (context: Koa.Context) => {
         const body = context.request.body;
-        const { name, description } = body;
+        const { label, description, picture } = body;
 
-        if (!name || !description) {
+        if (!label || !description) {
             return Response.badRequest(context);
         }
 
         const category = new Category({
-            name,
+            label,
             description,
+            picture,
         });
 
         await category.save();
@@ -53,6 +56,7 @@ export default {
         const allowedUpdates = {
             name: body.name,
             description: body.description,
+            picture: body.picture,
         };
 
         if (!id) {
@@ -88,7 +92,6 @@ export default {
         return Response.success(context, 'CATEGORY_DELETED');
     },
 
-
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;
         const ids = body.ids;
@@ -100,7 +103,10 @@ export default {
         const categories = await Category.find({ _id: { $in: ids } });
 
         if (categories.length !== ids.length) {
-            return Response.resourceNotFound(context, 'SOME_CATEGORIES_NOT_FOUND');
+            return Response.resourceNotFound(
+                context,
+                'SOME_CATEGORIES_NOT_FOUND'
+            );
         }
 
         await Category.deleteMany({ _id: { $in: ids } });
