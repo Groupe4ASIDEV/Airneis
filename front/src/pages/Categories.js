@@ -3,10 +3,10 @@ import Carousel from '../components/Carousel';
 import ImageDisplay from '../components/Pictures/Pictures';
 import CategoryList from "../components/CatList";
 
-function Home() {
+function Categories() {
 
     return (
-        <div id="home">
+        <div id="categories">
             <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
             <Carousel />
             <Box className="catchphrase">
@@ -23,4 +23,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default Categories;

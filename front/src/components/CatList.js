@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 
 
-function CustomComponent() {
+function CategoryList() {
 
     return (
         <div id="categoryList">
@@ -14,4 +14,4 @@ function CustomComponent() {
     );
 }
 
-export default CustomComponent;
+export default CategoryList;
