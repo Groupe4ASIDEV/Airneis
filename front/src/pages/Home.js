@@ -29,7 +29,6 @@ function Home() {
 
     return (
         <div id="home">
-            <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
             <CarouselBuilder />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">

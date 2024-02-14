@@ -1,59 +1,47 @@
+import { useEffect } from 'react';
 import Carousel from 'react-material-ui-carousel';
 import { Paper } from '@mui/material';
-import { useEffect, useState } from 'react';
-
-const baseUrl = process.env.REACT_APP_API_URL;
+import { useFeaturedItemsStore } from '../store';
+import { useProductStore } from '../store';
+import { useCategoryStore } from '../store';
+import ImageDisplay from './Pictures/Pictures';
 
 function CarouselBuilder() {
-    const [items, setItems] = useState([]);
+  const { featuredItems, loadFeaturedItems } = useFeaturedItemsStore();
+  const { products, loadProduct } = useProductStore();
+  const { categories, loadCategory } = useCategoryStore();
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${baseUrl}/featured-item/`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id: '65b7567be24917261715689d' }),
-                });
+  useEffect(() => {
+    loadFeaturedItems();
+    // charger les produits et les categories ici?
+  }, [loadFeaturedItems, loadProduct, loadCategory]);
 
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
+  const carousel = featuredItems.find(item => item.type === "CAROUSEL");
 
-                const data = await response.json();
-                setItems(data.data);
-                console.log('🚀 ~ fetchData ~ data:', data.data);
-            } catch (error) {
-                console.error(
-                    'There was a problem with the fetch operation:',
-                    error
-                );
-            }
-        };
+  if (!carousel) {
+    return <p>LOADING</p>;
+  }
 
-        fetchData();
-    }, []);
-
-    console.log(items);
-
-    return (
-        <Carousel>
-            {items.map((item, i) => (
-                <Item key={i} item={item} />
-            ))}
-        </Carousel>
-    );
+  return (
+    <Carousel>
+      {carousel.items.map((itemId, i) => {
+        const product = products[itemId];
+        const category = categories[itemId];
+        const pictureUrl = product?.pictures[0] || category?.picture;
+        
+        return (
+            <Item key={i} pictureUrl={pictureUrl} />
+        );
+      })}
+    </Carousel>
+  );
 }
 
 function Item(props) {
-    return (
-        <Paper>
-            <h2>{props.item.label}</h2>
-            <p>{props.item.description}</p>
-        </Paper>
-    );
+  console.log("🚀 ~ Item ~ props:", props)
+  return (
+    <ImageDisplay id={props.id} />
+  );
 }
 
 export default CarouselBuilder;
