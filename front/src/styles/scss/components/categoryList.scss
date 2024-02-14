@@ -1,0 +1,12 @@
+#categoryList {
+    & .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+    & img {
+        width: 20%;
+        height: auto;
+    }
+}

@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import Carousel from '../components/Carousel';
-import HighlightedCategories from '../components/HighlightedCategories';
-import HighlightedProducts from '../components/HighlightedProducts';
-import CategoryList from "../components/CategoryList";
 import ImageDisplay from '../components/Pictures/Pictures';
-import axios from 'axios';
 import CustomComponent from "../components/CatList";
 
 function Home() {
@@ -67,7 +63,6 @@ function Home() {
             <Box>
                 <CustomComponent></CustomComponent>
             </Box>
-
         </div>
     );
 }
