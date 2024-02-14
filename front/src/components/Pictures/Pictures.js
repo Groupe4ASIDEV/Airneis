@@ -13,7 +13,7 @@ const ImageDisplay = ({ id }) => {
                 return response.json();
             })
             .then((data) => {
-                setPictureUrl(baseUrl + '/' + data.data.url);
+                setPictureUrl(baseUrl + data.data.url);
                 setAltText(data.data.alt);
             })
             .catch((error) => {
