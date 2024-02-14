@@ -3,7 +3,6 @@ import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
-import ImageDisplay from '../components/Pictures/Pictures';
 import axios from 'axios';
 
 function Home() {
