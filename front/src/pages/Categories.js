@@ -11,9 +11,7 @@ function Categories() {
             <Carousel />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
-                    Venant des Hautes Terres d'Ecosse
-                    <br />
-                    Nos meubles sont immortels
+
                 </Typography>
             </Box>
             <Box>

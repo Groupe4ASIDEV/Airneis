@@ -3,6 +3,7 @@ import Carousel from '../components/Carousel';
 import ImageDisplay from '../components/Pictures/Pictures';
 import CategoryList from "../components/CatList";
 
+
 function Home() {
 
     return (
