@@ -5,9 +5,10 @@ import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
 import CategoryList from "../components/CategoryList";
 import axios from 'axios';
+import CustomComponent from "../components/CatList";
 
 function Home() {
-    const [products, setProducts] = useState([]);
+    /* const [products, setProducts] = useState([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
@@ -39,6 +40,18 @@ function Home() {
         fetchCategories();
     }, []);
 
+    <HighlightedCategories />
+            <Box className="catchphrase">
+                <Typography variant="h6" component="p">
+                    Les highlanders du moment
+
+                </Typography>
+            </Box>
+            <HighlightedProducts products={products} />
+            <CategoryList categories={categories} />
+
+            */
+
     return (
         <>
             <Carousel />
@@ -49,15 +62,10 @@ function Home() {
                     Nos meubles sont immortels
                 </Typography>
             </Box>
-            <HighlightedCategories />
-            <Box className="catchphrase">
-                <Typography variant="h6" component="p">
-                    Les highlanders du moment
-
-                </Typography>
+            <Box>
+                <CustomComponent></CustomComponent>
             </Box>
-            <HighlightedProducts products={products} />
-            <CategoryList categories={categories} />
+
         </>
     );
 }
