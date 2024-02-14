@@ -28,9 +28,10 @@ function CarouselBuilder() {
         const product = products[itemId];
         const category = categories[itemId];
         const pictureUrl = product?.pictures[0] || category?.picture;
-        
+        const label = product?.label || category?.label;
+
         return (
-            <Item key={i} pictureUrl={pictureUrl} />
+            <Item key={i} pictureUrl={pictureUrl} label={label} />
         );
       })}
     </Carousel>
@@ -40,7 +41,10 @@ function CarouselBuilder() {
 function Item(props) {
   console.log("🚀 ~ Item ~ props:", props)
   return (
-    <ImageDisplay id={props.id} />
+    <>
+        <p>{props.label}</p>
+        <ImageDisplay id={props.id}/>
+    </>
   );
 }
 
