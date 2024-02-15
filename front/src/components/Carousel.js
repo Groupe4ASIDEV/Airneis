@@ -17,9 +17,10 @@ function CarouselBuilder() {
     }, [loadFeaturedItems, loadProducts, loadCategories]);
 
     const carousel = featuredItems.find((item) => item.type === 'CAROUSEL');
+    console.log('🚀 ~ CarouselBuilder ~ carousel:', carousel);
 
     if (!carousel) {
-        return <p>LOADING</p>;
+        return <p>Loading...</p>;
     }
 
     return (
