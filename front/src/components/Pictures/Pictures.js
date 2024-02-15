@@ -1,4 +1,4 @@
-import { useState, useEffect, memo } from 'react';
+import { useState, useEffect } from 'react';
 import { Card, CardMedia } from '@mui/material';
 import axios from 'axios';
 

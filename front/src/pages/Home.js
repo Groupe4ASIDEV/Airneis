@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from 'react';
 import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
-import HighlightedProducts from '../components/HighlightedProducts';
-import axios from 'axios';
+// import HighlightedProducts from '../components/HighlightedProducts';
+// import axios from 'axios';
 
 function Home() {
-    const [products, setProducts] = useState([]);
+    // const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get(
-                    'http://localhost:3000/products'
-                ); // Remplacez l'URL par votre endpoint API
-                setProducts(response.data);
-            } catch (error) {
-                console.error(
-                    'Erreur lors du chargement des produits :',
-                    error
-                );
-            }
-        };
+    // useEffect(() => {
+    //     const fetchProducts = async () => {
+    //         try {
+    //             const response = await axios.get(
+    //                 'http://localhost:3000/products'
+    //             ); // Remplacez l'URL par votre endpoint API
+    //             setProducts(response.data);
+    //         } catch (error) {
+    //             console.error(
+    //                 'Erreur lors du chargement des produits :',
+    //                 error
+    //             );
+    //         }
+    //     };
 
-        fetchProducts();
-    }, []);
+    //     fetchProducts();
+    // }, []);
 
     return (
         <div id="home">
@@ -42,7 +41,7 @@ function Home() {
                     Les Highlanders du moment
                 </Typography>
             </Box>
-            <HighlightedProducts products={products} />
+            {/* <HighlightedProducts products={products} /> */}
         </div>
     );
 }
