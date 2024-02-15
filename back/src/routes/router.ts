@@ -55,7 +55,7 @@ materialRouter.delete('/delete/:id', MaterialController.delete);
 const pictureRouter = new Router({ prefix: '/picture' });
 // picture management
 pictureRouter.get('/', PictureController.getAll);
-pictureRouter.get('/:id', PictureController.getOneById);
+pictureRouter.post('/', PictureController.getOneById);
 pictureRouter.post(
     '/upload',
     koaBody({
