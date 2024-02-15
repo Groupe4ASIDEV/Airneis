@@ -3,7 +3,6 @@ import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
 import HighlightedCategories from '../components/HighlightedCategories';
 import HighlightedProducts from '../components/HighlightedProducts';
-import ImageDisplay from '../components/Pictures/Pictures';
 import axios from 'axios';
 
 function Home() {
@@ -29,7 +28,6 @@ function Home() {
 
     return (
         <div id="home">
-            <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
             <CarouselBuilder />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
