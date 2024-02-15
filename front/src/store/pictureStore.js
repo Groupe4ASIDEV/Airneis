@@ -7,32 +7,52 @@ const baseUrl = process.env.REACT_APP_API_URL;
 const usePictureStore = create(
     zustymiddleware((set, get) => ({
         pictures: [],
-        error: null,
         loadPictures: async () => {
             const currentPictures = get().pictures;
             if (currentPictures.length === 0) {
                 try {
-                    const response = await fetchPictures();
+                    const response = await axios.get(`${baseUrl}/picture`);
                     set({ pictures: response.data.data });
                 } catch (error) {
-                    set({
-                        error: 'Impossible de charger les images.',
-                    });
+                    console.error(
+                        'Erreur lors du chargement des images:',
+                        error
+                    );
                 }
             }
         },
     }))
 );
 
-const fetchPictures = async () => {
-    try {
-        const response = await axios.get(`${baseUrl}/picture`);
-        return response.data.data;
-    } catch (error) {
-        console.error('Erreur lors du chargement des images:', error);
-        throw error;
-    }
-};
+// const usePictureStore = create(
+//     zustymiddleware((set, get) => ({
+//         pictures: [],
+//         error: null,
+//         loadPictures: async () => {
+//             const currentPictures = get().pictures;
+//             if (currentPictures.length === 0) {
+//                 try {
+//                     const response = await fetchPictures();
+//                     set({ pictures: response.data.data });
+//                 } catch (error) {
+//                     set({
+//                         error: 'Impossible de charger les images.',
+//                     });
+//                 }
+//             }
+//         },
+//     }))
+// );
+
+// const fetchPictures = async () => {
+//     try {
+//         const response = await axios.get(`${baseUrl}/picture`);
+//         return response.data.data;
+//     } catch (error) {
+//         console.error('Erreur lors du chargement des images:', error);
+//         throw error;
+//     }
+// };
 
 window.store = usePictureStore;
 

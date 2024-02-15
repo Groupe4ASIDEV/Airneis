@@ -4,57 +4,61 @@ import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-// const useFeaturedItemsStore = create((set, get) => ({
-//     featuredItems: [],
-//     addFeaturedItem: (item) =>
-//         set((state) => ({ featuredItems: [...state.featuredItems, item] })),
-//     loadFeaturedItems: async () => {
-//         const currentFeaturedItems = get().featuredItems;
-//         if (currentFeaturedItems.length === 0) {
-//             try {
-//                 const response = await axios.get(`${baseUrl}/featured-item`);
-//                 set({ featuredItems: response.data.data });
-//             } catch (error) {
-//                 console.error(
-//                     'Erreur lors du chargement des featuredItems:',
-//                     error
-//                 );
-//             }
-//         }
-//     },
-// }));
-
 const useFeaturedItemsStore = create(
     zustymiddleware((set, get) => ({
         featuredItems: [],
-        error: null,
         addFeaturedItem: (item) =>
             set((state) => ({ featuredItems: [...state.featuredItems, item] })),
         loadFeaturedItems: async () => {
             const currentFeaturedItems = get().featuredItems;
             if (currentFeaturedItems.length === 0) {
                 try {
-                    const items = await fetchFeaturedItems();
-                    set({ featuredItems: items });
+                    const response = await axios.get(
+                        `${baseUrl}/featured-item`
+                    );
+                    set({ featuredItems: response.data.data });
                 } catch (error) {
-                    set({
-                        error: 'Impossible de charger les éléments en vedette.',
-                    });
+                    console.error(
+                        'Erreur lors du chargement des featuredItems:',
+                        error
+                    );
                 }
             }
         },
     }))
 );
 
-const fetchFeaturedItems = async () => {
-    try {
-        const response = await axios.get(`${baseUrl}/featured-item`);
-        return response.data.data;
-    } catch (error) {
-        console.error('Erreur lors du chargement des featuredItems:', error);
-        throw error;
-    }
-};
+// const useFeaturedItemsStore = create(
+//     zustymiddleware((set, get) => ({
+//         featuredItems: [],
+//         error: null,
+//         addFeaturedItem: (item) =>
+//             set((state) => ({ featuredItems: [...state.featuredItems, item] })),
+//         loadFeaturedItems: async () => {
+//             const currentFeaturedItems = get().featuredItems;
+//             if (currentFeaturedItems.length === 0) {
+//                 try {
+//                     const items = await fetchFeaturedItems();
+//                     set({ featuredItems: items });
+//                 } catch (error) {
+//                     set({
+//                         error: 'Impossible de charger les éléments en vedette.',
+//                     });
+//                 }
+//             }
+//         },
+//     }))
+// );
+
+// const fetchFeaturedItems = async () => {
+//     try {
+//         const response = await axios.get(`${baseUrl}/featured-item`);
+//         return response.data.data;
+//     } catch (error) {
+//         console.error('Erreur lors du chargement des featuredItems:', error);
+//         throw error;
+//     }
+// };
 
 window.store = useFeaturedItemsStore;
 
