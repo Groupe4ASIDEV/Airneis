@@ -1,25 +1,31 @@
 import { useState, useEffect } from 'react';
 import { Card, CardMedia } from '@mui/material';
+import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
 const ImageDisplay = ({ id }) => {
     const [pictureUrl, setPictureUrl] = useState('');
     const [altText, setAltText] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${baseUrl}/picture/${id}`)
+        axios
+            .post(`${baseUrl}/picture`, { id: id })
             .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setPictureUrl(baseUrl + '/' + data.data.url);
-                setAltText(data.data.alt);
+                setPictureUrl(baseUrl + '/' + response.data.data.url);
+                setAltText(response.data.data.alt);
+                setIsLoading(false);
             })
             .catch((error) => {
                 console.error('Error fetching image:', error);
+                setIsLoading(false);
             });
     }, [id]);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <Card>
