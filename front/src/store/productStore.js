@@ -11,8 +11,8 @@ const useProductStore = create(
             const currentProducts = get().products;
             if (currentProducts.length === 0) {
                 try {
-                    const response = await axios.get(`${baseUrl}/product`);
-                    set({ products: response.data.data });
+                    const response = await fetchProducts();
+                    set({ products: response });
                 } catch (error) {
                     console.error(
                         'Erreur lors du chargement des produits:',
@@ -24,35 +24,15 @@ const useProductStore = create(
     }))
 );
 
-// const useProductStore = create(
-//     zustymiddleware((set, get) => ({
-//         products: [],
-//         loadProducts: async () => {
-//             const currentProducts = get().products;
-//             if (currentProducts.length === 0) {
-//                 try {
-//                     const response = await fetchProducts();
-//                     set({ products: response.data.data });
-//                 } catch (error) {
-//                     console.error(
-//                         'Erreur lors du chargement des produits:',
-//                         error
-//                     );
-//                 }
-//             }
-//         },
-//     }))
-// );
-
-// const fetchProducts = async () => {
-//     try {
-//         const response = await axios.get(`${baseUrl}/product`);
-//         return response.data.data;
-//     } catch (error) {
-//         console.error('Erreur lors du chargement des produits:', error);
-//         throw error;
-//     }
-// };
+const fetchProducts = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/product`);
+        return response.data.data;
+    } catch (error) {
+        console.error('Erreur lors du chargement des produits:', error);
+        throw error;
+    }
+};
 
 window.store = useProductStore;
 
