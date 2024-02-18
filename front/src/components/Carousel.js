@@ -16,11 +16,10 @@ function CarouselBuilder() {
         loadFeaturedItems();
         loadProducts();
         loadCategories();
-        loadPictures(); //
+        loadPictures();
     }, [loadFeaturedItems, loadProducts, loadCategories, loadPictures]);
 
     const carousel = featuredItems.find((item) => item.type === 'CAROUSEL');
-    console.log('🚀 ~ CarouselBuilder ~ carousel:', carousel);
 
     if (!carousel) {
         return <p>Loading...</p>;
