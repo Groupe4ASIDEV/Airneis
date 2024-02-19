@@ -1,7 +1,6 @@
 import Koa from 'koa';
 import Response from '../helpers/Response';
 import { Category } from '../models/CategoryModel';
-import { Types } from 'mongoose';
 
 export default {
     getAll: async (context: Koa.Context) => {

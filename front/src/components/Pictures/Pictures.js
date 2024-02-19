@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Card, CardMedia } from '@mui/material';
+import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -8,13 +9,14 @@ const ImageDisplay = ({ id }) => {
     const [altText, setAltText] = useState('');
 
     useEffect(() => {
-        fetch(`${baseUrl}/picture/${id}`)
+        if (!id) {
+            return;
+        }
+        axios
+            .post(`${baseUrl}/picture`, { id: id })
             .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setPictureUrl(baseUrl + '/' + data.data.url);
-                setAltText(data.data.alt);
+                setPictureUrl(baseUrl + '/' + response.data.data.url);
+                setAltText(response.data.data.alt);
             })
             .catch((error) => {
                 console.error('Error fetching image:', error);
@@ -34,5 +36,7 @@ const ImageDisplay = ({ id }) => {
         </Card>
     );
 };
+
+// const ImageDisplay = memo(ImageDisplayComponent);
 
 export default ImageDisplay;
