@@ -1,4 +1,6 @@
-import { NavLink, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { UidContext } from './UserContext';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,7 +17,7 @@ import Container from '@mui/material/Container';
 const baseUrl = process.env.REACT_APP_API_URL;
 
 export default function SignIn() {
-    const navigate = useNavigate();
+    const { login } = useContext(UidContext);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -36,7 +38,7 @@ export default function SignIn() {
 
             if (response.ok) {
                 const result = await response.json();
-                navigate('/');
+                login();
                 console.log(result);
             } else {
                 // prévoir des erreurs types
