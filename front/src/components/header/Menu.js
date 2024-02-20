@@ -19,7 +19,7 @@ export default function BasicMenu({ anchorEl, open, onClose }) {
     return (
         <div>
             <Menu
-                id="basic-menu"
+                id="menu"
                 anchorEl={anchorEl}
                 open={open}
                 onClose={onClose}
@@ -29,7 +29,11 @@ export default function BasicMenu({ anchorEl, open, onClose }) {
             >
                 {isAuth
                     ? [
-                          <Link to="/auth" key="link-auth">
+                          <Link
+                              to="/auth"
+                              key="link-auth"
+                              className="custon-link"
+                          >
                               <MenuItem onClick={onClose} key="settings">
                                   <ManageAccountsIcon
                                       size="large"
