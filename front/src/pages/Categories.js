@@ -7,11 +7,11 @@ function Categories() {
 
     return (
         <div id="categories">
-            <ImageDisplay id={'65ae6ebe1628cad26ad03d15'} />
+            <ImageDisplay id={''} />
             <Carousel />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
-
+                    Toutes les catégories
                 </Typography>
             </Box>
             <Box>
