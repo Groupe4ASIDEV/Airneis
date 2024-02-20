@@ -20,6 +20,16 @@ export const components = (palette) => ({
             },
         },
     },
+    MuiButtonBase: {
+        styleOverrides: {
+            root: {
+                color: palette.primary.dark,
+                '&:hover': {
+                    color: palette.primary.main,
+                },
+            },
+        },
+    },
     MuiAvatar: {
         styleOverrides: {
             root: {

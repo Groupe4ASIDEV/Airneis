@@ -1,6 +1,14 @@
 // // Variables
 
 // // Mixins
+@mixin simple-link {
+    .MuiLink-root {
+        text-decoration: none;
+        &:hover {
+            color: inherit;
+        }
+    }
+}
 
 // Global
 * {
