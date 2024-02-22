@@ -30,18 +30,20 @@ export default {
     },
     create: async (context: Koa.Context) => {
         const body = context.request.body;
-        const { fullName, email, password, admin, validate } = body;
+        const { fullName, email, password, admin, validate, defaultAddress } =
+            body;
 
         if (!email || !password) {
             return Response.badRequest(context);
         }
 
         const user = new User({
-            fullName: fullName,
-            email: email,
-            password: password,
-            admin: admin,
-            validate: validate,
+            fullName,
+            email,
+            password,
+            admin,
+            validate,
+            defaultAddress,
         });
 
         await user.save();
@@ -51,11 +53,15 @@ export default {
     update: async (context: Koa.Context) => {
         const id = context.params.id;
         const updateData = context.request.body;
+        const { fullName, email, phone, password, validated, defaultAddress } =
+            updateData;
         const allowedUpdates = {
-            fullName: updateData.fullName,
-            email: updateData.email,
-            phone: updateData.phone,
-            password: updateData.password,
+            fullName,
+            email,
+            phone,
+            password,
+            validated,
+            defaultAddress,
         };
 
         if (!id) {

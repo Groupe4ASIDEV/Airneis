@@ -1,4 +1,4 @@
-import mongoose, { model } from 'mongoose';
+import mongoose, { Types, model, Schema } from 'mongoose';
 
 export type User = {
     fullName: string;
@@ -10,6 +10,7 @@ export type User = {
     createdAt: Date;
     deletedAt: Date;
     updatedAt: Date;
+    defaultAddress: Types.ObjectId;
 };
 
 const userSchema = new mongoose.Schema<User>({
@@ -22,6 +23,7 @@ const userSchema = new mongoose.Schema<User>({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date },
     deletedAt: { type: Date },
+    defaultAddress: { type: Schema.Types.ObjectId },
 });
 
 export const User = model<User>('User', userSchema);
