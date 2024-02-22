@@ -5,6 +5,7 @@ import Registration from '../pages/Registration';
 import Cart from '../pages/Cart';
 import Category from '../pages/Category';
 import Product from '../pages/Product';
+import OrderList from '../pages/OrderList';
 
 function Index() {
     return (
@@ -19,6 +20,7 @@ function Index() {
                 element={<Registration />}
             />
             <Route path="/cart" exact="true" element={<Cart />} />
+            <Route path="/orders" exact="true" element={<OrderList />} />
         </Routes>
     );
 }
