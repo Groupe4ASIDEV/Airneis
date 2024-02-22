@@ -1,4 +1,5 @@
 import mongoose, { model, Types, Schema } from 'mongoose';
+import { Address } from './AddressModel';
 
 export enum StateEnum {
     Preparation = 'PREPARATION',
@@ -18,8 +19,8 @@ const itemSchema = new mongoose.Schema<Item>({
 
 export type Order = {
     user: Types.ObjectId;
-    shippingAddress: Types.ObjectId;
-    billingAddress: Types.ObjectId;
+    shippingAddress: Address;
+    billingAddress: Address;
     state: string;
     items: Item[];
     total: number;
@@ -31,13 +32,17 @@ export type Order = {
 
 const orderSchema = new mongoose.Schema<Order>({
     user: { type: Schema.Types.ObjectId, required: true },
-    shippingAddress: { type: Schema.Types.ObjectId, required: true },
-    billingAddress: { type: Schema.Types.ObjectId, required: true },
-    state: { type: String, enum: Object.values(StateEnum), required: true },
+    shippingAddress: { type: Address.schema, required: true },
+    billingAddress: { type: Address.schema, required: true },
+    state: {
+        type: String,
+        enum: Object.values(StateEnum),
+        default: StateEnum.Preparation,
+    },
     items: { type: [itemSchema], required: true },
     total: { type: Number, required: true },
     vat: { type: Number, required: true },
-    createdAt: { type: Date, required: true, default: Date.now },
+    createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date },
     deletedAt: { type: Date },
 });

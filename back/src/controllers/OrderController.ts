@@ -9,6 +9,7 @@ export default {
         if (orders.length == 0) {
             return Response.resourceNotFound(context, 'NO_ORDER_FOUND');
         }
+
         return Response.success(context, orders);
     },
     getAllByUser: async (context: Koa.Context) => {
@@ -61,7 +62,6 @@ export default {
             user,
             shippingAddress,
             billingAddress,
-            state: 'PREPARATION',
             items,
             total,
             vat,
@@ -74,12 +74,20 @@ export default {
     update: async (context: Koa.Context) => {
         const id = context.params.id;
         const body = context.request.body;
-        const { user, shippingAddress, billingAddress, items, total, vat } =
-            body;
+        const {
+            user,
+            shippingAddress,
+            billingAddress,
+            state,
+            items,
+            total,
+            vat,
+        } = body;
         const allowedUpdates = {
             user,
             shippingAddress,
             billingAddress,
+            state,
             items,
             total,
             vat,
