@@ -8,6 +8,7 @@ import CategoryController from '../controllers/CategoryController';
 import MaterialController from '../controllers/MaterialController';
 import PictureController from '../controllers/PictureController';
 import FeaturedItemController from '../controllers/FeaturedItemController';
+import OrderController from '../controllers/OrderController';
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -78,6 +79,16 @@ featuredItem.post('/create', FeaturedItemController.create);
 featuredItem.put('/update/:id', FeaturedItemController.update);
 featuredItem.post('/delete', FeaturedItemController.deleteMany);
 featuredItem.delete('/delete/:id', FeaturedItemController.delete);
+//----------------------------------------------------//
+const order = new Router({ prefix: '/order' });
+// order CRUD
+order.get('/', OrderController.getAll);
+order.get('/', OrderController.getAllByUser);
+order.post('/:id', OrderController.getOneById);
+order.post('/create', OrderController.create);
+order.put('/update/:id', OrderController.update);
+order.post('/delete', OrderController.deleteMany);
+order.delete('/delete/:id', OrderController.delete);
 
 router.use(
     userRouter.routes(),
@@ -91,7 +102,9 @@ router.use(
     materialRouter.routes(),
     materialRouter.allowedMethods(),
     featuredItem.routes(),
-    featuredItem.allowedMethods()
+    featuredItem.allowedMethods(),
+    order.routes(),
+    order.allowedMethods()
 );
 
 export default router;

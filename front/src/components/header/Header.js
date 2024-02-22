@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,6 +10,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Link } from '@mui/material';
 
 function Header({ onMenuIconClick }) {
+    const navigate = useNavigate();
+
+    const handleCartClick = () => {
+        navigate('/cart');
+    };
+
     return (
         <div id="header">
             <Box component="header" sx={{ flexGrow: 1 }}>
@@ -39,6 +46,7 @@ function Header({ onMenuIconClick }) {
                             edge="start"
                             color="inherit"
                             aria-label="menu"
+                            onClick={handleCartClick}
                             sx={{
                                 mr: 2,
                             }}
