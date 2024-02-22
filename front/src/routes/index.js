@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import Authentication from '../pages/Authentication';
 import Registration from '../pages/Registration';
 import Cart from '../pages/Cart';
+import OrderList from '../pages/OrderList';
 
 function Index() {
     return (
@@ -15,6 +16,7 @@ function Index() {
                 element={<Registration />}
             />
             <Route path="/cart" exact="true" element={<Cart />} />
+            <Route path="/orders" exact="true" element={<OrderList />} />
         </Routes>
     );
 }

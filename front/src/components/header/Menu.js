@@ -45,16 +45,18 @@ export default function BasicMenu({ anchorEl, open, onClose }) {
                                   Mes paramètres
                               </MenuItem>
                           </Link>,
-                          <MenuItem onClick={onClose} key="orders">
-                              <LocalShippingIcon
-                                  size="large"
-                                  edge="start"
-                                  color="inherit"
-                                  aria-label="menu"
-                                  sx={{ mr: 2 }}
-                              />
-                              Mes commandes
-                          </MenuItem>,
+                          <Link to="/orders" key="link-orders">
+                              <MenuItem onClick={onClose} key="orders">
+                                  <LocalShippingIcon
+                                      size="large"
+                                      edge="start"
+                                      color="inherit"
+                                      aria-label="menu"
+                                      sx={{ mr: 2 }}
+                                  />
+                                  Mes commandes
+                              </MenuItem>
+                          </Link>,
                       ]
                     : [
                           <Link to="/auth" key="link-auth">
