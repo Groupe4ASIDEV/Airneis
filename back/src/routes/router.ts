@@ -9,6 +9,7 @@ import MaterialController from '../controllers/MaterialController';
 import PictureController from '../controllers/PictureController';
 import FeaturedItemController from '../controllers/FeaturedItemController';
 import OrderController from '../controllers/OrderController';
+import AddressController from '../controllers/AddressController';
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -80,11 +81,20 @@ featuredItem.put('/update/:id', FeaturedItemController.update);
 featuredItem.post('/delete', FeaturedItemController.deleteMany);
 featuredItem.delete('/delete/:id', FeaturedItemController.delete);
 //----------------------------------------------------//
+const address = new Router({ prefix: '/address' });
+// address CRUD
+address.get('/', AddressController.getAll);
+address.get('/:id', AddressController.getOneById);
+address.post('/create', AddressController.create);
+address.put('/update/:id', AddressController.update);
+address.post('/delete', AddressController.deleteMany);
+address.delete('/delete/:id', AddressController.delete);
+//----------------------------------------------------//
 const order = new Router({ prefix: '/order' });
 // order CRUD
 order.get('/', OrderController.getAll);
-order.get('/', OrderController.getAllByUser);
-order.post('/:id', OrderController.getOneById);
+order.post('/', OrderController.getAllByUser);
+order.get('/:id', OrderController.getOneById);
 order.post('/create', OrderController.create);
 order.put('/update/:id', OrderController.update);
 order.post('/delete', OrderController.deleteMany);
@@ -103,6 +113,8 @@ router.use(
     materialRouter.allowedMethods(),
     featuredItem.routes(),
     featuredItem.allowedMethods(),
+    address.routes(),
+    address.allowedMethods(),
     order.routes(),
     order.allowedMethods()
 );
