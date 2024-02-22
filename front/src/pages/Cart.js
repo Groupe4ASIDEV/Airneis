@@ -1,5 +1,30 @@
+import { useState, useEffect } from 'react';
+import CartItem from '../components/CartItem';
+
 function Cart() {
-    return <div className="cart">Cart is working</div>;
+    const [cartItems, setCartItems] = useState([]);
+
+    useEffect(() => {}, []);
+
+    const updateQuantity = (itemId, newQuantity) => {};
+
+    const removeFromCart = (itemId) => {};
+
+    return (
+        <div id="cart">
+            <p>cart is working</p>
+            {cartItems.map((item) => (
+                <CartItem
+                    key={item.id}
+                    item={item.label}
+                    price={item.price}
+                    updateQuantity={updateQuantity}
+                    removeFromCart={removeFromCart}
+                />
+            ))}
+            {/* ajouter total HT, total TVA & total TTC */}
+        </div>
+    );
 }
 
 export default Cart;
