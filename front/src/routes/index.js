@@ -6,6 +6,7 @@ import Cart from '../pages/Cart';
 import Category from '../pages/Category';
 import Product from '../pages/Product';
 import OrderList from '../pages/OrderList';
+import Order from '../pages/Order';
 
 function Index() {
     return (
@@ -20,7 +21,12 @@ function Index() {
                 element={<Registration />}
             />
             <Route path="/cart" exact="true" element={<Cart />} />
-            <Route path="/orders" exact="true" element={<OrderList />} />
+            <Route
+                path="/orders/:userId"
+                exact="true"
+                element={<OrderList />}
+            />
+            <Route path="/orders/:userId/:orderId" element={<Order />} />
         </Routes>
     );
 }
