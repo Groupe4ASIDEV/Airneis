@@ -14,7 +14,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { Link } from 'react-router-dom';
 
 export default function BasicMenu({ anchorEl, open, onClose }) {
-    const { isAuth, logout } = useContext(UidContext);
+    const { isAuth, userData, logout } = useContext(UidContext);
 
     return (
         <div>
@@ -45,7 +45,10 @@ export default function BasicMenu({ anchorEl, open, onClose }) {
                                   Mes paramètres
                               </MenuItem>
                           </Link>,
-                          <Link to="/orders" key="link-orders">
+                          <Link
+                              to={'/orders/' + userData?._id}
+                              key="link-orders"
+                          >
                               <MenuItem onClick={onClose} key="orders">
                                   <LocalShippingIcon
                                       size="large"
