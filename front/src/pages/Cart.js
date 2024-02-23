@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import CartItem from '../components/CartItem';
+import CartItem from '../components/ItemCard';
 
 function Cart() {
     const [cartItems, setCartItems] = useState([]);
