@@ -2,9 +2,9 @@ import mongoose, { model, Types, Schema } from 'mongoose';
 import { Address } from './AddressModel';
 
 export enum StateEnum {
-    Preparation = 'PREPARATION',
-    Shipping = 'SHIPPING',
-    Delivered = 'DELIVERED',
+    Shipping = 'EN COURS',
+    Delivered = 'LIVRÉE',
+    Canceled = 'ANNULÉE',
 }
 
 export type Item = {
@@ -37,7 +37,7 @@ const orderSchema = new mongoose.Schema<Order>({
     state: {
         type: String,
         enum: Object.values(StateEnum),
-        default: StateEnum.Preparation,
+        default: StateEnum.Shipping,
     },
     items: { type: [itemSchema], required: true },
     total: { type: Number, required: true },
