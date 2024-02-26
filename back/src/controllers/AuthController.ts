@@ -33,12 +33,14 @@ export default {
 
         try {
             const user = await User.findOne({ email: email });
-            if (!user) {
-                return Response.resourceNotFound(context, 'USER_NOT_FOUND');
-            }
-            const validPassword = await bcrypt.compare(password, user.password);
-            if (!validPassword) {
-                return Response.badRequest(context, 'WRONG_PASSWORD');
+            const validPassword = user
+                ? await bcrypt.compare(password, user.password)
+                : false;
+            if (!user || !validPassword) {
+                return Response.badRequest(
+                    context,
+                    'INCORRECT_EMAIL_OR_PASSWORD'
+                );
             }
 
             if (!secret) {
