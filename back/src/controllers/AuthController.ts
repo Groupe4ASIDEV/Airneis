@@ -25,7 +25,7 @@ export default {
 
         await user.save();
 
-        return Response.success(context, 'ACCOUNT_CREATED');
+        return Response.success(context);
     },
     signIn: async (context: Koa.Context) => {
         const body = context.request.body;
@@ -52,7 +52,7 @@ export default {
             sameSite: env === 'production' ? 'none' : 'lax',
         });
 
-        return Response.success(context, 'USER_CONNECTED');
+        return Response.success(context);
     },
     signOut: async (context: Koa.Context) => {
         context.cookies.set('jwt', null, {
@@ -61,6 +61,6 @@ export default {
             maxAge: 0,
         });
 
-        return Response.success(context, 'USER_DISCONNECTED');
+        return Response.success(context);
     },
 };

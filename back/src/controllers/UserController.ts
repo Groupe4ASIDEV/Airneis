@@ -93,7 +93,7 @@ export default {
 
         await User.deleteOne({ _id: id });
 
-        return Response.success(context, 'USER_DELETED');
+        return Response.success(context);
     },
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;
@@ -111,6 +111,6 @@ export default {
 
         await User.deleteMany({ _id: { $in: ids } });
 
-        return Response.success(context, `${ids.length}_USERS_DELETED`);
+        return Response.success(context);
     },
 };
