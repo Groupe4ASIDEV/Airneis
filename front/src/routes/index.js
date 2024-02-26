@@ -5,8 +5,8 @@ import Registration from '../pages/Registration';
 import Cart from '../pages/Cart';
 import Category from '../pages/Category';
 import Product from '../pages/Product';
-import OrderList from '../pages/OrderList';
-import Order from '../pages/Order';
+import OrderList from '../pages/Order/OrderList';
+import Order from '../pages/Order/Order';
 
 function Index() {
     return (

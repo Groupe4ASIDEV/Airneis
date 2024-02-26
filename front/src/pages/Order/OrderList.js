@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import useOrderStore from '../store/orderStore';
+import useOrderStore from '../../store/orderStore';
 import { Link, useParams } from 'react-router-dom';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
-import OrderCard from '../components/OrderCard';
+import OrderCard from '../../components/Order/OrderCard';
 
 function OrderList() {
     const { userId } = useParams();
@@ -34,9 +34,7 @@ function OrderList() {
                 alignItems: 'center',
             }}
         >
-            <Typography variant="h4" gutterBottom>
-                Mes commandes
-            </Typography>
+            <Typography variant="h4">Mes commandes</Typography>
             {!orders || orders.length === 0 ? (
                 <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                     <CircularProgress />
@@ -44,37 +42,39 @@ function OrderList() {
             ) : (
                 Object.keys(groupedOrders)
                     .sort((a, b) => b - a)
-                    .map((year) => (
-                        <Box key={year} sx={{ marginBottom: 4 }}>
-                            <Typography variant="h6" gutterBottom>
-                                {year}
-                            </Typography>
+                    .map((year, index) => (
+                        <Box
+                            key={index}
+                            sx={{
+                                width: '100%',
+                                borderBottom: '1px solid black',
+                            }}
+                        >
+                            <Box sx={{ marginBottom: 3 }}>
+                                <Typography
+                                    variant="h6"
+                                    sx={{ marginBottom: 2 }}
+                                    gutterBottom
+                                >
+                                    {year}
+                                </Typography>
 
-                            <Grid container spacing={2}>
-                                {groupedOrders[year].map((order) => (
-                                    <>
+                                <Grid
+                                    container
+                                    sx={{ justifyContent: 'center' }}
+                                >
+                                    {groupedOrders[year].map((order) => (
                                         <Link
-                                            to={
-                                                '/orders/' +
-                                                userId +
-                                                '/order=' +
-                                                order._id
-                                            }
+                                            to={`/orders/${userId}/${order._id}`}
                                             key={order._id}
                                         >
-                                            <Grid
-                                                item
-                                                xs={12}
-                                                sm={6}
-                                                md={4}
-                                                key={order._id}
-                                            >
+                                            <Grid item xs={12} sm={6} md={4}>
                                                 <OrderCard order={order} />
                                             </Grid>
                                         </Link>
-                                    </>
-                                ))}
-                            </Grid>
+                                    ))}
+                                </Grid>
+                            </Box>
                         </Box>
                     ))
             )}
