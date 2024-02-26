@@ -12,7 +12,7 @@ function ItemOrderCard({ product }) {
     }, []);
 
     const productImage = pictures.find(
-        (pic) => pic._id === product.pictures[0]
+        (picture) => picture._id === product.pictures[0]
     );
 
     return (
