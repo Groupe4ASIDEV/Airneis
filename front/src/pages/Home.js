@@ -1,7 +1,7 @@
 import { Typography, Box } from '@mui/material';
 import Carousel from '../components/Carousel';
 import ImageDisplay from '../components/Pictures/Pictures';
-import CategoryList from "../components/CatList";
+import CategoryList from "../components/CategoryList";
 
 
 function Home() {
