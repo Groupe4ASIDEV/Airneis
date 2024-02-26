@@ -97,7 +97,7 @@ export default {
             }
         });
 
-        return Response.success(context, 'PICTURE_DELETED');
+        return Response.success(context);
     },
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;
@@ -127,6 +127,6 @@ export default {
             });
         });
 
-        return Response.success(context, `${ids.length}_PICTURES_DELETED`);
+        return Response.success(context);
     },
 };

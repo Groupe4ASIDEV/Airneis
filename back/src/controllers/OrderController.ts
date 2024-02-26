@@ -122,7 +122,7 @@ export default {
 
         await order.deleteOne({ _id: id });
 
-        return Response.success(context, 'ORDER_DELETED');
+        return Response.success(context);
     },
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;
@@ -140,6 +140,6 @@ export default {
 
         await Order.deleteMany({ _id: { $in: ids } });
 
-        return Response.success(context, `${ids.length}_ORDERS_DELETED`);
+        return Response.success(context);
     },
 };
