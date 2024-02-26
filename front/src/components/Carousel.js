@@ -5,6 +5,7 @@ import { useProductStore } from '../store';
 import { useCategoryStore } from '../store';
 import { usePictureStore } from '../store';
 import ImageDisplay from './Pictures/Pictures';
+import { Box, CircularProgress } from '@mui/material';
 
 function CarouselBuilder() {
     const { featuredItems, loadFeaturedItems } = useFeaturedItemsStore();
@@ -22,7 +23,11 @@ function CarouselBuilder() {
     const carousel = featuredItems.find((item) => item.type === 'CAROUSEL');
 
     if (!carousel) {
-        return <p>Loading...</p>;
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CircularProgress />
+            </Box>
+        );
     }
 
     return (
