@@ -2,8 +2,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Authentication from '../pages/Authentication';
 import Registration from '../pages/Registration';
-import Products from "../pages/Products";
-import ProductDetail from "../pages/ProductDetail";
+import Cart from '../pages/Cart';
 
 function Index() {
     return (
@@ -17,6 +16,7 @@ function Index() {
                 exact="true"
                 element={<Registration />}
             />
+            <Route path="/cart" exact="true" element={<Cart />} />
         </Routes>
     );
 }

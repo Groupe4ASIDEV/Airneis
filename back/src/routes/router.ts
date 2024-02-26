@@ -7,6 +7,8 @@ import ProductController from '../controllers/ProductController';
 import CategoryController from '../controllers/CategoryController';
 import MaterialController from '../controllers/MaterialController';
 import PictureController from '../controllers/PictureController';
+import FeaturedItemController from '../controllers/FeaturedItemController';
+import OrderController from '../controllers/OrderController';
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -54,7 +56,7 @@ materialRouter.delete('/delete/:id', MaterialController.delete);
 const pictureRouter = new Router({ prefix: '/picture' });
 // picture management
 pictureRouter.get('/', PictureController.getAll);
-pictureRouter.get('/:id', PictureController.getOneById);
+pictureRouter.post('/', PictureController.getOneById);
 pictureRouter.post(
     '/upload',
     koaBody({
@@ -68,6 +70,25 @@ pictureRouter.post(
 );
 pictureRouter.post('/delete', PictureController.deleteMany);
 pictureRouter.delete('/delete/:id', PictureController.delete);
+//----------------------------------------------------//
+const featuredItem = new Router({ prefix: '/featured-item' });
+// Featured Item CRUD
+featuredItem.get('/', FeaturedItemController.getAll);
+featuredItem.post('/', FeaturedItemController.getOneById);
+featuredItem.post('/create', FeaturedItemController.create);
+featuredItem.put('/update/:id', FeaturedItemController.update);
+featuredItem.post('/delete', FeaturedItemController.deleteMany);
+featuredItem.delete('/delete/:id', FeaturedItemController.delete);
+//----------------------------------------------------//
+const order = new Router({ prefix: '/order' });
+// order CRUD
+order.get('/', OrderController.getAll);
+order.get('/', OrderController.getAllByUser);
+order.post('/:id', OrderController.getOneById);
+order.post('/create', OrderController.create);
+order.put('/update/:id', OrderController.update);
+order.post('/delete', OrderController.deleteMany);
+order.delete('/delete/:id', OrderController.delete);
 
 router.use(
     userRouter.routes(),
@@ -79,7 +100,11 @@ router.use(
     categoryRouter.routes(),
     categoryRouter.allowedMethods(),
     materialRouter.routes(),
-    materialRouter.allowedMethods()
+    materialRouter.allowedMethods(),
+    featuredItem.routes(),
+    featuredItem.allowedMethods(),
+    order.routes(),
+    order.allowedMethods()
 );
 
 export default router;
