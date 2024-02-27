@@ -86,7 +86,7 @@ export default {
 
         await Material.deleteOne({ _id: id });
 
-        return Response.success(context, 'MATERIAL_DELETED');
+        return Response.success(context);
     },
 
     deleteMany: async (context: Koa.Context) => {
@@ -108,6 +108,6 @@ export default {
 
         await Material.deleteMany({ _id: { $in: ids } });
 
-        return Response.success(context, `${ids.length}_MATERIAL_DELETED`);
+        return Response.success(context);
     },
 };

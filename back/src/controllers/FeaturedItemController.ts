@@ -112,7 +112,7 @@ export default {
 
         await FeaturedItem.deleteOne({ _id: id });
 
-        return Response.success(context, 'FEATURED_ITEMS_DELETED');
+        return Response.success(context);
     },
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;

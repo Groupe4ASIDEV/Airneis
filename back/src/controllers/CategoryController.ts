@@ -88,7 +88,7 @@ export default {
 
         await Category.deleteOne({ _id: id });
 
-        return Response.success(context, 'CATEGORY_DELETED');
+        return Response.success(context);
     },
 
     deleteMany: async (context: Koa.Context) => {
@@ -110,6 +110,6 @@ export default {
 
         await Category.deleteMany({ _id: { $in: ids } });
 
-        return Response.success(context, `${ids.length}_CATEGORIES_DELETED`);
+        return Response.success(context);
     },
 };
