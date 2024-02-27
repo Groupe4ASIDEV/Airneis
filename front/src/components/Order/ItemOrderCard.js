@@ -1,38 +1,37 @@
 import { Box, Card, Typography } from '@mui/material';
-import { usePictureStore } from '../../store';
+import { usePictureStore, useProductStore } from '../../store';
 import { useEffect } from 'react';
 import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-function ItemOrderCard({ product }) {
-    const { pictures, loadPictures } = usePictureStore();
+function ItemOrderCard({ item }) {
+    console.log('🚀 ~ ItemOrderCard ~ item:', item);
+    const { products, loadProducts } = useProductStore();
 
     useEffect(() => {
-        loadPictures();
+        loadProducts();
     }, []);
 
-    const productImage = pictures.find(
-        (picture) => picture._id === product.pictures[0]
-    );
-
+    const product = products.find((product) => {
+        return product._id === item.productId;
+    });
+    const imageId = product?.pictures[0];
     return (
         <Card
             variant="outlined"
             sx={{ minWidth: 390, marginBottom: 2, paddingRight: 2 }}
         >
             <Box display="flex" alignItems="center">
-                <ImageDisplay id={productImage} />
+                <ImageDisplay id={imageId} />
                 <Box flexGrow={1}>
-                    <Typography variant="body1">{product.label}</Typography>
-                    <Typography variant="body2">
-                        {product.description}
-                    </Typography>
+                    <Typography variant="body1">{item.label}</Typography>
+                    <Typography variant="body2">{item.description}</Typography>
                 </Box>
                 <Box>
                     <Typography variant="body1" ml={2}>
-                        {product.price} €
+                        {item.price} €
                     </Typography>
-                    <Typography variant="body1">{product.quantity}</Typography>
+                    <Typography variant="body1">{item.quantity}</Typography>
                     <DeleteOutlineIcon />
                 </Box>
             </Box>

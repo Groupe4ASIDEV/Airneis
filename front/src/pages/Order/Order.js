@@ -8,16 +8,17 @@ import ItemOrderCard from '../../components/Order/ItemOrderCard';
 function Order() {
     const { userId, orderId } = useParams();
     const { orders, loadOrders } = useOrderStore();
-    const { products, loadProducts } = useProductStore();
+    // const { products, loadProducts } = useProductStore();
 
     useEffect(() => {
         loadOrders(userId);
-        loadProducts();
-    }, [loadOrders, loadProducts, userId]);
+        // loadProducts();
+    }, [loadOrders, userId]);
 
     const order = orders.find((order) => {
         return order._id === orderId;
     });
+    console.log('🚀 ~ order ~ order:', order);
 
     if (!order) {
         return (
@@ -48,20 +49,7 @@ function Order() {
             >
                 <Grid item>
                     {order.items.map((item) => {
-                        const product = products.find(
-                            (product) => product._id === item.item
-                        );
-                        const productWithQuantity = {
-                            ...product,
-                            quantity: item.quantity,
-                        };
-
-                        return (
-                            <ItemOrderCard
-                                key={item._id}
-                                product={productWithQuantity}
-                            />
-                        );
+                        return <ItemOrderCard key={item._id} item={item} />;
                     })}
                 </Grid>
 
