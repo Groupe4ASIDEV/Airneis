@@ -8,12 +8,18 @@ export enum StateEnum {
 }
 
 export type Item = {
-    item: Types.ObjectId;
+    productId: Types.ObjectId;
+    label: string;
+    description: string;
+    price: number;
     quantity: number;
 };
 
 const itemSchema = new mongoose.Schema<Item>({
-    item: { type: Schema.Types.ObjectId },
+    productId: { type: Schema.Types.ObjectId, required: true },
+    label: { type: String, required: true },
+    description: { type: String, required: true },
+    price: { type: Number, required: true },
     quantity: { type: Number, required: true },
 });
 
