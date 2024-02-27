@@ -50,7 +50,11 @@ function OrderList() {
                                 borderBottom: '1px solid black',
                             }}
                         >
-                            <Box sx={{ marginBottom: 3 }}>
+                            <Box
+                                sx={{
+                                    marginBottom: 3,
+                                }}
+                            >
                                 <Typography
                                     variant="h6"
                                     sx={{ marginBottom: 2 }}
@@ -61,7 +65,11 @@ function OrderList() {
 
                                 <Grid
                                     container
-                                    sx={{ justifyContent: 'center' }}
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
                                 >
                                     {groupedOrders[year].map((order) => (
                                         <Link
