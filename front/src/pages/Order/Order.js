@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import useOrderStore from '../../store/orderStore';
 import { useEffect } from 'react';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
-import { useProductStore } from '../../store';
+// import { useProductStore } from '../../store';
 import ItemOrderCard from '../../components/Order/ItemOrderCard';
 
 function Order() {
@@ -18,7 +18,6 @@ function Order() {
     const order = orders.find((order) => {
         return order._id === orderId;
     });
-    console.log('🚀 ~ order ~ order:', order);
 
     if (!order) {
         return (

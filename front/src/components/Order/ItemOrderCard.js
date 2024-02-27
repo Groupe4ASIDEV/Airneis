@@ -5,7 +5,6 @@ import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
 function ItemOrderCard({ item }) {
-    console.log('🚀 ~ ItemOrderCard ~ item:', item);
     const { products, loadProducts } = useProductStore();
 
     useEffect(() => {
