@@ -1,5 +1,5 @@
 import { Box, Card, Typography } from '@mui/material';
-import { usePictureStore, useProductStore } from '../../store';
+import { useProductStore } from '../../store';
 import { useEffect } from 'react';
 import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
