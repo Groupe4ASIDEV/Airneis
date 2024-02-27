@@ -55,7 +55,7 @@ export default {
             !total ||
             !vat
         ) {
-            return Response.badRequest(context);
+            return Response.badRequest(context, 'MISSING_INFORMATION');
         }
 
         const order = new Order({
