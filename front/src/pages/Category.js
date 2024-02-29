@@ -1,12 +1,13 @@
-import {Typography, Box, Link} from '@mui/material';
+import {Typography, Box} from '@mui/material';
 import ImageDisplay from '../components/Pictures/Pictures';
 import HighlightedProducts from "../components/HighlightedProducts";
 import {useEffect, useState} from "react";
 import {useCategoryStore, useProductStore} from "../store";
 import Grid from "@mui/material/Grid";
+import {Link} from "react-router-dom";
 
 
-function Products() {
+function Category() {
 
     const { categories, loadCategories } = useCategoryStore();
     const { products, loadProducts } = useProductStore();
@@ -28,7 +29,7 @@ function Products() {
                             <ImageDisplay product={product} />
                         </Link>
                         <Box className="container">
-                            product.name
+                            product.label
                             product.price
                         </Box>
                     </Grid>
@@ -38,4 +39,4 @@ function Products() {
     );
 }
 
-export default Products;
+export default Category;

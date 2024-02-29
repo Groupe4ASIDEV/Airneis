@@ -1,4 +1,4 @@
-import { Box } from '@mui/material';
+import {Box, Link} from '@mui/material';
 import ImageDisplay from "./Pictures/Pictures";
 import {useEffect, useState} from "react";
 import Grid from "@mui/material/Grid";
@@ -17,16 +17,21 @@ function CategoryList() {
         <div id="categoryList">
             <Grid container spacing={2}>
                 {categories.map(category => (
-                    <Grid item xs={4} key={category.id}>
-                        <Box className="container">
-                            <h2>{category.name}</h2>
-                            <ImageDisplay id={category.id} />
-                        </Box>
+                    <Grid item xs={4} key={category._id}>
+                        <Link to={`/category/${category._id}`}
+                              style={{textDecoration: 'none', backgroundColor: 'brown', display: 'block'}}>
+                            TU ES DANS LE LIEN
+                            <h2>{category.label}</h2>
+                            <Box className="container" style={{backgroundColor: 'yellow'}}>
+                                <ImageDisplay id={category.id}/>
+                            </Box>
+                        </Link>
                     </Grid>
                 ))}
             </Grid>
         </div>
     );
+
 }
 
 

@@ -22,7 +22,7 @@ function ProductDetail() {
             </Grid>
             <Grid item xs={6}>
                 <Box p={2}>
-                    <Typography variant="h4">{product.name}</Typography>
+                    <Typography variant="h4">{product.label}</Typography>
                     <Typography>Prix: {product.price}</Typography>
                     <Typography>Stock: {product.stock}</Typography>
                     <Typography>{product.description}</Typography>

@@ -9,8 +9,6 @@ import Carousel from "../components/Carousel";
 function Home() {
     return (
         <div id="home">
-            <ImageDisplay id={''} />
-            <Carousel />
             <CarouselBuilder />
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
@@ -20,7 +18,7 @@ function Home() {
                 </Typography>
             </Box>
             <Box>
-                <CategoryList></CategoryList>
+                <CategoryList />
                 <HighlightedCategories />
             </Box>
             <Box className="catchphrase">
