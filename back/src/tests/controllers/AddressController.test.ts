@@ -40,44 +40,6 @@ const addresses: Address[] = [
         deletedAt: new Date(),
     },
 ];
-const wrongAddresses: Address[] = [
-    {
-        fullName: 'John Doe',
-        street: '123 Main St',
-        city: 'Anytown',
-        zipCode: '12345',
-        state: 'State',
-        country: 'Country',
-        furtherInformation: 'Apt 456',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deletedAt: new Date(),
-    },
-    {
-        fullName: 'Jane Doe',
-        street: '456 Main St',
-        city: 'Anytown',
-        zipCode: '12345',
-        state: 'State',
-        country: 'Country',
-        furtherInformation: 'Apt 456',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deletedAt: new Date(),
-    },
-    {
-        fullName: 'John Doe',
-        street: '456 Main St',
-        city: 'Anytown',
-        zipCode: '12345',
-        state: 'State',
-        country: 'Country',
-        furtherInformation: 'Apt 456',
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        deletedAt: new Date(),
-    },
-];
 
 describe('AddressController', () => {
     afterEach(() => {
