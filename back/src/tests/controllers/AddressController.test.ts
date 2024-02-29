@@ -89,7 +89,7 @@ describe('AddressController', () => {
     describe('getOneById method', () => {
         it('should return a 400 error', async () => {
             const mockFindById = jest.spyOn(Address, 'findById');
-            mockFindById.mockResolvedValue(null);
+            mockFindById.mockResolvedValue(addresses[0]);
 
             const ctx = {
                 params: {
@@ -132,6 +132,29 @@ describe('AddressController', () => {
             expect(ctx.status).toBe(404);
 
             mockFindById.mockRestore();
+        });
+        it('should return an address', async () => {
+            const mockFindById = jest.spyOn(Address, 'findById');
+            mockFindById.mockResolvedValue(addresses[0]);
+
+            const ctx = {
+                params: {
+                    id: '123',
+                },
+            } as unknown as Koa.Context;
+
+            await AddressController.getOneById(ctx);
+
+            const expectedResponse = {
+                data: addresses[0],
+                success: true,
+            };
+
+            expect(ctx.body).toBeDefined();
+            expect(ctx.body).toEqual(expectedResponse);
+            expect(ctx.status).toBe(200);
+
+            mockFindById.mockRestore
         });
     });
 });
