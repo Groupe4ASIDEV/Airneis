@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {useCategoryStore, useProductStore} from "../store";
 import Grid from "@mui/material/Grid";
 import {Link} from "react-router-dom";
+import BackButton from "../components/BackButton";
 
 
 function Category() {
@@ -35,6 +36,7 @@ function Category() {
                     </Grid>
                 ))}
             </Grid>
+            <BackButton />
         </div>
     );
 }
