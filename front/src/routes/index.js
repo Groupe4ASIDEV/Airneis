@@ -12,7 +12,7 @@ function Index() {
             <Route path="/" exact="true" element={<Home />} />
             <Route path="/category/:id" exact="true" element={<Category />} />
             <Route path="/auth" exact="true" element={<Authentication />} />
-            <Route path="/product_detail" exact="true" element={<ProductDetail />} />
+            <Route path="/product/:id" exact="true" element={<ProductDetail />} />
             <Route
                 path="/registration"
                 exact="true"

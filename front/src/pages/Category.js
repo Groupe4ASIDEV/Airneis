@@ -25,12 +25,12 @@ function Category() {
             <Grid container spacing={2}>
                 {products.map(product => (
                     <Grid item xs={4} key={product.id}>
-                        <Link to={`/products/${product.id}`} style= "textDecoration: 'none'">
+                        <Link to={`/product/${product.id}`} style= {{textDecoration: 'none'}}>
                             <ImageDisplay product={product} />
                         </Link>
                         <Box className="container">
-                            product.label
-                            product.price
+                            {product.label}
+                            {product.price}
                         </Box>
                     </Grid>
                 ))}
