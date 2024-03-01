@@ -11,7 +11,7 @@ function CarouselBuilder() {
     const { featuredItems, loadFeaturedItems } = useFeaturedItemsStore();
     const { products, loadProducts } = useProductStore();
     const { categories, loadCategories } = useCategoryStore();
-    const { pictures, loadPictures } = usePictureStore();
+    const { loadPictures } = usePictureStore();
 
     useEffect(() => {
         loadFeaturedItems();

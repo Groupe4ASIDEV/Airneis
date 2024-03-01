@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Container } from '@mui/material';
 import Index from './routes';
-import Header from './components/header/Header';
+import Header from './components/Header/Header';
+import BasicMenu from './components/Header/Menu';
 import Footer from './components/Footer';
-import BasicMenu from './components/header/Menu';
 
 function App() {
     const [anchorEl, setAnchorEl] = useState(null);
