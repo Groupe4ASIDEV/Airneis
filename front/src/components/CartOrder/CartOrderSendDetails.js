@@ -1,25 +1,23 @@
-import { useParams } from 'react-router-dom';
-import useOrderStore from '../../store/orderStore';
+import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import { Box, CircularProgress, Grid, Typography } from '@mui/material';
-// import { useProductStore } from '../../store';
-import ItemOrderCard from '../../components/Order/ItemOrderCard';
+import useOrderStore from '../../store/orderStore';
+import { useParams } from 'react-router-dom';
 
-function Order() {
+function CartOrderSendDetails({ cart }) {
     const { userId, orderId } = useParams();
     const { orders, loadOrders } = useOrderStore();
-    // const { products, loadProducts } = useProductStore();
 
     useEffect(() => {
-        loadOrders(userId);
-        // loadProducts();
-    }, [loadOrders, userId]);
+        if (orderId) {
+            loadOrders(userId);
+        }
+    }, [loadOrders, userId, orderId]);
 
     const order = orders.find((order) => {
         return order._id === orderId;
     });
 
-    if (!order) {
+    if (!order && !cart) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CircularProgress />
@@ -27,42 +25,14 @@ function Order() {
         );
     }
 
-    const orderDate = new Date(order.createdAt).toLocaleDateString();
-
     return (
-        <Box>
-            <Box>
-                <Typography variant="h4">
-                    Commande #{order._id.slice(0, 7)} - {orderDate} -{' '}
-                    {order.state}
-                </Typography>
-            </Box>
-            <Grid
-                container
-                spacing={2}
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-evenly',
-                    mt: 2,
-                }}
-            >
-                <Grid item>
-                    {order.items.map((item) => {
-                        return <ItemOrderCard key={item._id} item={item} />;
-                    })}
-                </Grid>
-
-                <Grid item xs={12} md={4}>
-                    <Box
-                        sx={{
-                            width: '100%',
-                            paddingBottom: 2,
-                            borderBottom: '1px solid black',
-                        }}
-                    >
-                        <Typography>TOTAL {order.total} €</Typography>
-                        <Typography>TVA {order.vat} €</Typography>
-                    </Box>
+        <>
+            {cart ? (
+                <Button variant="contained" sx={{ marginTop: 2 }}>
+                    Passer la commande
+                </Button>
+            ) : (
+                <>
                     <Box
                         sx={{
                             width: '100%',
@@ -125,10 +95,10 @@ function Order() {
                             {order.paymentMethod}
                         </Typography>
                     </Box>
-                </Grid>
-            </Grid>
-        </Box>
+                </>
+            )}
+        </>
     );
 }
 
-export default Order;
+export default CartOrderSendDetails;

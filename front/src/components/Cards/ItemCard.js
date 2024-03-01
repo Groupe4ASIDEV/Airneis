@@ -1,20 +1,31 @@
-import { Box, Card, Typography } from '@mui/material';
+import { Box, Card, CircularProgress, Typography } from '@mui/material';
 import { useProductStore } from '../../store';
 import { useEffect } from 'react';
 import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 
-function ItemOrderCard({ item }) {
+function ItemCard({ item }) {
     const { products, loadProducts } = useProductStore();
 
     useEffect(() => {
         loadProducts();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    if (!products) {
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <CircularProgress />
+            </Box>
+        );
+    }
 
     const product = products.find((product) => {
         return product._id === item.productId;
     });
+
     const imageId = product?.pictures[0];
+
     return (
         <Card
             variant="outlined"
@@ -28,7 +39,7 @@ function ItemOrderCard({ item }) {
                 </Box>
                 <Box>
                     <Typography variant="body1" ml={2}>
-                        {item.price} €
+                        {item.price * 1.2} €
                     </Typography>
                     <Typography variant="body1">{item.quantity}</Typography>
                     <DeleteOutlineIcon />
@@ -38,4 +49,4 @@ function ItemOrderCard({ item }) {
     );
 }
 
-export default ItemOrderCard;
+export default ItemCard;

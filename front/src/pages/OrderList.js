@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import useOrderStore from '../../store/orderStore';
+import useOrderStore from '../store/orderStore';
 import { Link, useParams } from 'react-router-dom';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
-import OrderCard from '../../components/Order/OrderCard';
+import OrderCard from '../components/Cards/OrderCard';
 
 function OrderList() {
     const { userId } = useParams();
