@@ -2,9 +2,8 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Authentication from '../pages/Authentication';
 import Registration from '../pages/Registration';
-import Cart from '../pages/Cart';
-import OrderList from '../pages/Order/OrderList';
-import Order from '../pages/Order/Order';
+import CartOrder from '../pages/CartOrder';
+import OrderList from '../pages/OrderList';
 
 function Index() {
     return (
@@ -16,13 +15,13 @@ function Index() {
                 exact="true"
                 element={<Registration />}
             />
-            <Route path="/cart" exact="true" element={<Cart />} />
+            <Route path="/cart" exact="true" element={<CartOrder />} />
             <Route
                 path="/orders/:userId"
                 exact="true"
                 element={<OrderList />}
             />
-            <Route path="/orders/:userId/:orderId" element={<Order />} />
+            <Route path="/orders/:userId/:orderId" element={<CartOrder />} />
         </Routes>
     );
 }
