@@ -1,10 +1,6 @@
 import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
-import ImageDisplay from '../components/Pictures/Pictures';
 import CategoryList from "../components/CategoryList";
-import HighlightedCategories from '../components/HighlightedCategories';
-import Carousel from "../components/Carousel";
-
 
 function Home() {
     return (
@@ -19,7 +15,6 @@ function Home() {
             </Box>
             <Box>
                 <CategoryList />
-                <HighlightedCategories />
             </Box>
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">

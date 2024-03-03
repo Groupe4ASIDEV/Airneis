@@ -1,43 +1,46 @@
-import { Box } from '@mui/material';
+import {Box, useMediaQuery} from '@mui/material';
 import ImageDisplay from './Pictures/Pictures';
 import { useEffect } from 'react';
 import Grid from '@mui/material/Grid';
 import { useCategoryStore } from '../store';
 import { Link } from 'react-router-dom';
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import ImageListItem from "@mui/material/ImageListItem";
 
 function CategoryList() {
     const { categories, loadCategories } = useCategoryStore();
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
+
 
     useEffect(() => {
         loadCategories();
     }, [loadCategories]);
 
     return (
-        <div id="categoryList">
-            <Grid container spacing={2}>
+
+        <Box id="categoryList" style={{ padding: 20 }}>
+            <Grid container spacing={4}>
                 {categories.map((category) => (
-                    <Grid item xs={4} key={category._id}>
+                    <Grid item xs={isSmallScreen ? 12 : 4} key={category._id}>
                         <Link
                             to={`/category/${category._id}`}
                             style={{
                                 textDecoration: 'none',
-                                backgroundColor: 'brown',
                                 display: 'block',
                             }}
                         >
-                            TU ES DANS LE LIEN
-                            <h2>{category.label}</h2>
-                            <Box
-                                className="container"
-                                style={{ backgroundColor: 'yellow' }}
-                            >
+                            <ImageListItem key={category.id}>
                                 <ImageDisplay id={category.id} />
-                            </Box>
+                                <ImageListItemBar
+                                    title={category.label}
+                                    subtitle={category.description}
+                                />
+                            </ImageListItem>
                         </Link>
                     </Grid>
                 ))}
             </Grid>
-        </div>
+        </Box>
     );
 }
 

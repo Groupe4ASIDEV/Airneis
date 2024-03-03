@@ -4,7 +4,7 @@ import Authentication from '../pages/Authentication';
 import Registration from '../pages/Registration';
 import Cart from '../pages/Cart';
 import Category from '../pages/Category';
-import ProductDetail from '../pages/ProductDetail';
+import Product from '../pages/Product';
 
 function Index() {
     return (
@@ -12,7 +12,7 @@ function Index() {
             <Route path="/" exact="true" element={<Home />} />
             <Route path="/category/:id" exact="true" element={<Category />} />
             <Route path="/auth" exact="true" element={<Authentication />} />
-            <Route path="/product/:id" exact="true" element={<ProductDetail />} />
+            <Route path="/product/:id" exact="true" element={<Product />} />
             <Route
                 path="/registration"
                 exact="true"

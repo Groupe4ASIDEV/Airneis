@@ -1,19 +1,13 @@
-import { useHistory } from 'react-router-dom';
+import { useNavigate, } from 'react-router-dom';
 import Button from '@mui/material/Button';
 
-function BackButton() {
-    const history = useHistory();
+export default function BackButton() {
+    const navigate = useNavigate();
 
-    const handleGoBack = () => {
-        history.goBack();
-    };
+    function BackButton() {
 
-    return (
-        <Button variant="contained" onClick={handleGoBack}>
-            Retour
-
-        </Button>
-    );
+        return (
+            <Button onClick={() => navigate(-1)}>Retour</Button>
+        );
+    }
 }
-
-export default BackButton;
