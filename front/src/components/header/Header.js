@@ -7,9 +7,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from '@mui/material';
+import { Badge, Link } from '@mui/material';
+import useCartStore from '../../store/cartStore';
 
 function Header({ onMenuIconClick }) {
+    const { cart } = useCartStore();
+    const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
     const navigate = useNavigate();
 
     const handleCartClick = () => {
@@ -51,7 +54,9 @@ function Header({ onMenuIconClick }) {
                                 mr: 2,
                             }}
                         >
-                            <ShoppingCartIcon />
+                            <Badge badgeContent={cartCount} color="error">
+                                <ShoppingCartIcon />
+                            </Badge>
                         </IconButton>
                         <IconButton
                             size="large"

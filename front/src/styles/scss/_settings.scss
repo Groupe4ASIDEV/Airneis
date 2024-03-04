@@ -21,12 +21,20 @@
     text-decoration: none;
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
+main {
+    width: 100%;
     text-align: center;
+    & .MuiContainer-root {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+    }
 }
 
-main {
-    text-align: center;
+.container {
+display: flex;
+flex-direction: column;
+text-align: center;
 }
+

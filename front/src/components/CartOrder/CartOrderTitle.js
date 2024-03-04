@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 
-function CartOrderTitle({ order, cart }) {
-    if (!order && !cart) {
+function CartOrderTitle({ isOrder, isCart }) {
+    if (!isOrder && !isCart) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CircularProgress />
@@ -14,7 +14,7 @@ function CartOrderTitle({ order, cart }) {
     return (
         <Box>
             <Typography variant="h4">
-                {cart
+                {isCart
                     ? 'Panier'
                     : `Commande #${'order._id.slice(0, 7)'} - ${'orderDate'} - ${'order.state'}`}
             </Typography>

@@ -1,38 +1,47 @@
-import React, { useState, useEffect } from 'react';
-import { Typography, Box } from '@mui/material';
-import axios from 'axios';
+import {Box, useMediaQuery} from '@mui/material';
+import ImageDisplay from './Pictures/Pictures';
+import { useEffect } from 'react';
+import Grid from '@mui/material/Grid';
+import { useCategoryStore } from '../store';
+import { Link } from 'react-router-dom';
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import ImageListItem from "@mui/material/ImageListItem";
 
-const CategoryList = () => {
-    const [categories, setCategories] = useState([]);
+function CategoryList() {
+    const { categories, loadCategories } = useCategoryStore();
+    const isSmallScreen = useMediaQuery('(max-width:600px)');
+
 
     useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/category');
-                setCategories(response.data);
-            } catch (error) {
-                console.error('Erreur lors du chargement des catégories :', error);
-            }
-        };
-
-        fetchCategories();
-
-    }, []);
+        loadCategories();
+    }, [loadCategories]);
 
     return (
-        <div>
-            <Typography variant="h4" component="h2" gutterBottom>
-                Toutes les catégories
-            </Typography>
-            <ul>
-                {categories.map(category => (
-                    <li key={category._id}>
-                        <strong>{category.label}</strong>: {category.description}
-                    </li>
+
+        <Box id="categoryList" style={{ padding: 20 }}>
+            <Grid container spacing={4}>
+                {categories.map((category) => (
+                    <Grid item xs={isSmallScreen ? 12 : 4} key={category._id}>
+                        <Link
+                            to={`/category/${category._id}`}
+                            style={{
+                                textDecoration: 'none',
+                                display: 'block',
+                            }}
+                        >
+                            <ImageListItem key={category.id}>
+                                <ImageDisplay id={category.id} />
+                                <ImageListItemBar
+                                    title={category.label}
+                                    subtitle={category.description}
+                                />
+                            </ImageListItem>
+                        </Link>
+                    </Grid>
                 ))}
-            </ul>
-        </div>
+            </Grid>
+        </Box>
     );
-};
+}
 
 export default CategoryList;
