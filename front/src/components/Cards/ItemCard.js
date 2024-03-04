@@ -10,20 +10,22 @@ import { useEffect } from 'react';
 import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import useCartStore from '../../store/cartStore';
-import useOrderStore from '../../store/orderStore';
 
 function ItemCard({ itemId, isCart, isOrder }) {
+    console.log(
+        '🚀 ~ ItemCard ~ itemId, isCart, isOrder:',
+        itemId,
+        isCart,
+        isOrder
+    );
     const { cart, updateCart, removeFromCart } = useCartStore();
-    const { order, loadOrder } = useOrderStore();
     let item = {};
 
-    useEffect(() => {
-        loadOrder();
-    }, [cart]);
+    useEffect(() => {}, [cart]);
 
     if (isCart && !isOrder) {
         item = cart.find((item) => {
-            return item.id === itemId;
+            return item._id === itemId;
         });
     } else if (!isCart && isOrder) {
         return <Box>Ceci est une commande</Box>;
@@ -36,23 +38,6 @@ function ItemCard({ itemId, isCart, isOrder }) {
             </Box>
         );
     }
-
-    // useEffect(() => {
-    //     loadProducts();
-    // }, [loadProducts]);
-
-    // if (!products) {
-    //     return (
-    //         <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-    //             <CircularProgress />
-    //         </Box>
-    //     );
-    // }
-
-    // const product = products.find((product) => {
-    //     return product._id === item.productId;
-    // });
-    // console.log('🚀 ~ product ~ product:', product);
 
     const handleQuantityChange = (event) => {
         let newQuantity = parseInt(event.target.value, 10);
