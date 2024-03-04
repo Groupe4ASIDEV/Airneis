@@ -4,7 +4,7 @@ import Authentication from '../pages/Authentication';
 import Registration from '../pages/Registration';
 import Category from '../pages/Category';
 import Product from '../pages/Product';
-import OrderList from '../pages/Order/OrderList';
+import OrderList from '../pages/OrderList';
 import CartOrder from '../pages/CartOrder';
 
 function Index() {
