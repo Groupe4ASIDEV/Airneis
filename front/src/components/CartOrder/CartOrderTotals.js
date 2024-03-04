@@ -1,10 +1,10 @@
 import { Box, Typography } from '@mui/material';
 
-function CartOrderTotals({ cart, items }) {
+function CartOrderTotals({ isCart, items }) {
     let total;
     let vat;
 
-    if (cart) {
+    if (isCart) {
         total = calculateCartATITotal();
         vat = calculateCartVATTotal();
     } else {

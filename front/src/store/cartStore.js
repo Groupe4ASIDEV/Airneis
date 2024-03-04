@@ -6,7 +6,8 @@ const useCartStore = create(
         (set, get) => ({
             cart: [],
             addToCart: (product) => get().updateCart(product, 1),
-            removeFromCart: (product) => get().updateCart(product, -1),
+            removeFromCart: (product) =>
+                get().updateCart(product, -product.quantity),
             updateCart: (product, change) => {
                 let cart = get().cart;
                 const existingProductIndex = cart.findIndex(

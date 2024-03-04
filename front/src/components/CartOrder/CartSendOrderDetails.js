@@ -1,11 +1,14 @@
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import useOrderStore from '../../store/orderStore';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { UidContext } from '../Authentication/UserContext';
 
-function CartOrderSendDetails({ cart }) {
+function CartSendOrderDetails({ isCart }) {
     const { userId, orderId } = useParams();
     const { orders, loadOrders } = useOrderStore();
+    const { isAuth } = UidContext;
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (orderId) {
@@ -17,7 +20,16 @@ function CartOrderSendDetails({ cart }) {
         return order._id === orderId;
     });
 
-    if (!order && !cart) {
+    const handleSendCart = (event) => {
+        event.preventDefault();
+        if (!isAuth) {
+            navigate('/auth');
+        } else {
+            navigate('/');
+        }
+    };
+
+    if (!order && !isCart) {
         return (
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <CircularProgress />
@@ -27,8 +39,12 @@ function CartOrderSendDetails({ cart }) {
 
     return (
         <>
-            {cart ? (
-                <Button variant="contained" sx={{ marginTop: 2 }}>
+            {isCart ? (
+                <Button
+                    variant="contained"
+                    sx={{ marginTop: 2 }}
+                    onClick={handleSendCart}
+                >
                     Passer la commande
                 </Button>
             ) : (
@@ -101,4 +117,4 @@ function CartOrderSendDetails({ cart }) {
     );
 }
 
-export default CartOrderSendDetails;
+export default CartSendOrderDetails;

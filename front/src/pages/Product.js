@@ -13,7 +13,7 @@ import useCartStore from '../store/cartStore';
 function Product() {
     const { productId } = useParams();
     const { products } = useProductStore();
-    const { addToCart, removeFromCart } = useCartStore();
+    const { addToCart } = useCartStore();
     const product = products.find((product) => product.id === productId);
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
@@ -23,10 +23,6 @@ function Product() {
 
     const handleAddToCart = () => {
         addToCart(product);
-    };
-
-    const handleRemoveFromCart = () => {
-        removeFromCart(product);
     };
 
     return (
@@ -61,12 +57,6 @@ function Product() {
                         <Typography>{product.description}</Typography>
                         <Button variant="contained" onClick={handleAddToCart}>
                             Ajouter au panier
-                        </Button>
-                        <Button
-                            variant="contained"
-                            onClick={handleRemoveFromCart}
-                        >
-                            Retirer au panier
                         </Button>
                     </Box>
                 </Grid>
