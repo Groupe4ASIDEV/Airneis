@@ -1,4 +1,4 @@
-import {Typography, Box, Container, ListItem, List, ListItemText} from '@mui/material';
+import {Typography, Container, ListItem, List, ListItemText} from '@mui/material';
 
 
 function LegalMentions() {

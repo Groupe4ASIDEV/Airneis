@@ -1,7 +1,7 @@
 import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
 import CategoryList from "../components/CategoryList";
-import CookieConsent from "./CookieConsent";
+import CookieConsent from "../components/CookieConsent";
 
 function Home() {
     return (
