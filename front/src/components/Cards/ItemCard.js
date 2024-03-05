@@ -10,25 +10,35 @@ import { useEffect } from 'react';
 import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import useCartStore from '../../store/cartStore';
+import useOrderStore from '../../store/orderStore';
+import { useParams } from 'react-router-dom';
 
 function ItemCard({ itemId, isCart, isOrder }) {
-    console.log(
-        '🚀 ~ ItemCard ~ itemId, isCart, isOrder:',
-        itemId,
-        isCart,
-        isOrder
-    );
     const { cart, updateCart, removeFromCart } = useCartStore();
-    let item = {};
+    const { orders, loadOrders } = useOrderStore();
+    const { userId, orderId } = useParams('userId');
 
-    useEffect(() => {}, [cart]);
+    let item = {}; // Will be used to centralize the item to display, regardless of the data source
+
+    useEffect(() => {
+        if (userId && orderId) {
+            loadOrders(userId);
+        }
+    }, [cart, loadOrders, userId, orderId]);
 
     if (isCart && !isOrder) {
         item = cart.find((item) => {
             return item._id === itemId;
         });
-    } else if (!isCart && isOrder) {
-        return <Box>Ceci est une commande</Box>;
+    }
+    if (!isCart && isOrder) {
+        const order = orders.find((order) => {
+            console.log('🚀 ~ ItemCard ~ order:', order);
+            return order._id === orderId;
+        });
+        item = order.items.find((item) => {
+            return item.productId === itemId;
+        });
     }
 
     if (!item) {
@@ -75,10 +85,14 @@ function ItemCard({ itemId, isCart, isOrder }) {
                         value={item.quantity}
                         onChange={handleQuantityChange}
                         inputProps={{ min: '1', step: '1' }}
+                        disabled={isOrder && item.state !== 'LIVRÉE'}
                     >
                         {item.quantity}
                     </TextField>
-                    <IconButton onClick={handleRemoveProduct}>
+                    <IconButton
+                        onClick={handleRemoveProduct}
+                        disabled={isOrder && item.state !== 'LIVRÉE'}
+                    >
                         <DeleteOutlineIcon />
                     </IconButton>
                 </Box>

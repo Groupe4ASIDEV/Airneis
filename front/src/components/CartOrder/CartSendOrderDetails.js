@@ -11,7 +11,7 @@ function CartSendOrderDetails({ isCart }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (orderId) {
+        if (userId && orderId) {
             loadOrders(userId);
         }
     }, [loadOrders, userId, orderId]);

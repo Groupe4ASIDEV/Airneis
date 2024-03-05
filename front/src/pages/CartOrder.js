@@ -3,7 +3,7 @@ import { Box, CircularProgress, Grid } from '@mui/material';
 import ItemCard from '../components/Cards/ItemCard';
 import CartOrderTitle from '../components/CartOrder/CartOrderTitle';
 import CartOrderTotals from '../components/CartOrder/CartOrderTotals';
-import CartOrderSendDetails from '../components/CartOrder/CartSendOrderDetails';
+import CartSendOrderDetails from '../components/CartOrder/CartSendOrderDetails';
 import useCartStore from '../store/cartStore';
 import useOrderStore from '../store/orderStore';
 import useProductStore from '../store/productStore';
@@ -29,23 +29,7 @@ function CartOrder() {
         }
     }, [isOrder, userId, loadOrders, loadProducts, cart]);
 
-    let items = []; // Will be used to format the items to display, regardless of the data source
-
-    if (!isCart && isOrder) {
-        // Update Items if the page is an order
-        const order = orders.find((order) => order._id === orderId);
-        console.log('🚀 ~ CartOrder ~ order:', order);
-        if (order && order.items) {
-            items = order.items.map((orderItem) => {
-                const product = products.find((p) => p.id === orderItem.id);
-                console.log(
-                    '🚀 ~ items=currentOrder.items.map ~ product:',
-                    product
-                );
-                return { ...product, quantity: orderItem.quantity };
-            });
-        }
-    }
+    let items = []; // Will be used to centralize the items to display, regardless of the data source
 
     if (isCart && !isOrder) {
         // Update Items if the page is a cart
@@ -54,10 +38,20 @@ function CartOrder() {
             const parsedData = JSON.parse(cartData);
             const cart = parsedData.state.cart;
             items = cart;
-            console.log('🚀 ~ CartOrder ~ cart:', cart);
         }
         if (items.length === 0 || !items) {
             return <Box>Votre Panier est vide.</Box>;
+        }
+    }
+
+    if (!isCart && isOrder) {
+        // Update Items if the page is an order
+        const order = orders.find((order) => order._id === orderId);
+        if (order && order.items) {
+            items = order.items.map((orderItem) => {
+                const product = products.find((p) => p.id === orderItem.id);
+                return { ...product, quantity: orderItem.quantity };
+            });
         }
     }
 
@@ -68,8 +62,6 @@ function CartOrder() {
             </Box>
         );
     }
-
-    console.log('🚀 ~ CartOrder ~ items:', items);
 
     return (
         <Box>
@@ -88,7 +80,7 @@ function CartOrder() {
                         const itemId = item._id || item.id;
                         return (
                             <ItemCard
-                                key={itemId}
+                                key={item._id}
                                 itemId={itemId}
                                 isCart={isCart}
                                 isOrder={isOrder}
@@ -98,7 +90,7 @@ function CartOrder() {
                 </Grid>
                 <Grid item xs={12} md={4}>
                     <CartOrderTotals isCart={isCart} items={items} />
-                    <CartOrderSendDetails isCart={isCart} />
+                    <CartSendOrderDetails isCart={isCart} />
                 </Grid>
             </Grid>
         </Box>
