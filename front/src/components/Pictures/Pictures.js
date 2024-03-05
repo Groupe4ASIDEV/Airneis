@@ -37,6 +37,4 @@ const ImageDisplay = ({ id }) => {
     );
 };
 
-// const ImageDisplay = memo(ImageDisplayComponent);
-
 export default ImageDisplay;

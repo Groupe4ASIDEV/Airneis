@@ -9,6 +9,7 @@ export default {
         if (orders.length == 0) {
             return Response.resourceNotFound(context, 'NO_ORDER_FOUND');
         }
+
         return Response.success(context, orders);
     },
     getAllByUser: async (context: Koa.Context) => {
@@ -54,14 +55,13 @@ export default {
             !total ||
             !vat
         ) {
-            return Response.badRequest(context);
+            return Response.badRequest(context, 'MISSING_INFORMATION');
         }
 
         const order = new Order({
             user,
             shippingAddress,
             billingAddress,
-            state: 'PREPARATION',
             items,
             total,
             vat,
@@ -74,12 +74,20 @@ export default {
     update: async (context: Koa.Context) => {
         const id = context.params.id;
         const body = context.request.body;
-        const { user, shippingAddress, billingAddress, items, total, vat } =
-            body;
+        const {
+            user,
+            shippingAddress,
+            billingAddress,
+            state,
+            items,
+            total,
+            vat,
+        } = body;
         const allowedUpdates = {
             user,
             shippingAddress,
             billingAddress,
+            state,
             items,
             total,
             vat,
@@ -114,7 +122,7 @@ export default {
 
         await order.deleteOne({ _id: id });
 
-        return Response.success(context, 'ORDER_DELETED');
+        return Response.success(context);
     },
     deleteMany: async (context: Koa.Context) => {
         const body = context.request.body;
@@ -132,6 +140,6 @@ export default {
 
         await Order.deleteMany({ _id: { $in: ids } });
 
-        return Response.success(context, `${ids.length}_ORDERS_DELETED`);
+        return Response.success(context);
     },
 };
