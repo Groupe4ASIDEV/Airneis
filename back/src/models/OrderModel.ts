@@ -2,6 +2,7 @@ import mongoose, { model, Types, Schema } from 'mongoose';
 import { Address } from './AddressModel';
 
 export enum StateEnum {
+    CheckingOut = 'EN ATTENTE',
     Shipping = 'EN COURS',
     Delivered = 'LIVRÉE',
     Canceled = 'ANNULÉE',
@@ -11,6 +12,7 @@ export type Item = {
     productId: Types.ObjectId;
     label: string;
     description: string;
+    pictures: Types.ObjectId[];
     price: number;
     quantity: number;
 };
@@ -20,6 +22,7 @@ const itemSchema = new mongoose.Schema<Item>({
     label: { type: String, required: true },
     description: { type: String, required: true },
     price: { type: Number, required: true },
+    pictures: { type: [Types.ObjectId], required: true },
     quantity: { type: Number, required: true },
 });
 
@@ -43,7 +46,7 @@ const orderSchema = new mongoose.Schema<Order>({
     state: {
         type: String,
         enum: Object.values(StateEnum),
-        default: StateEnum.Shipping,
+        default: StateEnum.CheckingOut,
     },
     items: { type: [itemSchema], required: true },
     total: { type: Number, required: true },
