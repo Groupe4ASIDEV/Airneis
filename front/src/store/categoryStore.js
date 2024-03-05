@@ -16,7 +16,7 @@ const useCategoryStore = create(
                     set({ categories: response });
                 } catch (error) {
                     set({
-                        error: 'Impossible de charger les catégories.',
+                        error: 'Categories are not available',
                     });
                 }
             }
@@ -29,7 +29,7 @@ const fetchCategories = async () => {
         const response = await axios.get(`${baseUrl}/category`);
         return response.data.data;
     } catch (error) {
-        console.error('Erreur lors du chargement des catégories:', error);
+        console.error('Error while fetching categories :', error);
         throw error;
     }
 };

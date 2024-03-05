@@ -14,10 +14,9 @@ const useProductStore = create(
                     const response = await fetchProducts();
                     set({ products: response });
                 } catch (error) {
-                    console.error(
-                        'Erreur lors du chargement des produits:',
-                        error
-                    );
+                    set({
+                        error: 'Products are not available',
+                    });
                 }
             }
         },
@@ -29,7 +28,7 @@ const fetchProducts = async () => {
         const response = await axios.get(`${baseUrl}/product`);
         return response.data.data;
     } catch (error) {
-        console.error('Erreur lors du chargement des produits:', error);
+        console.error('Error while fetching products :', error);
         throw error;
     }
 };

@@ -22,7 +22,6 @@ function Home() {
                     Les Highlanders du moment
                 </Typography>
             </Box>
-
         </div>
     );
 }
