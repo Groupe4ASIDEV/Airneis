@@ -1,30 +1,9 @@
 import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
-import HighlightedCategories from '../components/HighlightedCategories';
-// import HighlightedProducts from '../components/HighlightedProducts';
-// import axios from 'axios';
+import CategoryList from "../components/CategoryList";
+import CookieConsent from "../components/CookieConsent";
 
 function Home() {
-    // const [products, setProducts] = useState([]);
-
-    // useEffect(() => {
-    //     const fetchProducts = async () => {
-    //         try {
-    //             const response = await axios.get(
-    //                 'http://localhost:3000/products'
-    //             ); // Remplacez l'URL par votre endpoint API
-    //             setProducts(response.data);
-    //         } catch (error) {
-    //             console.error(
-    //                 'Erreur lors du chargement des produits :',
-    //                 error
-    //             );
-    //         }
-    //     };
-
-    //     fetchProducts();
-    // }, []);
-
     return (
         <div id="home">
             <CarouselBuilder />
@@ -35,13 +14,15 @@ function Home() {
                     Nos meubles sont immortels
                 </Typography>
             </Box>
-            <HighlightedCategories />
+            <Box>
+                <CategoryList />
+            </Box>
             <Box className="catchphrase">
                 <Typography variant="h6" component="p">
                     Les Highlanders du moment
                 </Typography>
             </Box>
-            {/* <HighlightedProducts products={products} /> */}
+
         </div>
     );
 }
