@@ -1,0 +1,16 @@
+#categoryList {
+    & .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        height: 20rem;
+        margin: 3%;
+    }
+    & img {
+        width: 30%;
+        height: 100%;
+        object-fit: cover;
+        border: solid black;
+    }
+}
