@@ -1,6 +1,7 @@
 import { Typography, Box } from '@mui/material';
 import CarouselBuilder from '../components/Carousel';
 import CategoryList from "../components/CategoryList";
+import CookieConsent from "./CookieConsent";
 
 function Home() {
     return (
@@ -21,8 +22,8 @@ function Home() {
                     Les Highlanders du moment
                 </Typography>
             </Box>
-        </div>
 
+        </div>
     );
 }
 

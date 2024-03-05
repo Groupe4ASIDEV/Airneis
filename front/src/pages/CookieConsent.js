@@ -1,18 +1,16 @@
-import { Typography, Box } from '@mui/material';
-import CarouselBuilder from '../components/Carousel';
-import ImageDisplay from '../components/Pictures/Pictures';
-import CategoryList from "../components/CategoryList";
-import HighlightedCategories from '../components/HighlightedCategories';
-import Carousel from "../components/Carousel";
-
+import React, { useEffect } from 'react';
 
 function CookieConsent() {
-    return (
-        <script type="text/javascript" src="https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js"
-                charSet="UTF-8"></script>
-        <script type="text/javascript" charset="UTF-8">
-            document.addEventListener('DOMContentLoaded', function () {
-            cookieconsent.run({
+    useEffect(() => {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = 'https://www.termsfeed.com/public/cookie-consent/4.1.0/cookie-consent.js';
+        script.charset = 'UTF-8';
+        script.async = true;
+        document.body.appendChild(script);
+
+        script.onload = () => {
+            window.cookieconsent.initialise({
                 "notice_banner_type": "simple",
                 "consent_type": "express",
                 "palette": "light",
@@ -24,9 +22,15 @@ function CookieConsent() {
                 "website_name": "www.airneis.com",
                 "website_privacy_policy_url": "www.airneis.com/confidentialite"
             });
-        });
-    </script>
-    <a href="#" id="open_preferences_center">Update cookies preferences</a>
+        };
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
+    return (
+        <a href="#" id="open_preferences_center">Update cookies preferences</a>
     );
 }
 

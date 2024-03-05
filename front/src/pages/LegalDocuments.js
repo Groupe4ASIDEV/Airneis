@@ -660,8 +660,4 @@ function PrivacyPolicy() {
     );
 }
 
-
-
-export default LegalMentions;
-export GeneralUseConditions;
-export PrivacyPolicy;
+export { LegalMentions, GeneralUseConditions, PrivacyPolicy };
