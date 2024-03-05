@@ -4,7 +4,7 @@
     "description": "",
     "main": "server",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "test": "jest",
         "watch": "ts-node-dev --respawn --files --clear --transpile-only src/server.ts"
     },
     "author": "",
@@ -28,11 +28,14 @@
     "devDependencies": {
         "@types/bcrypt": "^5.0.2",
         "@types/dotenv": "^8.2.0",
+        "@types/jest": "^29.5.12",
         "@types/jsonwebtoken": "^9.0.5",
         "@types/koa__cors": "^4.0.3",
         "@types/koa-logger": "^3.1.5",
         "@types/koa-router": "^7.4.8",
         "@types/koa-static": "^4.0.4",
-        "dotenv": "^16.3.1"
+        "dotenv": "^16.3.1",
+        "jest": "^29.7.0",
+        "ts-jest": "^29.1.2"
     }
 }
