@@ -1,3 +1,4 @@
+
 import { Box, Typography, useMediaQuery } from '@mui/material';
 import ImageDisplay from '../components/Pictures/Pictures';
 import Grid from '@mui/material/Grid';
@@ -7,7 +8,6 @@ import Button from '@mui/material/Button';
 import ImageListItem from '@mui/material/ImageListItem';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 import CarouselBuilder from '../components/Carousel';
-import * as React from 'react';
 import useCartStore from '../store/cartStore';
 
 function Product() {
@@ -24,7 +24,7 @@ function Product() {
     const handleAddToCart = () => {
         addToCart(product);
     };
-
+  
     return (
         <Box id="productList" style={{ padding: 20 }}>
             <ImageListItem key={product._id}>
