@@ -18,7 +18,7 @@ const useFeaturedItemsStore = create(
                     set({ featuredItems: items });
                 } catch (error) {
                     set({
-                        error: 'Impossible de charger les éléments en vedette.',
+                        error: 'Featured items are not available',
                     });
                 }
             }
@@ -31,7 +31,7 @@ const fetchFeaturedItems = async () => {
         const response = await axios.get(`${baseUrl}/featured-item`);
         return response.data.data;
     } catch (error) {
-        console.error('Erreur lors du chargement des featuredItems:', error);
+        console.error('Error while fetching featured items :', error);
         throw error;
     }
 };

@@ -16,7 +16,7 @@ const useOrderStore = create(
                     set({ orders: response });
                 } catch (error) {
                     set({
-                        error: 'Impossible de charger les commandes.',
+                        error: 'Orders are note available',
                     });
                 }
             }
@@ -31,7 +31,7 @@ const fetchOrders = async (userId) => {
         });
         return response.data.data;
     } catch (error) {
-        console.error('Erreur lors du chargement des commandes:', error);
+        console.error('Error while fetching orders :', error);
         throw error;
     }
 };

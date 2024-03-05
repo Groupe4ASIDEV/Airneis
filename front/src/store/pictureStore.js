@@ -16,7 +16,7 @@ const usePictureStore = create(
                     set({ pictures: response });
                 } catch (error) {
                     set({
-                        error: 'Impossible de charger les images.',
+                        error: 'Pictures are not available',
                     });
                 }
             }
@@ -29,7 +29,7 @@ const fetchPictures = async () => {
         const response = await axios.get(`${baseUrl}/picture`);
         return response.data.data;
     } catch (error) {
-        console.error('Erreur lors du chargement des images:', error);
+        console.error('Error while fetching pictures :', error);
         throw error;
     }
 };
