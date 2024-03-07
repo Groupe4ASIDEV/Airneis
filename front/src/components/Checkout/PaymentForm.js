@@ -3,8 +3,12 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { useCheckoutStore } from '../../store';
 
 function PaymentForm() {
+    const { checkoutData, setCheckoutData } = useCheckoutStore();
+    console.log('🚀 ~ PaymentForm ~ checkoutData:', checkoutData);
+
     return (
         <>
             <Typography variant="h6" gutterBottom>

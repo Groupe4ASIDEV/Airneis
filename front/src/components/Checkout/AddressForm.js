@@ -8,18 +8,22 @@ import { useEffect, useState } from 'react';
 import useCheckoutStore from '../../store/checkoutStore';
 
 function AddressForm({ step }) {
-    const [address, setAddress] = useState('');
+    console.log('🚀 ~ AddressForm ~ step:', step);
+    const [addresses, setAddresses] = useState('');
     const { checkoutData, setCheckoutData } = useCheckoutStore();
 
     useEffect(() => {
         console.log('🚀 ~ checkoutData:', checkoutData);
-    }, [checkoutData]);
+    }, [checkoutData, step]);
 
     const handleAddressChange = (event) => {
-        setAddress(event.target.value);
+        setAddresses(event.target.value);
     };
-    const handleFormChange = (event) => {
-        const { name, value } = event.target;
+
+    const handleChange = (event) => {
+        const { checked, name, value } = event.target;
+        const shippingAddressData = { ...checkoutData.shippingAddress };
+
         setCheckoutData({
             [step === 0 ? 'shippingAddress' : 'billingAddress']: {
                 ...checkoutData[
@@ -27,6 +31,8 @@ function AddressForm({ step }) {
                 ],
                 [name]: value,
             },
+            ...(checked && { billingAddress: { ...shippingAddressData } }),
+            saveAddress: checked,
         });
     };
 
@@ -35,22 +41,22 @@ function AddressForm({ step }) {
             <Typography variant="h6" gutterBottom>
                 {step === 0 ? 'Livraison' : 'Facturation'}
             </Typography>
-            {/* <FormControl sx={{ minWidth: '50%' }}>
+            <FormControl sx={{ minWidth: '50%' }}>
                 <InputLabel id="demo-simple-select-label">
                     Adresses enregistrées
                 </InputLabel>
                 <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={handleAddressChange}
                     label="Adresses enregistrées"
+                    value={addresses}
                     onChange={handleAddressChange}
                 >
-                    <MenuItem>Domicile</MenuItem>
-                    <MenuItem>Travail</MenuItem>
-                    <MenuItem>Babe's</MenuItem>
+                    <MenuItem value={1}>Domicile</MenuItem>
+                    <MenuItem value={2}>Travail</MenuItem>
+                    <MenuItem value={3}>Babe's</MenuItem>
                 </Select>
-            </FormControl> */}
+            </FormControl>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <TextField
@@ -61,7 +67,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="given-name"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -73,7 +79,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="family-name"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -85,7 +91,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="shipping address-line1"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -96,7 +102,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="shipping address-line2"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -108,7 +114,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="shipping phone-number"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -120,7 +126,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="shipping address-level2"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -130,7 +136,7 @@ function AddressForm({ step }) {
                         label="État/Province/Région"
                         fullWidth
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -142,7 +148,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="shipping postal-code"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -154,7 +160,7 @@ function AddressForm({ step }) {
                         fullWidth
                         autoComplete="shipping country"
                         variant="standard"
-                        onChange={handleFormChange}
+                        onChange={handleChange}
                     />
                 </Grid>
                 {step === 0 ? (
@@ -164,7 +170,9 @@ function AddressForm({ step }) {
                                 <Checkbox
                                     color="secondary"
                                     name="saveAddress"
-                                    value="yes"
+                                    value={checkoutData.saveAddress}
+                                    checked={checkoutData.saveAddress}
+                                    onClick={handleChange}
                                 />
                             }
                             label="Utiliser également comme adresse de facturation"

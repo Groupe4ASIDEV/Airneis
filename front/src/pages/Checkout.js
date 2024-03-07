@@ -16,28 +16,6 @@ import PaymentForm from '../components/Checkout/PaymentForm';
 import CreateOrder from '../components/Checkout/Review';
 import { useCheckoutStore } from '../store';
 
-const steps = ['Livraison', 'Facturation', 'Paiement', 'Commande'];
-let buttonValue;
-
-function getStepContent(step) {
-    switch (step) {
-        case 0:
-            buttonValue = 'Passer à la facturation';
-            return <AddressForm step={step} />;
-        case 1:
-            buttonValue = 'Passer au paiement';
-            return <AddressForm step={step} />;
-        case 2:
-            buttonValue = 'Vérifier la commande';
-            return <PaymentForm />;
-        case 3:
-            buttonValue = 'Commander';
-            return <CreateOrder />;
-        default:
-            throw new Error('Unknown step');
-    }
-}
-
 function Checkout() {
     const navigate = useNavigate();
     const { isAuth } = useContext(UidContext);
@@ -45,6 +23,46 @@ function Checkout() {
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
     const { checkoutData } = useCheckoutStore();
+    const steps = checkoutData.saveAddress
+        ? ['Livraison', 'Paiement', 'Commande']
+        : ['Livraison', 'Facturation', 'Paiement', 'Commande'];
+
+    let buttonValue;
+
+    function getStepContent(step) {
+        if (!checkoutData.saveAddress) {
+            switch (step) {
+                case 0:
+                    buttonValue = 'Passer à la facturation';
+                    return <AddressForm step={step} />;
+                case 1:
+                    buttonValue = 'Passer au paiement';
+                    return <AddressForm step={step} />;
+                case 2:
+                    buttonValue = 'Vérifier la commande';
+                    return <PaymentForm />;
+                case 3:
+                    buttonValue = 'Commander';
+                    return <CreateOrder />;
+                default:
+                    throw new Error('Unknown step');
+            }
+        } else {
+            switch (step) {
+                case 0:
+                    buttonValue = 'Passer au paiement';
+                    return <AddressForm step={step} />;
+                case 1:
+                    buttonValue = 'Vérifier la commande';
+                    return <PaymentForm />;
+                case 2:
+                    buttonValue = 'Commander';
+                    return <CreateOrder />;
+                default:
+                    throw new Error('Unknown step');
+            }
+        }
+    }
 
     useEffect(() => {
         setIsRefreshing(false);
@@ -66,6 +84,7 @@ function Checkout() {
                 : checkoutData.billingAddress;
         const { firstName, lastName, street, city, zipCode, country, phone } =
             addressData;
+        console.log('🚀 ~ handleNext ~ addressData:', addressData);
         if (
             firstName &&
             lastName &&
@@ -109,7 +128,7 @@ function Checkout() {
                                 Merci pour votre achat !
                             </Typography>
                             <Typography variant="subtitle1">
-                                Votre commande a bien été eregistrée sous le
+                                Votre commande a bien été enregistrée sous le
                                 numéro XXXXXX. Vous pouvez suivre son état
                                 depuis votre espace client.
                             </Typography>
