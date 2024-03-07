@@ -1,5 +1,5 @@
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import useOrderStore from '../../store/orderStore';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../Authentication/UserContext';
@@ -7,7 +7,7 @@ import { UidContext } from '../Authentication/UserContext';
 function CartSendOrderDetails({ isCart }) {
     const { userId, orderId } = useParams();
     const { orders, loadOrders } = useOrderStore();
-    const { isAuth } = UidContext;
+    const { isAuth } = useContext(UidContext);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -25,7 +25,7 @@ function CartSendOrderDetails({ isCart }) {
         if (!isAuth) {
             navigate('/auth');
         } else {
-            navigate('/');
+            navigate('/checkout');
         }
     };
 
