@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import zustymiddleware from 'zustymiddleware';
 
 const useCheckoutStore = create(
-    zustymiddleware((set, get) => ({
+    zustymiddleware((set) => ({
         checkoutData: {
             shippingAddress: {
                 firstName: '',
@@ -29,14 +29,14 @@ const useCheckoutStore = create(
             },
         },
         setCheckoutData: (newData) => {
-            console.log('New data:', newData);
-            set(() => ({
+            set((prevState) => ({
+                ...prevState,
                 checkoutData: {
+                    ...prevState.checkoutData,
                     ...newData,
                 },
             }));
         },
-        get,
     }))
 );
 

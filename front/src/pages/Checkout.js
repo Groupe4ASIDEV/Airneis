@@ -66,7 +66,8 @@ function Checkout() {
 
     useEffect(() => {
         setIsRefreshing(false);
-    }, []);
+        console.log(activeStep);
+    }, [activeStep]);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
@@ -78,6 +79,7 @@ function Checkout() {
     }, [isAuth, cart, isRefreshing, navigate]);
 
     const handleNext = () => {
+        console.log('handleNext');
         const addressData =
             activeStep === 0
                 ? checkoutData.shippingAddress
@@ -86,6 +88,7 @@ function Checkout() {
             addressData;
         console.log('🚀 ~ handleNext ~ addressData:', addressData);
         if (
+            addressData !== undefined &&
             firstName &&
             lastName &&
             street &&
