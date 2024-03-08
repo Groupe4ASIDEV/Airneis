@@ -5,36 +5,17 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useEffect, useState } from 'react';
-import useCheckoutStore from '../../store/checkoutStore';
 
 function AddressForm({ step }) {
-    // console.log('🚀 ~ AddressForm ~ step:', step);
     const [addresses, setAddresses] = useState('');
-    const { checkoutData, setCheckoutData } = useCheckoutStore();
 
-    useEffect(() => {
-        console.log('🚀 ~ checkoutData:', checkoutData);
-    }, [checkoutData, step]);
+    useEffect(() => {}, [step]);
 
     const handleAddressChange = (event) => {
         setAddresses(event.target.value);
     };
 
-    const handleChange = (event) => {
-        const { checked, name, value } = event.target;
-        const shippingAddressData = { ...checkoutData.shippingAddress };
-
-        setCheckoutData({
-            [step === 0 ? 'shippingAddress' : 'billingAddress']: {
-                ...checkoutData[
-                    step === 0 ? 'shippingAddress' : 'billingAddress'
-                ],
-                [name]: value,
-            },
-            ...(checked && { billingAddress: { ...shippingAddressData } }),
-            saveAddress: checked,
-        });
-    };
+    const handleChange = (event) => {};
 
     return (
         <>
@@ -68,13 +49,6 @@ function AddressForm({ step }) {
                         autoComplete="given-name"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.firstName'
-                                    : 'billingAddress.firstName'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -87,13 +61,6 @@ function AddressForm({ step }) {
                         autoComplete="family-name"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.lastName'
-                                    : 'billingAddress.lastName'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -106,13 +73,6 @@ function AddressForm({ step }) {
                         autoComplete="shipping address-line1"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.street'
-                                    : 'billingAddress.street'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -124,13 +84,6 @@ function AddressForm({ step }) {
                         autoComplete="shipping address-line2"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.furtherInformation'
-                                    : 'billingAddress.furtherInformation'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -143,13 +96,6 @@ function AddressForm({ step }) {
                         autoComplete="shipping phone-number"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.phone'
-                                    : 'billingAddress.phone'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -162,13 +108,6 @@ function AddressForm({ step }) {
                         autoComplete="shipping address-level2"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.city'
-                                    : 'billingAddress.city'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -179,13 +118,6 @@ function AddressForm({ step }) {
                         fullWidth
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.state'
-                                    : 'billingAddress.state'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -198,13 +130,6 @@ function AddressForm({ step }) {
                         autoComplete="shipping postal-code"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.zipCode'
-                                    : 'billingAddress.zipCode'
-                            ]
-                        }
                     />
                 </Grid>
                 <Grid item xs={12} sm={6}>
@@ -217,13 +142,6 @@ function AddressForm({ step }) {
                         autoComplete="shipping country"
                         variant="standard"
                         onChange={handleChange}
-                        value={
-                            checkoutData[
-                                step === 0
-                                    ? 'shippingAddress.country'
-                                    : 'billingAddress.country'
-                            ]
-                        }
                     />
                 </Grid>
                 {step === 0 ? (
@@ -233,8 +151,6 @@ function AddressForm({ step }) {
                                 <Checkbox
                                     color="secondary"
                                     name="saveAddress"
-                                    value={checkoutData.saveAddress}
-                                    checked={checkoutData.saveAddress}
                                     onClick={handleChange}
                                 />
                             }

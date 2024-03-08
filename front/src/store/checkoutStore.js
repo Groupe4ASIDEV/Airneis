@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import zustymiddleware from 'zustymiddleware';
 
 const useCheckoutStore = create(
-    zustymiddleware((set) => ({
+    zustymiddleware((set, get) => ({
         checkoutData: {
             shippingAddress: {
                 firstName: '',
@@ -37,6 +37,8 @@ const useCheckoutStore = create(
                 },
             }));
         },
+
+        get,
     }))
 );
 

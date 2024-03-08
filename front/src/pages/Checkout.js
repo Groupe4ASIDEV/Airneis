@@ -86,7 +86,6 @@ function Checkout() {
                 : checkoutData.billingAddress;
         const { firstName, lastName, street, city, zipCode, country, phone } =
             addressData;
-        console.log('🚀 ~ handleNext ~ addressData:', addressData);
         if (
             addressData !== undefined &&
             firstName &&
