@@ -22,15 +22,15 @@ function Checkout() {
     const { cart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
-    const { checkoutData } = useCheckoutStore();
-    const steps = checkoutData.saveAddress
+    const { checkout } = useCheckoutStore();
+    const steps = checkout.saveAddress
         ? ['Livraison', 'Paiement', 'Commande']
         : ['Livraison', 'Facturation', 'Paiement', 'Commande'];
 
     let buttonValue;
 
     function getStepContent(step) {
-        if (!checkoutData.saveAddress) {
+        if (!checkout.saveAddress) {
             switch (step) {
                 case 0:
                     buttonValue = 'Passer à la facturation';
@@ -82,10 +82,11 @@ function Checkout() {
         console.log('handleNext');
         const addressData =
             activeStep === 0
-                ? checkoutData.shippingAddress
-                : checkoutData.billingAddress;
+                ? checkout.shippingAddress
+                : checkout.billingAddress;
         const { firstName, lastName, street, city, zipCode, country, phone } =
             addressData;
+        console.log('🚀 ~ handleNext ~ addressData:', addressData);
         if (
             addressData !== undefined &&
             firstName &&

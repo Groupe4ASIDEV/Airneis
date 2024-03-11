@@ -3,7 +3,7 @@ import zustymiddleware from 'zustymiddleware';
 
 const useCheckoutStore = create(
     zustymiddleware((set, get) => ({
-        checkoutData: {
+        checkout: {
             shippingAddress: {
                 firstName: '',
                 lastName: '',
@@ -27,12 +27,18 @@ const useCheckoutStore = create(
                 furtherInformation: '',
                 phone: '',
             },
+            payment: {
+                fullName: '',
+                cardNumber: '',
+                expirationDate: '',
+                cvv: '',
+            },
         },
-        setCheckoutData: (newData) => {
+        setCheckout: (newData) => {
             set((prevState) => ({
                 ...prevState,
-                checkoutData: {
-                    ...prevState.checkoutData,
+                checkout: {
+                    ...prevState.checkout,
                     ...newData,
                 },
             }));
