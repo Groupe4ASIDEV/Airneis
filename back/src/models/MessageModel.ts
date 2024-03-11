@@ -12,4 +12,4 @@ const messageSchema = new mongoose.Schema<Message>({
     description: { type: String, required: true },
 });
 
-export const Message = model<Message>('Material', messageSchema);
+export const Message = model<Message>('Message', messageSchema);
