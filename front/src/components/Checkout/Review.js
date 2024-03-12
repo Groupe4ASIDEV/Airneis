@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useCheckoutStore } from '../../store';
 import { Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
+import { calculateCartATITotal } from '../../utils/calculs';
 
 function Review() {
     const { checkout, setCheckout } = useCheckoutStore();
@@ -16,21 +17,6 @@ function Review() {
     useEffect(() => {
         console.log('🚀 ~ checkoutData:', checkout);
     }, [checkout]);
-
-    function calculateCartETTotal() {
-        return items.reduce(
-            (total, item) => total + item.price * item.quantity,
-            0
-        );
-    }
-
-    function calculateCartVATTotal() {
-        return calculateCartETTotal() * 0.2;
-    }
-
-    function calculateCartATITotal() {
-        return calculateCartETTotal() + calculateCartVATTotal();
-    }
 
     return (
         <>
@@ -57,7 +43,7 @@ function Review() {
                 <ListItem sx={{ py: 1, px: 0 }}>
                     <ListItemText primary="Total" />
                     <Typography variant="subtitle1" sx={{ fontWeight: 700 }}>
-                        {calculateCartATITotal()} €
+                        {calculateCartATITotal(items)} €
                     </Typography>
                 </ListItem>
             </List>

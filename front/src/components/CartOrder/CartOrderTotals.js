@@ -2,8 +2,13 @@ import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import useOrderStore from '../../store/orderStore';
 import { useEffect } from 'react';
+import {
+    calculateCartATITotal,
+    calculateCartVATTotal,
+} from '../../utils/calculs';
 
 function CartOrderTotals({ isCart, items }) {
+    console.log('🚀 ~ CartOrderTotals ~ items:', items);
     const { userId, orderId } = useParams();
     const { orders, loadOrders } = useOrderStore();
 
@@ -17,29 +22,14 @@ function CartOrderTotals({ isCart, items }) {
     let vat;
 
     if (isCart) {
-        total = calculateCartATITotal();
-        vat = calculateCartVATTotal();
+        total = calculateCartATITotal(items);
+        vat = calculateCartVATTotal(items);
     } else {
         const order = orders.find((order) => {
             return order._id === orderId;
         });
         total = order.total;
         vat = order.vat;
-    }
-
-    function calculateCartETTotal() {
-        return items.reduce(
-            (total, item) => total + item.price * item.quantity,
-            0
-        );
-    }
-
-    function calculateCartVATTotal() {
-        return calculateCartETTotal() * 0.2;
-    }
-
-    function calculateCartATITotal() {
-        return calculateCartETTotal() + calculateCartVATTotal();
     }
 
     return (

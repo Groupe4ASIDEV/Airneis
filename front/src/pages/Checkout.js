@@ -16,6 +16,7 @@ import PaymentForm from '../components/Checkout/PaymentForm';
 import CreateOrder from '../components/Checkout/Review';
 import { useCheckoutStore } from '../store';
 import axios from 'axios';
+import { calculateCartATITotal, calculateCartVATTotal } from '../utils/calculs';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -86,14 +87,6 @@ function Checkout() {
         const parsedData = JSON.parse(cartData);
         const items = parsedData.state.cart;
 
-        let totalPrice = 0;
-        let totalVat = 0;
-
-        items.forEach((item) => {
-            totalPrice += item.price * item.quantity * 1.2;
-            totalVat += item.price * item.quantity * 0.2;
-        });
-
         try {
             const response = await axios.post(`${baseUrl}/order/create`, {
                 user: userData._id,
@@ -127,15 +120,13 @@ function Checkout() {
                     quantity: item.quantity,
                     pictures: item.pictures,
                 })),
-                total: totalPrice.toFixed(2),
-                vat: totalVat.toFixed(2),
+                total: calculateCartATITotal(items),
+                vat: calculateCartVATTotal(items),
             });
-
-            console.log('Réponse de la requête POST:', response.data);
 
             return response.data;
         } catch (error) {
-            console.error('Erreur lors de la requête POST:', error);
+            console.error('Error creating order');
             throw error;
         }
     };
