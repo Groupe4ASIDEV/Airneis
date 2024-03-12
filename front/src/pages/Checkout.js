@@ -17,6 +17,7 @@ import CreateOrder from '../components/Checkout/Review';
 import { useCheckoutStore } from '../store';
 import axios from 'axios';
 import { calculateCartATITotal, calculateCartVATTotal } from '../utils/calculs';
+import { CircularProgress } from '@mui/material';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
@@ -26,6 +27,7 @@ function Checkout() {
     const { cart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
+    const [orderId, setOrderId] = useState();
     const { checkout } = useCheckoutStore();
     const steps = checkout.saveAddress
         ? ['Livraison', 'Paiement', 'Commande']
@@ -70,8 +72,7 @@ function Checkout() {
 
     useEffect(() => {
         setIsRefreshing(false);
-        console.log(activeStep);
-    }, [activeStep]);
+    }, [activeStep, orderId]);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
@@ -124,6 +125,8 @@ function Checkout() {
                 vat: calculateCartVATTotal(items),
             });
 
+            setOrderId(response.data.data._id);
+
             return response.data;
         } catch (error) {
             console.error('Error creating order');
@@ -131,15 +134,13 @@ function Checkout() {
         }
     };
 
-    const handleNext = () => {
-        console.log('handleNext');
+    const handleNext = async () => {
         const addressData =
             activeStep === 0
                 ? checkout.shippingAddress
                 : checkout.billingAddress;
         const { firstName, lastName, street, city, zipCode, country, phone } =
             addressData;
-        console.log('🚀 ~ handleNext ~ addressData:', addressData);
         if (
             addressData !== undefined &&
             firstName &&
@@ -156,7 +157,7 @@ function Checkout() {
         }
 
         if (buttonValue === 'Commander') {
-            createOrder();
+            await createOrder();
         }
     };
 
@@ -179,7 +180,11 @@ function Checkout() {
                             </Step>
                         ))}
                     </Stepper>
-                    {activeStep === steps.length ? (
+                    {activeStep === steps.length && !orderId ? (
+                        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                            <CircularProgress />
+                        </Box>
+                    ) : activeStep === steps.length ? (
                         <>
                             <Typography variant="h5" gutterBottom>
                                 Commande effectuée
@@ -189,8 +194,8 @@ function Checkout() {
                             </Typography>
                             <Typography variant="subtitle1">
                                 Votre commande a bien été enregistrée sous le
-                                numéro XXXXXX. Vous pouvez suivre son état
-                                depuis votre espace client.
+                                numéro {orderId.slice(0, 7)}. Vous pouvez suivre
+                                son état depuis votre espace client.
                             </Typography>
                         </>
                     ) : (
