@@ -1,5 +1,15 @@
 import mongoose, { Types, model, Schema } from 'mongoose';
 
+export type Address = {
+    label: string;
+    addressId: Types.ObjectId;
+};
+
+const addressSchema = new mongoose.Schema<Address>({
+    label: { type: String, required: true },
+    addressId: { type: Schema.Types.ObjectId, required: true },
+});
+
 export type User = {
     fullName: string;
     email: string;
@@ -10,7 +20,7 @@ export type User = {
     createdAt: Date;
     deletedAt: Date;
     updatedAt: Date;
-    defaultAddress: Types.ObjectId;
+    Addresses: Address[];
 };
 
 const userSchema = new mongoose.Schema<User>({
@@ -23,7 +33,7 @@ const userSchema = new mongoose.Schema<User>({
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date },
     deletedAt: { type: Date },
-    defaultAddress: { type: Schema.Types.ObjectId },
+    Addresses: { type: [addressSchema] },
 });
 
 export const User = model<User>('User', userSchema);
