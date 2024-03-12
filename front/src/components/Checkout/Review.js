@@ -5,12 +5,12 @@ import { Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
 function Review() {
     const { checkout, setCheckout } = useCheckoutStore();
     const cartData = localStorage.getItem('cart');
-    let products = [];
+    let items = [];
 
     if (cartData) {
         const parsedData = JSON.parse(cartData);
         const cart = parsedData.state.cart;
-        products = cart;
+        items = cart;
     }
 
     useEffect(() => {
@@ -18,8 +18,8 @@ function Review() {
     }, [checkout]);
 
     function calculateCartETTotal() {
-        return products.reduce(
-            (total, product) => total + product.price * product.quantity,
+        return items.reduce(
+            (total, item) => total + item.price * item.quantity,
             0
         );
     }
@@ -38,18 +38,18 @@ function Review() {
                 Résumé de la commande
             </Typography>
             <List disablePadding>
-                {products.map((product) => (
-                    <ListItem key={product.label} sx={{ py: 1, px: 0 }}>
+                {items.map((item) => (
+                    <ListItem key={item.label} sx={{ py: 1, px: 0 }}>
                         <ListItemText
-                            primary={product.label}
-                            secondary={product.description}
+                            primary={item.label}
+                            secondary={item.description}
                         />
                         <Grid>
                             <Typography variant="body2">
-                                {product.price * 1.2} €
+                                {item.price * 1.2} €
                             </Typography>
                             <Typography variant="body2">
-                                {product.quantity}
+                                {item.quantity}
                             </Typography>
                         </Grid>
                     </ListItem>

@@ -15,10 +15,13 @@ import AddressForm from '../components/Checkout/AddressForm';
 import PaymentForm from '../components/Checkout/PaymentForm';
 import CreateOrder from '../components/Checkout/Review';
 import { useCheckoutStore } from '../store';
+import axios from 'axios';
+
+const baseUrl = process.env.REACT_APP_API_URL;
 
 function Checkout() {
     const navigate = useNavigate();
-    const { isAuth } = useContext(UidContext);
+    const { isAuth, userData } = useContext(UidContext);
     const { cart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
@@ -78,6 +81,65 @@ function Checkout() {
         }
     }, [isAuth, cart, isRefreshing, navigate]);
 
+    const createOrder = async () => {
+        const cartData = localStorage.getItem('cart');
+        const parsedData = JSON.parse(cartData);
+        const items = parsedData.state.cart;
+
+        let totalPrice = 0;
+        let totalVat = 0;
+
+        items.forEach((item) => {
+            totalPrice += item.price * item.quantity * 1.2;
+            totalVat += item.price * item.quantity * 0.2;
+        });
+
+        try {
+            const response = await axios.post(`${baseUrl}/order/create`, {
+                user: userData._id,
+                shippingAddress: {
+                    fullName: `${checkout.shippingAddress.firstName} ${checkout.shippingAddress.lastName}`,
+                    street: checkout.shippingAddress.street,
+                    city: checkout.shippingAddress.city,
+                    zipCode: checkout.shippingAddress.zipCode,
+                    state: checkout.shippingAddress.state,
+                    country: checkout.shippingAddress.country,
+                    phone: checkout.shippingAddress.phone,
+                    furtherInformation:
+                        checkout.shippingAddress.furtherInformation,
+                },
+                billingAddress: {
+                    fullName: `${checkout.billingAddress.firstName} ${checkout.billingAddress.lastName}`,
+                    street: checkout.billingAddress.street,
+                    city: checkout.billingAddress.city,
+                    zipCode: checkout.billingAddress.zipCode,
+                    state: checkout.billingAddress.state,
+                    country: checkout.billingAddress.country,
+                    phone: checkout.billingAddress.phone,
+                    furtherInformation:
+                        checkout.billingAddress.furtherInformation,
+                },
+                items: items.map((item) => ({
+                    productId: item._id,
+                    label: item.label,
+                    description: item.description,
+                    price: item.price,
+                    quantity: item.quantity,
+                    pictures: item.pictures,
+                })),
+                total: totalPrice.toFixed(2),
+                vat: totalVat.toFixed(2),
+            });
+
+            console.log('Réponse de la requête POST:', response.data);
+
+            return response.data;
+        } catch (error) {
+            console.error('Erreur lors de la requête POST:', error);
+            throw error;
+        }
+    };
+
     const handleNext = () => {
         console.log('handleNext');
         const addressData =
@@ -100,6 +162,10 @@ function Checkout() {
             setActiveStep(activeStep + 1);
         } else {
             alert('Veuillez renseigner tous les champs obligatoires');
+        }
+
+        if (buttonValue === 'Commander') {
+            createOrder();
         }
     };
 
