@@ -33,7 +33,6 @@ function ItemCard({ itemId, isCart, isOrder }) {
     }
     if (!isCart && isOrder) {
         const order = orders.find((order) => {
-            console.log('🚀 ~ ItemCard ~ order:', order);
             return order._id === orderId;
         });
         item = order.items.find((item) => {

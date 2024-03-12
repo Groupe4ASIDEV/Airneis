@@ -8,7 +8,6 @@ import {
 } from '../../utils/calculs';
 
 function CartOrderTotals({ isCart, items }) {
-    console.log('🚀 ~ CartOrderTotals ~ items:', items);
     const { userId, orderId } = useParams();
     const { orders, loadOrders } = useOrderStore();
 

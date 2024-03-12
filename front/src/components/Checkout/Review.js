@@ -14,9 +14,7 @@ function Review() {
         items = cart;
     }
 
-    useEffect(() => {
-        console.log('🚀 ~ checkoutData:', checkout);
-    }, [checkout]);
+    useEffect(() => {}, [checkout]);
 
     return (
         <>

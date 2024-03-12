@@ -11,9 +11,7 @@ function AddressForm({ step }) {
     const [addresses, setAddresses] = useState('');
     const { checkout, setCheckout } = useCheckoutStore();
 
-    useEffect(() => {
-        console.log('🚀 ~ checkout:', checkout);
-    }, [checkout, step]);
+    useEffect(() => {}, [checkout, step]);
 
     const handleAddressChange = (event) => {
         setAddresses(event.target.value);

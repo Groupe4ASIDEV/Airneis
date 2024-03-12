@@ -9,9 +9,7 @@ import { useEffect } from 'react';
 function PaymentForm() {
     const { checkout, setCheckout } = useCheckoutStore();
 
-    useEffect(() => {
-        console.log('🚀 ~ checkoutData:', checkout);
-    }, [checkout]);
+    useEffect(() => {}, [checkout]);
 
     const handleChange = (event) => {
         const { checked, name, value } = event.target;
