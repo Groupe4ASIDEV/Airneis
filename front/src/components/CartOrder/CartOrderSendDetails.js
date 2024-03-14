@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useEffect } from 'react';
-import useOrderStore from '../../store/orderStore';
+import { useOrderStore } from '../../store';
 import { useParams } from 'react-router-dom';
 
 function CartOrderSendDetails({ cart }) {

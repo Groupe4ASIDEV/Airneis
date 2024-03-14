@@ -4,9 +4,7 @@ import ItemCard from '../components/Cards/ItemCard';
 import CartOrderTitle from '../components/CartOrder/CartOrderTitle';
 import CartOrderTotals from '../components/CartOrder/CartOrderTotals';
 import CartSendOrderDetails from '../components/CartOrder/CartSendOrderDetails';
-import useCartStore from '../store/cartStore';
-import useOrderStore from '../store/orderStore';
-import useProductStore from '../store/productStore';
+import { useCartStore, useOrderStore, useProductStore } from '../store';
 import { useEffect } from 'react';
 import { cancelOrder } from '../services/orderService';
 

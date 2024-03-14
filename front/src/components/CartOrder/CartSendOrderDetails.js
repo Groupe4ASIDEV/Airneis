@@ -1,6 +1,6 @@
 import { Box, Button, CircularProgress, Typography } from '@mui/material';
 import { useEffect, useContext } from 'react';
-import useOrderStore from '../../store/orderStore';
+import { useOrderStore } from '../../store';
 import { useNavigate, useParams } from 'react-router-dom';
 import { UidContext } from '../Authentication/UserContext';
 

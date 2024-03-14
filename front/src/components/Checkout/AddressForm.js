@@ -5,7 +5,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import { useEffect, useState } from 'react';
-import useCheckoutStore from '../../store/checkoutStore';
+import { useCheckoutStore } from '../../store';
 
 function AddressForm({ step }) {
     const [addresses, setAddresses] = useState('');

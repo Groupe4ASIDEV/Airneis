@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-export const fetchProducts = async () => {
+export async function fetchProducts() {
     try {
         const response = await axios.get(`${baseUrl}/product`);
         return response.data.data;
@@ -10,4 +10,4 @@ export const fetchProducts = async () => {
         console.error('Error while fetching products :', error);
         throw error;
     }
-};
+}

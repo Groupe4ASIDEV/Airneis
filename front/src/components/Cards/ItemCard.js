@@ -9,8 +9,7 @@ import {
 import { useEffect } from 'react';
 import ImageDisplay from '../Pictures/Pictures';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import useCartStore from '../../store/cartStore';
-import useOrderStore from '../../store/orderStore';
+import { useCartStore, useOrderStore } from '../../store';
 import { useParams } from 'react-router-dom';
 
 function ItemCard({ itemId, isCart, isOrder }) {

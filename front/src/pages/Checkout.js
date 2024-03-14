@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { UidContext } from '../components/Authentication/UserContext';
-import useCartStore from '../store/cartStore';
 import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -14,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import AddressForm from '../components/Checkout/AddressForm';
 import PaymentForm from '../components/Checkout/PaymentForm';
 import CreateOrder from '../components/Checkout/Review';
-import { useCheckoutStore } from '../store';
+import { useCheckoutStore, useCartStore } from '../store';
 import axios from 'axios';
 import { calculateCartATITotal, calculateCartVATTotal } from '../utils/calculs';
 import { CircularProgress } from '@mui/material';
@@ -24,7 +23,7 @@ const baseUrl = process.env.REACT_APP_API_URL;
 function Checkout() {
     const navigate = useNavigate();
     const { isAuth, userData } = useContext(UidContext);
-    const { cart } = useCartStore();
+    const { cart, clearCart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
     const [orderId, setOrderId] = useState();
@@ -158,6 +157,7 @@ function Checkout() {
 
         if (buttonValue === 'Commander') {
             await createOrder();
+            clearCart();
         }
     };
 

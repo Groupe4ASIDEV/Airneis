@@ -8,7 +8,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Badge, Link } from '@mui/material';
-import useCartStore from '../../store/cartStore';
+import { useCartStore } from '../../store';
 
 function Header({ onMenuIconClick }) {
     const { cart } = useCartStore();

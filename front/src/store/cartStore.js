@@ -34,6 +34,7 @@ const useCartStore = create(
                     set({ cart: [...cart, newProduct] });
                 }
             },
+            clearCart: () => set({ cart: [] }),
         }),
         {
             name: 'cart',
