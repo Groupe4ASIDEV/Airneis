@@ -8,10 +8,7 @@ import useCartStore from '../store/cartStore';
 import useOrderStore from '../store/orderStore';
 import useProductStore from '../store/productStore';
 import { useEffect } from 'react';
-import axios from 'axios';
 import { cancelOrder } from '../services/orderService';
-
-const baseUrl = process.env.REACT_APP_API_URL;
 
 /*
     This page is used to display a cart or an order

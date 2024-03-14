@@ -1,8 +1,6 @@
 import { create } from 'zustand';
 import zustymiddleware from 'zustymiddleware';
-import axios from 'axios';
-
-const baseUrl = process.env.REACT_APP_API_URL;
+import { fetchPictures } from '../services/pictureService';
 
 const usePictureStore = create(
     zustymiddleware((set, get) => ({
@@ -23,16 +21,6 @@ const usePictureStore = create(
         },
     }))
 );
-
-const fetchPictures = async () => {
-    try {
-        const response = await axios.get(`${baseUrl}/picture`);
-        return response.data.data;
-    } catch (error) {
-        console.error('Error while fetching pictures :', error);
-        throw error;
-    }
-};
 
 window.store = usePictureStore;
 

@@ -1,8 +1,6 @@
 import { create } from 'zustand';
 import zustymiddleware from 'zustymiddleware';
-import axios from 'axios';
-
-const baseUrl = process.env.REACT_APP_API_URL;
+import { fetchAddresses } from '../services/addressService';
 
 const useAddressStore = create(
     zustymiddleware((set, get) => ({
@@ -23,16 +21,6 @@ const useAddressStore = create(
         },
     }))
 );
-
-const fetchAddresses = async () => {
-    try {
-        const response = await axios.get(`${baseUrl}/address`);
-        return response.data.data;
-    } catch (error) {
-        console.error('Error while fetching adresses :', error);
-        throw error;
-    }
-};
 
 window.store = useAddressStore;
 
