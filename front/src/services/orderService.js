@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseUrl = process.env.REACT_APP_API_URL;
 
-export const fetchOrders = async (userId) => {
+export async function fetchOrders(userId) {
     try {
         const response = await axios.post(`${baseUrl}/order`, {
             userId,
@@ -12,9 +12,9 @@ export const fetchOrders = async (userId) => {
         console.error('Error while fetching orders :', error);
         throw error;
     }
-};
+}
 
-export const cancelOrder = async (orderId) => {
+export async function cancelOrder(orderId) {
     try {
         const response = await axios.put(`${baseUrl}/order/update/${orderId}`, {
             state: 'ANNULÉE',
@@ -24,4 +24,4 @@ export const cancelOrder = async (orderId) => {
         console.error('Error while cancelling order :', error);
         throw error;
     }
-};
+}
