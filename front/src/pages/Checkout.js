@@ -16,6 +16,7 @@ import Review from '../components/Checkout/Review';
 import { useCheckoutStore, useCartStore } from '../store';
 import { CircularProgress } from '@mui/material';
 import { createOrder } from '../services/orderService';
+import { removeProductStock } from '../services/productService';
 
 function Checkout() {
     const navigate = useNavigate();
@@ -68,7 +69,8 @@ function Checkout() {
 
     useEffect(() => {
         setIsRefreshing(false);
-    }, [activeStep, orderId]);
+        console.log(cart);
+    }, [activeStep, orderId, cart]);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
@@ -111,8 +113,21 @@ function Checkout() {
         }
 
         if (buttonValue === 'Commander') {
-            await sendCartToOrder();
-            clearCart();
+            try {
+                await Promise.all(
+                    cart.map((item) =>
+                        removeProductStock(item._id, item.quantity)
+                    )
+                );
+                await sendCartToOrder();
+                clearCart();
+            } catch (error) {
+                if (error.message === 'Not enough stock') {
+                    alert('Stock insuffisant pour un produit');
+                } else {
+                    console.error('Error :', error);
+                }
+            }
         }
     };
 
