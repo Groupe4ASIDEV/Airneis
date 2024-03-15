@@ -4,7 +4,7 @@ import { Grid, List, ListItem, ListItemText, Typography } from '@mui/material';
 import { calculateCartATITotal } from '../../utils/calculs';
 
 function Review() {
-    const { checkout, setCheckout } = useCheckoutStore();
+    const { checkout } = useCheckoutStore();
     const cartData = localStorage.getItem('cart');
     let items = [];
 
