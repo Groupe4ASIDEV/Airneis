@@ -44,6 +44,7 @@ export async function createOrder(userData, checkout, items) {
                 price: item.price,
                 quantity: item.quantity,
                 pictures: item.pictures,
+                returnedQuantity: item.returnedQuantity,
             })),
             total: calculateCartATITotal(items),
             vat: calculateCartVATTotal(items),
@@ -52,6 +53,38 @@ export async function createOrder(userData, checkout, items) {
         return response.data.data;
     } catch (error) {
         console.error('Error creating order');
+        throw error;
+    }
+}
+
+export async function incrementReturnedQuantity(
+    orderId,
+    itemId,
+    returnedQuantity
+) {
+    try {
+        const orderResponse = await axios.get(`${baseUrl}/order/${orderId}`);
+        let order = orderResponse.data.data;
+
+        let item = order.items.find((item) => item.productId === itemId);
+
+        if (item) {
+            item.returnedQuantity += returnedQuantity;
+            console.log(
+                '🚀 ~ incrementReturnedQuantity ~ item.returnedQuantity:',
+                item.returnedQuantity
+            );
+
+            const updateResponse = await axios.put(
+                `${baseUrl}/order/update/${orderId}`,
+                order
+            );
+            return updateResponse.data.data;
+        } else {
+            throw new Error(`Item with id ${itemId} not found in the order.`);
+        }
+    } catch (error) {
+        console.error('Error while updating returnedQuantity :', error);
         throw error;
     }
 }

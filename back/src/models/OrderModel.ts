@@ -15,6 +15,7 @@ export type Item = {
     pictures: Types.ObjectId[];
     price: number;
     quantity: number;
+    returnedQuantity: number;
 };
 
 const itemSchema = new mongoose.Schema<Item>({
@@ -24,6 +25,7 @@ const itemSchema = new mongoose.Schema<Item>({
     price: { type: Number, required: true },
     pictures: { type: [Types.ObjectId], required: true },
     quantity: { type: Number, required: true },
+    returnedQuantity: { type: Number, default: 0 },
 });
 
 export type Order = {
