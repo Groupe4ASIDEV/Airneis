@@ -15,18 +15,6 @@ export async function fetchOrders(userId) {
     }
 }
 
-export async function cancelOrder(orderId) {
-    try {
-        const response = await axios.put(`${baseUrl}/order/update/${orderId}`, {
-            state: 'ANNULÉE',
-        });
-        return response.data.data;
-    } catch (error) {
-        console.error('Error while cancelling order :', error);
-        throw error;
-    }
-}
-
 export async function createOrder(userData, checkout, items) {
     try {
         const response = await axios.post(`${baseUrl}/order/create`, {
@@ -64,6 +52,18 @@ export async function createOrder(userData, checkout, items) {
         return response.data.data;
     } catch (error) {
         console.error('Error creating order');
+        throw error;
+    }
+}
+
+export async function cancelOrder(orderId) {
+    try {
+        const response = await axios.put(`${baseUrl}/order/update/${orderId}`, {
+            state: 'ANNULÉE',
+        });
+        return response.data.data;
+    } catch (error) {
+        console.error('Error while cancelling order :', error);
         throw error;
     }
 }
