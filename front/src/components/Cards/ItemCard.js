@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 function ItemCard({ itemId, isCart, isOrder }) {
     const { cart, updateCart, removeFromCart } = useCartStore();
     const { orders, loadOrders } = useOrderStore();
-    const { userId, orderId } = useParams('userId');
+    const { userId, orderId } = useParams();
 
     let item = {}; // Will be used to centralize the item to display, regardless of the data source
 
