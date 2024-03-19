@@ -11,5 +11,4 @@ const messageSchema = new mongoose.Schema<Message>({
     title: { type: String, required: true },
     description: { type: String, required: true },
 });
-
-export const Message = model<Message>('Meessage', messageSchema);
+export const Message = model<Message>('Message', messageSchema);
