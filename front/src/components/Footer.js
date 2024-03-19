@@ -27,13 +27,13 @@ function Footer() {
                     <Link sx={{ px: 2 }} href="#" onClick={afficherMentionsLegales}>Mentions Légales</Link>
                     <Link sx={{ px: 2 }} href="#" onClick={afficherConditionsUtilisation}>Conditions d'Utilisation</Link>
                     <Link sx={{ px: 2 }} href="#" onClick={afficherPolitiqueConfidentialite}>Politique de Confidentialité</Link>
-                    <IconButton href="lien_vers_facebook">
+                    <IconButton href="#">
                         <Facebook />
                     </IconButton>
-                    <IconButton href="lien_vers_twitter">
+                    <IconButton href="#">
                         <Twitter />
                     </IconButton>
-                    <IconButton href="lien_vers_instagram">
+                    <IconButton href="#">
                         <Instagram />
                     </IconButton>
                     {/* Copyright */}
