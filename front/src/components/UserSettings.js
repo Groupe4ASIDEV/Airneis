@@ -1,47 +1,52 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useState } from 'react';
 import { Typography, TextField, Button } from '@mui/material';
-import {UidContext} from "./Authentication/UserContext";
+import { UidContext } from './Authentication/UserContext';
+import axios from 'axios';
 
+const baseUrl = process.env.REACT_APP_API_URL;
 
 const UserSettings = () => {
-    const { userId } = useContext(UidContext);
-    const [userData, setUserData] = useState({
+    const { userData } = useContext(UidContext);
+    console.log('🚀 ~ UserSettings ~ userId:', userData._id);
+    const [userDatas, setUserDatas] = useState({
         fullName: '',
         email: '',
         password: '',
         phone: '',
         validated: false,
-        defaultAddress: ''
+        defaultAddress: '',
     });
 
-    console.log(userData);
-
+    console.log(userDatas);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setUserData({ ...userData, [name]: value });
+        setUserDatas({ ...userDatas, [name]: value });
     };
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch(`/user/update/${userId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(userData)
-            });
-
-            if (response.ok) {
-                alert('Paramètres du compte utilisateur mis à jour avec succès !');
-            } else {
-                const errorData = await response.json();
-                alert(`Une erreur s'est produite : ${errorData.message}`);
-            }
+            const response = await axios.put(
+                `${baseUrl}/user/update/${userData._id}`,
+                {
+                    fullName: userDatas.fullName,
+                    email: userDatas.email,
+                    password: userDatas.password,
+                    phone: userDatas.phone,
+                    defaultAddress: userDatas.defaultAddress,
+                }
+            );
+            console.log('🚀 ~ UserSettings ~ response:', response.data.data);
+            return response.data.data;
         } catch (error) {
-            console.error("Erreur lors de la mise à jour des paramètres du compte utilisateur :", error);
-            alert("Une petite erreur s'est produite lors de la mise à jour des paramètres du compte utilisateur.");
+            console.error(
+                'Erreur lors de la mise à jour des paramètres du compte utilisateur :',
+                error
+            );
+            alert(
+                "Une erreur s'est produite lors de la mise à jour des paramètres du compte utilisateur."
+            );
         }
     };
 
