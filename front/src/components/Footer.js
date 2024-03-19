@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Link, IconButton } from '@mui/material';
 import { Facebook, Twitter, Instagram } from '@mui/icons-material';
-import { GeneralUseConditions, LegalMentions, PrivacyPolicy } from "./LegalDocuments";
+import { GeneralUseConditions, LegalMentions, PrivacyPolicy } from "../pages/legals/LegalDocuments";
 
 const mentionsLegales = LegalMentions();
 const conditionsUtilisation = GeneralUseConditions();
