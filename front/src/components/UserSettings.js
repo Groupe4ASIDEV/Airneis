@@ -41,7 +41,7 @@ const UserSettings = () => {
             }
         } catch (error) {
             console.error("Erreur lors de la mise à jour des paramètres du compte utilisateur :", error);
-            alert("Une erreur s'est produite lors de la mise à jour des paramètres du compte utilisateur.");
+            alert("Une petite erreur s'est produite lors de la mise à jour des paramètres du compte utilisateur.");
         }
     };
 
