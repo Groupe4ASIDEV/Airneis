@@ -1,5 +1,5 @@
 import { useLocation, useParams } from 'react-router-dom';
-import { Box, CircularProgress, Grid } from '@mui/material';
+import { Box, Button, CircularProgress, Grid } from '@mui/material';
 import ItemCard from '../components/Cards/ItemCard';
 import CartOrderTitle from '../components/CartOrder/CartOrderTitle';
 import CartOrderTotals from '../components/CartOrder/CartOrderTotals';
@@ -8,6 +8,7 @@ import useCartStore from '../store/cartStore';
 import useOrderStore from '../store/orderStore';
 import useProductStore from '../store/productStore';
 import { useEffect } from 'react';
+import { cancelOrder } from '../services/orderService';
 
 /*
     This page is used to display a cart or an order
@@ -29,11 +30,13 @@ function CartOrder() {
         }
     }, [isOrder, userId, loadOrders, loadProducts, cart]);
 
+    let cartData = {};
+    let order = {};
     let items = []; // Will be used to centralize the items to display, regardless of the data source
 
     if (isCart && !isOrder) {
         // Update Items if the page is a cart
-        const cartData = localStorage.getItem('cart');
+        cartData = localStorage.getItem('cart');
         if (cartData) {
             const parsedData = JSON.parse(cartData);
             const cart = parsedData.state.cart;
@@ -46,7 +49,7 @@ function CartOrder() {
 
     if (!isCart && isOrder) {
         // Update Items if the page is an order
-        const order = orders.find((order) => order._id === orderId);
+        order = orders.find((order) => order._id === orderId);
         if (order && order.items) {
             items = order.items.map((orderItem) => {
                 const product = products.find((p) => p.id === orderItem.id);
@@ -62,6 +65,19 @@ function CartOrder() {
             </Box>
         );
     }
+
+    const handleClick = () => {
+        // Cancel the order in the state
+        const updatedOrder = { ...order, state: 'ANNULÉE' };
+        useOrderStore.setState({
+            orders: orders.map((order) =>
+                order._id === orderId ? updatedOrder : order
+            ),
+        });
+
+        // Cancel the order in the database
+        cancelOrder(orderId);
+    };
 
     return (
         <Box>
@@ -93,6 +109,11 @@ function CartOrder() {
                     <CartSendOrderDetails isCart={isCart} />
                 </Grid>
             </Grid>
+            {order.state === 'EN ATTENTE' ? (
+                <Button variant="contained" onClick={handleClick}>
+                    Annuler la commande
+                </Button>
+            ) : null}
         </Box>
     );
 }

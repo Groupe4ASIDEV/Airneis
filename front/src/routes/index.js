@@ -6,7 +6,11 @@ import Category from '../pages/Category';
 import Product from '../pages/Product';
 import OrderList from '../pages/OrderList';
 import CartOrder from '../pages/CartOrder';
+<<<<<<< .mine
 import Contact from "../pages/Contact";
+=======
+import Checkout from '../pages/Checkout';
+>>>>>>> .theirs
 
 function Index() {
     return (
@@ -22,6 +26,7 @@ function Index() {
                 element={<Registration />}
             />
             <Route path="/cart" exact="true" element={<CartOrder />} />
+            <Route path="/checkout" exact="true" element={<Checkout />} />
             <Route
                 path="/orders/:userId"
                 exact="true"
