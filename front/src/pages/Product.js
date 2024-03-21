@@ -1,4 +1,9 @@
-import { Box, Typography, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    CircularProgress,
+    Typography,
+    useMediaQuery,
+} from '@mui/material';
 import ImageDisplay from '../components/Pictures/Pictures';
 import Grid from '@mui/material/Grid';
 import { useProductStore } from '../store';
