@@ -4,11 +4,10 @@ import ItemCard from '../components/Cards/ItemCard';
 import CartOrderTitle from '../components/CartOrder/CartOrderTitle';
 import CartOrderTotals from '../components/CartOrder/CartOrderTotals';
 import CartSendOrderDetails from '../components/CartOrder/CartSendOrderDetails';
-import useCartStore from '../store/cartStore';
-import useOrderStore from '../store/orderStore';
-import useProductStore from '../store/productStore';
+import { useCartStore, useOrderStore, useProductStore } from '../store';
 import { useEffect } from 'react';
 import { cancelOrder } from '../services/orderService';
+import { addProductStock } from '../services/productService';
 
 /*
     This page is used to display a cart or an order
@@ -66,8 +65,8 @@ function CartOrder() {
         );
     }
 
-    const handleClick = () => {
-        // Cancel the order in the state
+    const handleCancelOrder = () => {
+        // Cancel the order in the store for side effects
         const updatedOrder = { ...order, state: 'ANNULÉE' };
         useOrderStore.setState({
             orders: orders.map((order) =>
@@ -77,6 +76,11 @@ function CartOrder() {
 
         // Cancel the order in the database
         cancelOrder(orderId);
+
+        // Update stock for each product in the database
+        for (const item of items) {
+            addProductStock(item._id, item.quantity);
+        }
     };
 
     return (
@@ -110,7 +114,7 @@ function CartOrder() {
                 </Grid>
             </Grid>
             {order.state === 'EN ATTENTE' ? (
-                <Button variant="contained" onClick={handleClick}>
+                <Button variant="contained" onClick={handleCancelOrder}>
                     Annuler la commande
                 </Button>
             ) : null}

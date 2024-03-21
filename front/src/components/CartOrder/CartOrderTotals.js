@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import useOrderStore from '../../store/orderStore';
+import { useOrderStore } from '../../store';
 import { useEffect } from 'react';
 import {
     calculateCartATITotal,

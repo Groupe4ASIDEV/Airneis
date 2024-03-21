@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { UidContext } from '../components/Authentication/UserContext';
-import useCartStore from '../store/cartStore';
 import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -13,18 +12,16 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import AddressForm from '../components/Checkout/AddressForm';
 import PaymentForm from '../components/Checkout/PaymentForm';
-import CreateOrder from '../components/Checkout/Review';
-import { useCheckoutStore } from '../store';
-import axios from 'axios';
-import { calculateCartATITotal, calculateCartVATTotal } from '../utils/calculs';
+import Review from '../components/Checkout/Review';
+import { useCheckoutStore, useCartStore } from '../store';
 import { CircularProgress } from '@mui/material';
-
-const baseUrl = process.env.REACT_APP_API_URL;
+import { createOrder } from '../services/orderService';
+import { removeProductStock } from '../services/productService';
 
 function Checkout() {
     const navigate = useNavigate();
     const { isAuth, userData } = useContext(UidContext);
-    const { cart } = useCartStore();
+    const { cart, clearCart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
     const [orderId, setOrderId] = useState();
@@ -49,7 +46,7 @@ function Checkout() {
                     return <PaymentForm />;
                 case 3:
                     buttonValue = 'Commander';
-                    return <CreateOrder />;
+                    return <Review />;
                 default:
                     throw new Error('Unknown step');
             }
@@ -63,7 +60,7 @@ function Checkout() {
                     return <PaymentForm />;
                 case 2:
                     buttonValue = 'Commander';
-                    return <CreateOrder />;
+                    return <Review />;
                 default:
                     throw new Error('Unknown step');
             }
@@ -72,66 +69,25 @@ function Checkout() {
 
     useEffect(() => {
         setIsRefreshing(false);
-    }, [activeStep, orderId]);
+        console.log(cart);
+    }, [activeStep, orderId, cart]);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
             navigate('/auth');
         }
-        if ((!cart || cart.length === 0) && !isRefreshing) {
+        if ((!cart || cart.length === 0) && !(activeStep >= 3)) {
             navigate('/');
         }
-    }, [isAuth, cart, isRefreshing, navigate]);
+    }, [isAuth, isRefreshing, activeStep, cart, navigate]);
 
-    const createOrder = async () => {
+    const sendCartToOrder = async () => {
         const cartData = localStorage.getItem('cart');
         const parsedData = JSON.parse(cartData);
         const items = parsedData.state.cart;
 
-        try {
-            const response = await axios.post(`${baseUrl}/order/create`, {
-                user: userData._id,
-                shippingAddress: {
-                    fullName: `${checkout.shippingAddress.firstName} ${checkout.shippingAddress.lastName}`,
-                    street: checkout.shippingAddress.street,
-                    city: checkout.shippingAddress.city,
-                    zipCode: checkout.shippingAddress.zipCode,
-                    state: checkout.shippingAddress.state,
-                    country: checkout.shippingAddress.country,
-                    phone: checkout.shippingAddress.phone,
-                    furtherInformation:
-                        checkout.shippingAddress.furtherInformation,
-                },
-                billingAddress: {
-                    fullName: `${checkout.billingAddress.firstName} ${checkout.billingAddress.lastName}`,
-                    street: checkout.billingAddress.street,
-                    city: checkout.billingAddress.city,
-                    zipCode: checkout.billingAddress.zipCode,
-                    state: checkout.billingAddress.state,
-                    country: checkout.billingAddress.country,
-                    phone: checkout.billingAddress.phone,
-                    furtherInformation:
-                        checkout.billingAddress.furtherInformation,
-                },
-                items: items.map((item) => ({
-                    productId: item._id,
-                    label: item.label,
-                    description: item.description,
-                    price: item.price,
-                    quantity: item.quantity,
-                    pictures: item.pictures,
-                })),
-                total: calculateCartATITotal(items),
-                vat: calculateCartVATTotal(items),
-            });
-
-            setOrderId(response.data.data._id);
-
-            return response.data;
-        } catch (error) {
-            console.error('Error creating order');
-            throw error;
-        }
+        const newOrder = await createOrder(userData, checkout, items);
+        setOrderId(newOrder._id);
     };
 
     const handleNext = async () => {
@@ -157,7 +113,21 @@ function Checkout() {
         }
 
         if (buttonValue === 'Commander') {
-            await createOrder();
+            try {
+                await Promise.all(
+                    cart.map((item) =>
+                        removeProductStock(item._id, item.quantity)
+                    )
+                );
+                await sendCartToOrder();
+                clearCart();
+            } catch (error) {
+                if (error.message === 'Not enough stock') {
+                    alert('Stock insuffisant pour un produit');
+                } else {
+                    console.error('Error :', error);
+                }
+            }
         }
     };
 

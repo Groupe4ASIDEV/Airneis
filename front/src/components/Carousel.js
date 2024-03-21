@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import Carousel from 'react-material-ui-carousel';
-import { useFeaturedItemsStore } from '../store';
-import { useProductStore } from '../store';
-import { useCategoryStore } from '../store';
-import { usePictureStore } from '../store';
+import {
+    useFeaturedItemsStore,
+    useProductStore,
+    useCategoryStore,
+    usePictureStore,
+} from '../store';
 import ImageDisplay from './Pictures/Pictures';
 import { Box, CircularProgress } from '@mui/material';
 

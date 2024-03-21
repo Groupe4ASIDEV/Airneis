@@ -1,13 +1,8 @@
-import {
-    Box,
-    CircularProgress,
-    Typography,
-    useMediaQuery,
-} from '@mui/material';
+import { Box, Typography, useMediaQuery } from '@mui/material';
 import ImageDisplay from '../components/Pictures/Pictures';
 import Grid from '@mui/material/Grid';
 import { useProductStore } from '../store';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 // import ImageListItem from '@mui/material/ImageListItem';
 // import ImageListItemBar from '@mui/material/ImageListItemBar';

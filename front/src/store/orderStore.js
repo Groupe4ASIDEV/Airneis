@@ -19,6 +19,26 @@ const useOrderStore = create(
                 }
             }
         },
+        updateReturnedQuantity: (orderId, itemId, newReturnedQuantity) => {
+            set((state) => ({
+                orders: state.orders.map((order) =>
+                    order.id === orderId
+                        ? {
+                              ...order,
+                              items: order.items.map((item) =>
+                                  item.id === itemId
+                                      ? {
+                                            ...item,
+                                            returnedQuantity:
+                                                newReturnedQuantity,
+                                        }
+                                      : item
+                              ),
+                          }
+                        : order
+                ),
+            }));
+        },
     }))
 );
 

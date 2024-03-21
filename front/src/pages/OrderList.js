@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import useOrderStore from '../store/orderStore';
+import { useOrderStore } from '../store';
 import { Link, useParams } from 'react-router-dom';
 import { Box, CircularProgress, Grid, Typography } from '@mui/material';
 import OrderCard from '../components/Cards/OrderCard';

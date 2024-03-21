@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import zustymiddleware from 'zustymiddleware';
-import { fetchProducts } from '../services/produtService';
+import { fetchProducts } from '../services/productService';
 
 const useProductStore = create(
     zustymiddleware((set, get) => ({
