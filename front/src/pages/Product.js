@@ -14,7 +14,6 @@ import Button from '@mui/material/Button';
 // import CarouselBuilder from '../components/Carousel';
 import useCartStore from '../store/cartStore';
 import { useEffect } from 'react';
-import { fontWeight } from '@mui/system';
 
 function Product() {
     const { id } = useParams();
