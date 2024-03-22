@@ -7,6 +7,11 @@ import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './styles/themes';
 import { AuthProvider } from './components/Authentication/UserContext';
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements } from '@stripe/react-stripe-js';
+
+const publicKey = process.env.REACT_APP_PAYMENT_PUBLIC_KEY;
+const stripePromise = loadStripe(publicKey);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -14,7 +19,9 @@ root.render(
     <BrowserRouter>
         <ThemeProvider theme={theme}>
             <AuthProvider>
-                <App />
+                <Elements stripe={stripePromise}>
+                    <App />
+                </Elements>
             </AuthProvider>
         </ThemeProvider>
     </BrowserRouter>

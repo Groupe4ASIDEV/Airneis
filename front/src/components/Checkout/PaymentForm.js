@@ -5,9 +5,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useCheckoutStore } from '../../store';
 import { useEffect } from 'react';
+import { useStripe } from '@stripe/react-stripe-js';
 
 function PaymentForm() {
     const { checkout, setCheckout } = useCheckoutStore();
+    const { stripe, useElement } = useStripe();
 
     useEffect(() => {}, [checkout]);
 
