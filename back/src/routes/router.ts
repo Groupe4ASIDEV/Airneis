@@ -8,6 +8,7 @@ import pictureRouter from './PictureRouter';
 import featuredItemRouter from './FeaturedItemRouter';
 import addressRouter from './AddressRouter';
 import orderRouter from './OrderRouter';
+import paymentRouter from './PaymentRouter';
 
 const router: Router = new Router();
 router.get('/status', StatusController.status);
@@ -28,7 +29,9 @@ router.use(
     addressRouter.routes(),
     addressRouter.allowedMethods(),
     orderRouter.routes(),
-    orderRouter.allowedMethods()
+    orderRouter.allowedMethods(),
+    paymentRouter.routes(),
+    paymentRouter.allowedMethods()
 );
 
 export default router;
