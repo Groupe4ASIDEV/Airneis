@@ -18,6 +18,7 @@ export default {
                 amount,
                 currency,
             });
+            console.log(paymentIntent);
 
             return Response.success(context, paymentIntent.client_secret);
         } catch (error: any) {

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { UidContext } from '../components/Authentication/UserContext';
 import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,6 +17,8 @@ import { useCheckoutStore, useCartStore } from '../store';
 import { CircularProgress } from '@mui/material';
 import { createOrder } from '../services/orderService';
 import { removeProductStock } from '../services/productService';
+import { useStripe } from '@stripe/react-stripe-js';
+import { createPaymentIntentOnServer } from '../services/paymentService';
 
 function Checkout() {
     const navigate = useNavigate();
@@ -24,8 +26,13 @@ function Checkout() {
     const { cart, clearCart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
+    const [clientSecret, setClientSecret] = useState();
+    const [paymentId, setPaymentId] = useState();
     const [orderId, setOrderId] = useState();
     const { checkout } = useCheckoutStore();
+    const paymentFormRef = useRef();
+    const stripe = useStripe();
+
     const steps = checkout.saveAddress
         ? ['Livraison', 'Paiement', 'Commande']
         : ['Livraison', 'Facturation', 'Paiement', 'Commande'];
@@ -43,7 +50,7 @@ function Checkout() {
                     return <AddressForm step={step} />;
                 case 2:
                     buttonValue = 'Vérifier la commande';
-                    return <PaymentForm />;
+                    return <PaymentForm ref={paymentFormRef} />;
                 case 3:
                     buttonValue = 'Commander';
                     return <Review />;
@@ -57,7 +64,7 @@ function Checkout() {
                     return <AddressForm step={step} />;
                 case 1:
                     buttonValue = 'Vérifier la commande';
-                    return <PaymentForm />;
+                    return <PaymentForm ref={paymentFormRef} />;
                 case 2:
                     buttonValue = 'Commander';
                     return <Review />;
@@ -70,7 +77,8 @@ function Checkout() {
     useEffect(() => {
         setIsRefreshing(false);
         console.log(cart);
-    }, [activeStep, orderId, cart]);
+        console.log(checkout);
+    }, [activeStep, orderId, cart, clientSecret, checkout]);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
@@ -91,12 +99,14 @@ function Checkout() {
     };
 
     const handleNext = async () => {
+        let nextStep = false;
         const addressData =
             activeStep === 0
                 ? checkout.shippingAddress
                 : checkout.billingAddress;
         const { firstName, lastName, street, city, zipCode, country, phone } =
             addressData;
+
         if (
             addressData !== undefined &&
             firstName &&
@@ -107,27 +117,78 @@ function Checkout() {
             country &&
             phone
         ) {
-            setActiveStep(activeStep + 1);
+            nextStep = true;
         } else {
             alert('Veuillez renseigner tous les champs obligatoires');
         }
 
-        if (buttonValue === 'Commander') {
+        if (buttonValue === 'Vérifier la commande' && nextStep) {
             try {
-                await Promise.all(
-                    cart.map((item) =>
-                        removeProductStock(item._id, item.quantity)
-                    )
+                console.log('try bloc');
+                console.log(paymentFormRef.current);
+                setClientSecret(await createPaymentIntentOnServer());
+                console.log(clientSecret);
+
+                setPaymentId(
+                    await paymentFormRef.current.handlePaymentSubmission()
                 );
-                await sendCartToOrder();
-                clearCart();
+                console.log(paymentId);
+                nextStep = true;
+            } catch (error) {
+                console.log("Impossible de créer l'intention de paiement");
+                nextStep = false;
+            }
+        }
+
+        if (buttonValue === 'Commander' && nextStep) {
+            try {
+                let paymentSucceeded = false;
+                console.log(clientSecret);
+                console.log(paymentId);
+                if (clientSecret && paymentId) {
+                    const result = await stripe.confirmCardPayment(
+                        clientSecret,
+                        {
+                            payment_method: paymentId,
+                        }
+                    );
+                    console.log(result);
+
+                    if (
+                        result.paymentIntent &&
+                        result.paymentIntent.status === 'succeeded'
+                    ) {
+                        paymentSucceeded = true;
+                    }
+                } else {
+                    console.log(
+                        'No attempt of confirmCardPayement as clientSecret:',
+                        paymentId
+                    );
+                }
+
+                if (paymentSucceeded) {
+                    await Promise.all(
+                        cart.map((item) =>
+                            removeProductStock(item._id, item.quantity)
+                        )
+                    );
+                    await sendCartToOrder();
+                    clearCart();
+                    nextStep = true;
+                }
             } catch (error) {
                 if (error.message === 'Not enough stock') {
                     alert('Stock insuffisant pour un produit');
                 } else {
                     console.error('Error :', error);
                 }
+                nextStep = false;
             }
+        }
+        console.log(nextStep);
+        if (nextStep) {
+            setActiveStep(activeStep + 1);
         }
     };
 
