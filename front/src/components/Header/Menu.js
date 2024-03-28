@@ -11,7 +11,7 @@ import BalanceIcon from '@mui/icons-material/Balance';
 import EmailIcon from '@mui/icons-material/Email';
 import InfoIcon from '@mui/icons-material/Info';
 import LogoutIcon from '@mui/icons-material/Logout';
-import { Link } from 'react-router-dom';
+import {Link} from "@mui/material";
 
 export default function BasicMenu({ anchorEl, open, onClose }) {
     const { isAuth, userData, logout } = useContext(UidContext);
@@ -111,18 +111,20 @@ export default function BasicMenu({ anchorEl, open, onClose }) {
                     />
                     Mentions légales
                 </MenuItem>
-                <MenuItem onClick={onClose} key="Contact">
-                    <EmailIcon
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{
-                            mr: 2,
-                        }}
-                    />
-                    Contact
-                </MenuItem>
+                <Link href="/contact">
+                    <MenuItem onClick={onClose} key="Contact">
+                        <EmailIcon
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{
+                                mr: 2,
+                            }}
+                        />
+                        Contact
+                    </MenuItem>
+                </Link>
                 <MenuItem onClick={onClose} key="information">
                     <InfoIcon
                         size="large"
