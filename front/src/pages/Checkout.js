@@ -83,7 +83,6 @@ function Checkout() {
             navigate('/auth');
         }
         if ((!cart || cart.length === 0) && !(activeStep >= 2)) {
-            console.log('navigate activated');
             navigate('/');
         }
     }, [isAuth, isRefreshing, activeStep, cart, navigate]);
@@ -173,7 +172,7 @@ function Checkout() {
                         alert('Stock insuffisant pour un produit');
                         break;
                     case 'User Data is not available':
-                        console.log('Something went wrong');
+                        console.error('Error : Something went wrong');
                         navigate('/');
                         break;
                     default:
@@ -182,16 +181,13 @@ function Checkout() {
                 nextStep = false;
             }
         }
-        console.log(nextStep);
         if (nextStep) {
-            console.log('activeStep incremented');
             setActiveStep(activeStep + 1);
         }
     };
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
-        console.log(activeStep);
     };
 
     return (
