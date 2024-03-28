@@ -11,7 +11,6 @@ const UserSettings = () => {
     const [userDatas, setUserDatas] = useState({
         fullName: '',
         email: '',
-        password: '',
         phone: '',
         validated: false,
         defaultAddress: '',
@@ -32,7 +31,7 @@ const UserSettings = () => {
 
     const loadAddresses = async () => {
         try {
-            const response = await axios.get(`${baseUrl}/user/addresses/${userData._id}`);
+            const response = await axios.get(`${baseUrl}/user/addresses/${userData.id}`);
             setAddresses(response.data);
         } catch (error) {
             console.error('Erreur lors du chargement des adresses de l\'utilisateur :', error);
@@ -77,11 +76,10 @@ const UserSettings = () => {
         event.preventDefault();
         try {
             const response = await axios.put(
-                `${baseUrl}/user/update/${userData._id}`,
+                `${baseUrl}/user/update/${userData.id}`,
                 {
                     fullName: userDatas.fullName,
                     email: userDatas.email,
-                    password: userDatas.password,
                     phone: userDatas.phone,
                     defaultAddress: userDatas.defaultAddress,
                 }
@@ -119,16 +117,6 @@ const UserSettings = () => {
                     type="email"
                     name="email"
                     value={userData.email}
-                    onChange={handleChange}
-                    margin="normal"
-                />
-                <TextField
-                    label="Mot de passe"
-                    variant="outlined"
-                    fullWidth
-                    type="password"
-                    name="password"
-                    value={userData.password}
                     onChange={handleChange}
                     margin="normal"
                 />
