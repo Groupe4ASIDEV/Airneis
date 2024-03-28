@@ -7,6 +7,7 @@ import Product from '../pages/Product';
 import OrderList from '../pages/OrderList';
 import CartOrder from '../pages/CartOrder';
 import Checkout from '../pages/Checkout';
+import Contact from "../pages/Contact";
 
 function Index() {
     return (
@@ -20,6 +21,7 @@ function Index() {
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/orders/:userId" element={<OrderList />} />
             <Route path="/orders/:userId/:orderId" element={<CartOrder />} />
+            <Route path="/contact" element={< Contact />} />
         </Routes>
     );
 }
