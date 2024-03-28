@@ -1,7 +1,7 @@
 import { Box, CircularProgress, Typography } from '@mui/material';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import useOrderStore from '../../store/orderStore';
+import { useOrderStore } from '../../store';
 
 function CartOrderTitle({ isOrder, isCart }) {
     const { userId, orderId } = useParams();

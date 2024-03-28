@@ -1,8 +1,6 @@
 import { create } from 'zustand';
 import zustymiddleware from 'zustymiddleware';
-import axios from 'axios';
-
-const baseUrl = process.env.REACT_APP_API_URL;
+import { fetchOrders } from '../services/orderService';
 
 const useOrderStore = create(
     zustymiddleware((set, get) => ({
@@ -21,20 +19,28 @@ const useOrderStore = create(
                 }
             }
         },
+        updateReturnedQuantity: (orderId, itemId, newReturnedQuantity) => {
+            set((state) => ({
+                orders: state.orders.map((order) =>
+                    order.id === orderId
+                        ? {
+                              ...order,
+                              items: order.items.map((item) =>
+                                  item.id === itemId
+                                      ? {
+                                            ...item,
+                                            returnedQuantity:
+                                                newReturnedQuantity,
+                                        }
+                                      : item
+                              ),
+                          }
+                        : order
+                ),
+            }));
+        },
     }))
 );
-
-const fetchOrders = async (userId) => {
-    try {
-        const response = await axios.post(`${baseUrl}/order`, {
-            userId,
-        });
-        return response.data.data;
-    } catch (error) {
-        console.error('Error while fetching orders :', error);
-        throw error;
-    }
-};
 
 window.store = useOrderStore;
 

@@ -17,6 +17,10 @@ export const components = (palette) => ({
                     color: palette.primary.dark,
                     backgroundColor: palette.secondary.main,
                 },
+                '&.Mui-disabled': {
+                    backgroundColor: palette.secondary.light,
+                    color: palette.text.disabled,
+                },
             },
         },
     },

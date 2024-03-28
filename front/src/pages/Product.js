@@ -1,43 +1,60 @@
-
-import { Box, Typography, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    CircularProgress,
+    Typography,
+    useMediaQuery,
+} from '@mui/material';
 import ImageDisplay from '../components/Pictures/Pictures';
 import Grid from '@mui/material/Grid';
 import { useProductStore } from '../store';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import CarouselBuilder from '../components/Carousel';
+// import ImageListItem from '@mui/material/ImageListItem';
+// import ImageListItemBar from '@mui/material/ImageListItemBar';
+// import CarouselBuilder from '../components/Carousel';
 import useCartStore from '../store/cartStore';
+import { useEffect } from 'react';
 
 function Product() {
-    const { productId } = useParams();
-    const { products } = useProductStore();
+    const { id } = useParams();
+    console.log('🚀 ~ Product ~ id:', id);
+    const { products, loadProducts } = useProductStore();
+    console.log('🚀 ~ Product ~ products:', products);
     const { addToCart } = useCartStore();
-    const product = products.find((product) => product.id === productId);
     const isSmallScreen = useMediaQuery('(max-width:600px)');
 
-    if (!product) {
-        return <Typography variant="h6">Produit non trouvé</Typography>;
-    }
+    useEffect(() => {
+        loadProducts();
+    }, [loadProducts, id]);
+
+    const product = products.find((product) => {
+        console.log('🚀 ~ Product ~ product:', product);
+        return product._id === id;
+    });
 
     const handleAddToCart = () => {
         addToCart(product);
     };
-  
+
+    if (!product || product === undefined) {
+        <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <CircularProgress />
+        </Box>;
+    }
+
     return (
-        <Box id="productList" style={{ padding: 20 }}>
-            <ImageListItem key={product._id}>
+        <Box id="product" style={{ padding: 20 }}>
+            {/* <ImageListItem key={product._id}>
                 <CarouselBuilder />
                 <ImageListItemBar title={product.label} />
-            </ImageListItem>
+            </ImageListItem> */}
             <Grid container spacing={2}>
-                <Grid item xs={isSmallScreen ? 12 : 4}>
+                <Grid item xs={isSmallScreen ? 12 : 6}>
                     <Box p={2}>
-                        <ImageDisplay product={product} />
+                        <ImageDisplay id={product.pictures[0]} />
                     </Box>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={isSmallScreen ? 12 : 6}>
                     <Box p={2}>
                         <Box>
                             <Box display="flex" justifyContent="space-between">
@@ -51,13 +68,28 @@ function Product() {
                                 flexDirection="column"
                                 alignItems="flex-end"
                             >
-                                <Typography>Stock: {product.stock}</Typography>
+                                <Typography>
+                                    {product.stock > 0
+                                        ? 'En stock'
+                                        : 'Stock épuisé'}
+                                </Typography>
                             </Box>
                         </Box>
-                        <Typography>{product.description}</Typography>
-                        <Button variant="contained" onClick={handleAddToCart}>
-                            Ajouter au panier
-                        </Button>
+                    </Box>
+                    <Box>
+                        <Typography align="justify">
+                            {product.description}
+                        </Typography>
+                        {product.stock > 0 ? (
+                            <Button
+                                variant="contained"
+                                onClick={handleAddToCart}
+                            >
+                                Ajouter au panier
+                            </Button>
+                        ) : (
+                            <Button variant="disabled">Stock épuisé</Button>
+                        )}
                     </Box>
                 </Grid>
             </Grid>

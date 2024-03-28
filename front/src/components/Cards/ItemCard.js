@@ -1,5 +1,6 @@
 import {
     Box,
+    Button,
     Card,
     CircularProgress,
     IconButton,
@@ -12,12 +13,15 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import useCartStore from '../../store/cartStore';
 import useOrderStore from '../../store/orderStore';
 import { useParams } from 'react-router-dom';
+import { incrementReturnedQuantity } from '../../services/orderService';
+import { addProductStock } from '../../services/productService';
 
 function ItemCard({ itemId, isCart, isOrder }) {
     const { cart, updateCart, removeFromCart } = useCartStore();
-    const { orders, loadOrders } = useOrderStore();
-    const { userId, orderId } = useParams('userId');
+    const { orders, loadOrders, updateReturnedQuantity } = useOrderStore();
+    const { userId, orderId } = useParams();
 
+    let order;
     let item = {}; // Will be used to centralize the item to display, regardless of the data source
 
     useEffect(() => {
@@ -32,8 +36,7 @@ function ItemCard({ itemId, isCart, isOrder }) {
         });
     }
     if (!isCart && isOrder) {
-        const order = orders.find((order) => {
-            console.log('🚀 ~ ItemCard ~ order:', order);
+        order = orders.find((order) => {
             return order._id === orderId;
         });
         item = order.items.find((item) => {
@@ -54,11 +57,29 @@ function ItemCard({ itemId, isCart, isOrder }) {
         if (isNaN(newQuantity)) {
             newQuantity = 1;
         }
-        updateCart(item, newQuantity - item.quantity);
+        if (isCart) {
+            updateCart(item, newQuantity - item.quantity);
+        }
     };
 
-    const handleRemoveProduct = () => {
+    const handleRemoveProductFromCart = () => {
         removeFromCart(item);
+    };
+
+    const handleReturnProduct = async (quantity) => {
+        if (item.returnedQuantity < item.quantity) {
+            await incrementReturnedQuantity(orderId, item.productId, quantity);
+            await addProductStock(item.productId, quantity);
+            updateReturnedQuantity(
+                order.id,
+                item.id,
+                item.returnedQuantity + quantity
+            );
+        } else {
+            alert(
+                'Vous avez déjà retourné toutes les unités de ce produit pour cette commande.'
+            );
+        }
     };
 
     const imageId = item?.pictures[0];
@@ -85,13 +106,40 @@ function ItemCard({ itemId, isCart, isOrder }) {
                         value={item.quantity}
                         onChange={handleQuantityChange}
                         inputProps={{ min: '1', step: '1' }}
-                        disabled={isOrder && item.state !== 'LIVRÉE'}
+                        disabled={isOrder}
                     >
                         {item.quantity}
                     </TextField>
+                    {isOrder && order.state === 'LIVRÉE' ? (
+                        <>
+                            <Typography>
+                                Produit(s) retourné(s): {item.returnedQuantity}
+                            </Typography>
+                            <Button
+                                variant="contained"
+                                onClick={() => handleReturnProduct(1)}
+                                disabled={
+                                    !(item.returnedQuantity < item.quantity)
+                                }
+                            >
+                                Retourner un produit
+                            </Button>
+                        </>
+                    ) : null}
                     <IconButton
-                        onClick={handleRemoveProduct}
-                        disabled={isOrder && item.state !== 'LIVRÉE'}
+                        onClick={() => {
+                            if (isOrder && order.state === 'LIVRÉE') {
+                                handleReturnProduct(
+                                    item.quantity - item.returnedQuantity
+                                );
+                            } else {
+                                handleRemoveProductFromCart();
+                            }
+                        }}
+                        disabled={
+                            (isOrder && order.state !== 'LIVRÉE') ||
+                            !(item.returnedQuantity < item.quantity)
+                        }
                     >
                         <DeleteOutlineIcon />
                     </IconButton>

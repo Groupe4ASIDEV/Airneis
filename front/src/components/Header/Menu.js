@@ -125,7 +125,6 @@ export default function BasicMenu({ anchorEl, open, onClose }) {
                         Contact
                     </MenuItem>
                 </Link>
-
                 <MenuItem onClick={onClose} key="information">
                     <InfoIcon
                         size="large"
