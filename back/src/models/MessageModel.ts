@@ -7,7 +7,7 @@ export type Message = {
 };
 
 const messageSchema = new mongoose.Schema<Message>({
-    email: { type: String, required: true, unique: true },
+    email: { type: String, required: true },
     title: { type: String, required: true },
     description: { type: String, required: true },
 });
