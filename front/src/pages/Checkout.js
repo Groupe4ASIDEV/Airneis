@@ -76,15 +76,14 @@ function Checkout() {
 
     useEffect(() => {
         setIsRefreshing(false);
-        console.log(cart);
-        console.log(checkout);
-    }, [activeStep, orderId, cart, clientSecret, checkout]);
+    }, []);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
             navigate('/auth');
         }
-        if ((!cart || cart.length === 0) && !(activeStep >= 3)) {
+        if ((!cart || cart.length === 0) && !(activeStep >= 2)) {
+            console.log('navigate activated');
             navigate('/');
         }
     }, [isAuth, isRefreshing, activeStep, cart, navigate]);
@@ -124,27 +123,23 @@ function Checkout() {
 
         if (buttonValue === 'Vérifier la commande' && nextStep) {
             try {
-                console.log('try bloc');
-                console.log(paymentFormRef.current);
                 setClientSecret(await createPaymentIntentOnServer());
-                console.log(clientSecret);
-
                 setPaymentId(
                     await paymentFormRef.current.handlePaymentSubmission()
                 );
-                console.log(paymentId);
                 nextStep = true;
             } catch (error) {
-                console.log("Impossible de créer l'intention de paiement");
                 nextStep = false;
             }
         }
 
         if (buttonValue === 'Commander' && nextStep) {
             try {
+                if (!userData) {
+                    throw new Error('User Data is not available');
+                }
+
                 let paymentSucceeded = false;
-                console.log(clientSecret);
-                console.log(paymentId);
                 if (clientSecret && paymentId) {
                     const result = await stripe.confirmCardPayment(
                         clientSecret,
@@ -152,8 +147,6 @@ function Checkout() {
                             payment_method: paymentId,
                         }
                     );
-                    console.log(result);
-
                     if (
                         result.paymentIntent &&
                         result.paymentIntent.status === 'succeeded'
@@ -161,10 +154,7 @@ function Checkout() {
                         paymentSucceeded = true;
                     }
                 } else {
-                    console.log(
-                        'No attempt of confirmCardPayement as clientSecret:',
-                        paymentId
-                    );
+                    throw new Error('Could not proceed to payment');
                 }
 
                 if (paymentSucceeded) {
@@ -178,22 +168,30 @@ function Checkout() {
                     nextStep = true;
                 }
             } catch (error) {
-                if (error.message === 'Not enough stock') {
-                    alert('Stock insuffisant pour un produit');
-                } else {
-                    console.error('Error :', error);
+                switch (error.message) {
+                    case 'Not enough stock':
+                        alert('Stock insuffisant pour un produit');
+                        break;
+                    case 'User Data is not available':
+                        console.log('Something went wrong');
+                        navigate('/');
+                        break;
+                    default:
+                        console.error('Error :', error);
                 }
                 nextStep = false;
             }
         }
         console.log(nextStep);
         if (nextStep) {
+            console.log('activeStep incremented');
             setActiveStep(activeStep + 1);
         }
     };
 
     const handleBack = () => {
         setActiveStep(activeStep - 1);
+        console.log(activeStep);
     };
 
     return (
