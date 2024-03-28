@@ -32,7 +32,6 @@ const PaymentForm = forwardRef((props, ref) => {
             if (!stripe || !elements) {
                 return;
             }
-            console.log('prout');
             const cardElement = elements.getElement(CardElement);
             const { error, paymentMethod } = await stripe.createPaymentMethod({
                 type: 'card',

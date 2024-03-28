@@ -19,6 +19,7 @@ import { createOrder } from '../services/orderService';
 import { removeProductStock } from '../services/productService';
 import { useStripe } from '@stripe/react-stripe-js';
 import { createPaymentIntentOnServer } from '../services/paymentService';
+import { calculateCartATITotal } from '../utils/calculs';
 
 function Checkout() {
     const navigate = useNavigate();
@@ -122,7 +123,12 @@ function Checkout() {
 
         if (buttonValue === 'Vérifier la commande' && nextStep) {
             try {
-                setClientSecret(await createPaymentIntentOnServer());
+                setClientSecret(
+                    await createPaymentIntentOnServer(
+                        calculateCartATITotal(cart) * 100,
+                        'eur'
+                    )
+                );
                 setPaymentId(
                     await paymentFormRef.current.handlePaymentSubmission()
                 );
