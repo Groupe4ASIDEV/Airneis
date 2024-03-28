@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { UidContext } from '../components/Authentication/UserContext';
 import { useNavigate } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -17,6 +17,9 @@ import { useCheckoutStore, useCartStore } from '../store';
 import { CircularProgress } from '@mui/material';
 import { createOrder } from '../services/orderService';
 import { removeProductStock } from '../services/productService';
+import { useStripe } from '@stripe/react-stripe-js';
+import { createPaymentIntentOnServer } from '../services/paymentService';
+import { calculateCartATITotal } from '../utils/calculs';
 
 function Checkout() {
     const navigate = useNavigate();
@@ -24,8 +27,13 @@ function Checkout() {
     const { cart, clearCart } = useCartStore();
     const [activeStep, setActiveStep] = useState(0);
     const [isRefreshing, setIsRefreshing] = useState(true);
+    const [clientSecret, setClientSecret] = useState();
+    const [paymentId, setPaymentId] = useState();
     const [orderId, setOrderId] = useState();
     const { checkout } = useCheckoutStore();
+    const paymentFormRef = useRef();
+    const stripe = useStripe();
+
     const steps = checkout.saveAddress
         ? ['Livraison', 'Paiement', 'Commande']
         : ['Livraison', 'Facturation', 'Paiement', 'Commande'];
@@ -43,7 +51,7 @@ function Checkout() {
                     return <AddressForm step={step} />;
                 case 2:
                     buttonValue = 'Vérifier la commande';
-                    return <PaymentForm />;
+                    return <PaymentForm ref={paymentFormRef} />;
                 case 3:
                     buttonValue = 'Commander';
                     return <Review />;
@@ -57,7 +65,7 @@ function Checkout() {
                     return <AddressForm step={step} />;
                 case 1:
                     buttonValue = 'Vérifier la commande';
-                    return <PaymentForm />;
+                    return <PaymentForm ref={paymentFormRef} />;
                 case 2:
                     buttonValue = 'Commander';
                     return <Review />;
@@ -69,14 +77,13 @@ function Checkout() {
 
     useEffect(() => {
         setIsRefreshing(false);
-        console.log(cart);
-    }, [activeStep, orderId, cart]);
+    }, []);
 
     useEffect(() => {
         if (!isAuth && !isRefreshing) {
             navigate('/auth');
         }
-        if ((!cart || cart.length === 0) && !(activeStep >= 3)) {
+        if ((!cart || cart.length === 0) && !(activeStep >= 2)) {
             navigate('/');
         }
     }, [isAuth, isRefreshing, activeStep, cart, navigate]);
@@ -91,12 +98,14 @@ function Checkout() {
     };
 
     const handleNext = async () => {
+        let nextStep = false;
         const addressData =
             activeStep === 0
                 ? checkout.shippingAddress
                 : checkout.billingAddress;
         const { firstName, lastName, street, city, zipCode, country, phone } =
             addressData;
+
         if (
             addressData !== undefined &&
             firstName &&
@@ -107,27 +116,79 @@ function Checkout() {
             country &&
             phone
         ) {
-            setActiveStep(activeStep + 1);
+            nextStep = true;
         } else {
             alert('Veuillez renseigner tous les champs obligatoires');
         }
 
-        if (buttonValue === 'Commander') {
+        if (buttonValue === 'Vérifier la commande' && nextStep) {
             try {
-                await Promise.all(
-                    cart.map((item) =>
-                        removeProductStock(item._id, item.quantity)
+                setClientSecret(
+                    await createPaymentIntentOnServer(
+                        calculateCartATITotal(cart) * 100,
+                        'eur'
                     )
                 );
-                await sendCartToOrder();
-                clearCart();
+                setPaymentId(
+                    await paymentFormRef.current.handlePaymentSubmission()
+                );
+                nextStep = true;
             } catch (error) {
-                if (error.message === 'Not enough stock') {
-                    alert('Stock insuffisant pour un produit');
-                } else {
-                    console.error('Error :', error);
-                }
+                nextStep = false;
             }
+        }
+
+        if (buttonValue === 'Commander' && nextStep) {
+            try {
+                if (!userData) {
+                    throw new Error('User Data is not available');
+                }
+
+                let paymentSucceeded = false;
+                if (clientSecret && paymentId) {
+                    const result = await stripe.confirmCardPayment(
+                        clientSecret,
+                        {
+                            payment_method: paymentId,
+                        }
+                    );
+                    if (
+                        result.paymentIntent &&
+                        result.paymentIntent.status === 'succeeded'
+                    ) {
+                        paymentSucceeded = true;
+                    }
+                } else {
+                    throw new Error('Could not proceed to payment');
+                }
+
+                if (paymentSucceeded) {
+                    await Promise.all(
+                        cart.map((item) =>
+                            removeProductStock(item._id, item.quantity)
+                        )
+                    );
+                    await sendCartToOrder();
+                    clearCart();
+                    nextStep = true;
+                }
+            } catch (error) {
+                switch (error.message) {
+                    case 'Not enough stock':
+                        alert('Stock insuffisant pour un produit');
+                        break;
+                    case 'User Data is not available':
+                        console.error('Error : Something went wrong');
+                        navigate('/');
+                        break;
+                    default:
+                        console.error('Error :', error);
+                }
+                nextStep = false;
+            }
+        }
+        if (nextStep) {
+            setActiveStep(activeStep + 1);
         }
     };
 

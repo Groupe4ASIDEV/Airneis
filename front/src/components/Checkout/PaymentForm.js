@@ -4,10 +4,13 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { useCheckoutStore } from '../../store';
-import { useEffect } from 'react';
+import { useEffect, forwardRef, useImperativeHandle } from 'react';
+import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 
-function PaymentForm() {
+const PaymentForm = forwardRef((props, ref) => {
     const { checkout, setCheckout } = useCheckoutStore();
+    const stripe = useStripe();
+    const elements = useElements();
 
     useEffect(() => {}, [checkout]);
 
@@ -24,13 +27,43 @@ function PaymentForm() {
         });
     };
 
+    useImperativeHandle(ref, () => ({
+        handlePaymentSubmission: async () => {
+            if (!stripe || !elements) {
+                return;
+            }
+            const cardElement = elements.getElement(CardElement);
+            const { error, paymentMethod } = await stripe.createPaymentMethod({
+                type: 'card',
+                card: cardElement,
+                billing_details: {
+                    name: checkout.fullName,
+                },
+            });
+            if (error) {
+                console.log('[error]', error);
+                return;
+            }
+
+            setCheckout({
+                ...checkout,
+                payment: {
+                    ...checkout.payment,
+                    paymentMethodId: paymentMethod.id,
+                },
+            });
+
+            return paymentMethod.id;
+        },
+    }));
+
     return (
         <>
             <Typography variant="h6" gutterBottom>
                 Paiement
             </Typography>
-            <Grid container spacing={3}>
-                <Grid item xs={12} md={6}>
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={12}>
                     <TextField
                         required
                         id="fullName"
@@ -42,41 +75,22 @@ function PaymentForm() {
                         onChange={handleChange}
                     />
                 </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cardNumber"
-                        name="cardNumber"
-                        label="Numéro de carte"
-                        fullWidth
-                        autoComplete="cc-number"
-                        variant="standard"
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="expirationDate"
-                        name="expirationDate"
-                        label="Date d'expiration"
-                        fullWidth
-                        autoComplete="cc-exp"
-                        variant="standard"
-                        onChange={handleChange}
-                    />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                    <TextField
-                        required
-                        id="cvv"
-                        name="cvv"
-                        label="CVV"
-                        helperText="3 chiffres au verso de la carte"
-                        fullWidth
-                        autoComplete="cc-csc"
-                        variant="standard"
-                        onChange={handleChange}
+                <Grid item xs={12} md={12}>
+                    <CardElement
+                        options={{
+                            style: {
+                                base: {
+                                    fontSize: '16px',
+                                    color: '#424770',
+                                    '::placeholder': {
+                                        color: '#757575',
+                                    },
+                                },
+                                invalid: {
+                                    color: '#9e2146',
+                                },
+                            },
+                        }}
                     />
                 </Grid>
                 {/* <Grid item xs={12}>
@@ -95,6 +109,6 @@ function PaymentForm() {
             </Grid>
         </>
     );
-}
+});
 
 export default PaymentForm;

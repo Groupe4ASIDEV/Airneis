@@ -8,6 +8,7 @@ import pictureRouter from './PictureRouter';
 import featuredItemRouter from './FeaturedItemRouter';
 import addressRouter from './AddressRouter';
 import orderRouter from './OrderRouter';
+import paymentRouter from './PaymentRouter';
 import messageRouter from "./MessageRouter";
 
 const router: Router = new Router();
@@ -30,6 +31,8 @@ router.use(
     addressRouter.allowedMethods(),
     orderRouter.routes(),
     orderRouter.allowedMethods(),
+    paymentRouter.routes(),
+    paymentRouter.allowedMethods()
     messageRouter.routes(),
     messageRouter.allowedMethods()
 );

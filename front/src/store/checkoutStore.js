@@ -29,9 +29,7 @@ const useCheckoutStore = create(
             },
             payment: {
                 fullName: '',
-                cardNumber: '',
-                expirationDate: '',
-                cvv: '',
+                paymentMethodId: '',
             },
         },
         setCheckout: (newData) => {
